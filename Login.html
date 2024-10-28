@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Login - MangeBook</title>
+    <link rel="stylesheet" href="/css/EstiloPrincipal.css">
+    <link rel="stylesheet" href="/css/Login.css"> <!-- Estilo específico para a tela de login -->
+</head>
+<body>
+    <header class="navbar">
+        <h1 class="logo">
+            <a href="index.html" style="color: white; text-decoration: none;">MangeBook</a>
+        </h1>
+    </header>
+
+    <div class="login-container">
+        <form class="login-form">
+            <h2>Bem-vindo ao sistema MangeBook</h2>
+            <div class="form-group">
+                <label for="user-type">Tipo de Usuário:</label>
+                <select id="user-type" name="user-type" required>
+                    <option value="" disabled selected>Selecione um tipo de usuário</option>
+                    <option value="admin">Administrador</option>
+                    <option value="user">Usuário Comum</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="username">Usuário:</label>
+                <input type="text" id="username" placeholder="Digite seu usuário" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" placeholder="Digite sua senha" required>
+            </div>
+            <button type="submit" class="login-button">Entrar</button>
+            <p class="forgot-password">
+                <a href="RecuperaSenha.html">Esqueceu sua senha?</a>
+            </p>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 MangeBook. Todos os direitos reservados.</p>
+        <p>Contato: contato@mangeBook.com | Telefone: (11) 1234-5678</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,210 @@
+/* Reset de estilo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do corpo */
+body {
+    background-color: #f0f0f0; /* Cor de fundo */
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+/* Estilo da navbar */
+.navbar {
+    background-color: #00334e;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Container principal */
+main {
+    width: 90%; /* Aumente a porcentagem conforme necessário */
+    max-width: 1200px; /* Limite a largura máxima */
+    margin: 20px auto; /* Centraliza o conteúdo e dá um espaçamento acima e abaixo */
+    padding: 20px; /* Espaçamento interno */
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Estilo do título "welcome-title" */
+.welcome-title {
+    text-align: center; /* Centraliza o texto */
+    font-size: 2rem; /* Aumenta o tamanho da fonte */
+    margin-top: 40px;
+    margin-bottom: 20px; /* Espaçamento inferior */
+    color: #00334e; /* Cor do título */
+    font-weight: bold; /* Negrito */
+}
+
+/* Container de detalhes do livro */
+.detalhes-container {
+    display: flex; /* Alinha os itens em linha */
+    align-items: stretch; /* Estica para a mesma altura */
+    gap: 20px; /* Espaço entre imagem e tabela */
+    background-color: #fff; /* Fundo branco */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 20px;
+    margin-bottom: 20px; /* Ajusta o espaçamento inferior */
+}
+
+/* Miniatura do livro */
+.book-thumbnail {
+    width: 300px;
+    height: auto; /* Mantém a proporção */
+    max-height: 100%; /* Limita a altura para não exceder o container */
+    object-fit: cover; /* Preenche sem distorcer */
+    border-radius: 8px;
+    flex-shrink: 0; /* Evita que a imagem encolha */
+}
+
+/* Container dos detalhes */
+.detalhes-livro {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Tabela de detalhes */
+table {
+    width: 100%;
+    height: 100%;
+    border-collapse: separate; /* Permite bordas arredondadas */
+    border-spacing: 0; /* Remove espaços entre células */
+    border-radius: 8px; /* Borda arredondada na tabela */
+    overflow: hidden; /* Garante que o conteúdo respeite as bordas */
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-radius: 8px; /* Bordas arredondadas nas células */
+    border: none; /* Remove as bordas */
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Seção de comentários */
+.comentarios {
+    margin-top: 20px;
+}
+
+/* Container de comentários */
+.comentarios-container {
+    background-color: #fff; /* Cor de fundo branca */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 20px; /* Espaçamento interno */
+    margin-top: 10px; /* Margem superior */
+}
+
+/* Comentário individual */
+.comentario {
+    width: 100%;
+    border-collapse: separate; /* Permite bordas arredondadas */
+    border-spacing: 0; /* Remove espaços entre células */
+}
+
+.comentario th, .comentario td {
+    padding: 10px;
+    text-align: left;
+    border-radius: 8px; /* Bordas arredondadas nas células do comentário */
+    border: none; /* Remove as bordas */
+}
+
+.comentario th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.comentario tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alterna a cor de fundo das linhas */
+}
+
+/* Formulário de comentários */
+.form-comentario {
+    background-color: #f9f9f9;
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 20px; /* Adiciona espaçamento superior ao formulário */
+    margin-bottom: 30px; /* Margem inferior para separar de outros elementos */
+}
+
+/* Estilo do título dentro do formulário de comentários */
+.form-comentario h4 {
+    margin-bottom: 15px; /* Adiciona espaçamento abaixo do título */
+}
+
+/* Grupos de formulário */
+.form-group {
+    margin-bottom: 20px; /* Adiciona espaçamento inferior entre os grupos de formulário */
+}
+
+/* Campos de entrada */
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* Mantém a borda arredondada */
+    border-radius: 5px; /* Bordas arredondadas nos campos de entrada */
+}
+
+/* Botão de envio */
+.enviar-comentario {
+    background-color: #00334e;
+    color: white;
+    padding: 10px 20px;
+    border: none; /* Remove a borda do botão */
+    border-radius: 5px; /* Bordas arredondadas no botão */
+    cursor: pointer;
+}
+
+.enviar-comentario:hover {
+    background-color: #004c66;
+}
+
+
+/* Seção de reserva */
+.reservar-container {
+    margin-top: 20px; /* Espaçamento acima da seção de reserva */
+    padding: 15px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Fundo da seção */
+    border-radius: 8px; /* Bordas arredondadas */
+    display: flex; /* Adiciona flexbox */
+    justify-content: center; /* Centraliza os itens */
+    align-items: center; /* Alinha verticalmente */
+    gap: 10px; /* Espaço entre o texto e o botão */
+}
+
+.reservar-livro {
+    background-color: #00334e; /* Cor do botão */
+    color: white; /* Cor do texto */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    border: none; /* Remove a borda do botão */
+    border-radius: 5px; /* Bordas arredondadas do botão */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+}
+
+.reservar-livro:hover {
+    background-color: #005577; /* Cor do botão ao passar o mouse */
+}
+
+
+/* Rodapé */
+.footer {
+    background-color: #00334e;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

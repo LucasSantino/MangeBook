@@ -1,0 +1,162 @@
+/* Reset de estilo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo da Navbar */
+.navbar {
+    background-color: #00334e; /* Cor da navbar */
+    padding: 10px 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o conteúdo da navbar */
+    width: 100%; /* Largura total */
+}
+
+.logo a {
+    color: white; /* Cor do texto */
+    font-size: 24px; /* Tamanho da fonte */
+    text-decoration: none; /* Remove o sublinhado */
+}
+
+/* Estilo do corpo */
+body {
+    display: flex; /* Usando flexbox */
+    flex-direction: column; /* Colocando os itens em coluna */
+    min-height: 100vh; /* Altura mínima da viewport */
+    background-color: #f0f0f0; /* Cor de fundo */
+}
+
+/* Estilo do container de login */
+.login-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: calc(100vh - 140px); /* Altura total menos a altura da navbar e footer */
+}
+
+/* Estilo do formulário de login */
+.login-form {
+    background-color: #f9f9f9; /* Cor de fundo do formulário */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra do card */
+    width: 300px; /* Largura do formulário */
+}
+
+/* Estilo do título dentro do formulário */
+.login-form h2 {
+    margin-bottom: 20px; /* Espaço entre o título e o primeiro grupo de formulário */
+}
+
+/* Estilo dos grupos de formulário */
+.form-group {
+    margin-bottom: 15px; /* Espaçamento entre os grupos */
+}
+
+.form-group label {
+    display: block; /* Exibe o rótulo como bloco */
+    margin-bottom: 5px; /* Espaçamento abaixo do rótulo */
+}
+
+/* Estilo dos campos de entrada */
+input[type="text"],
+input[type="password"],
+select {
+    width: 100%; /* Largura total */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid#00334e; /* Borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
+/* Estilo do botão de login */
+.login-button {
+    background-color: #00334e; /* Cor do botão */
+    color: white; /* Cor do texto */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Remove borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    font-size: 16px; /* Tamanho da fonte */
+    width: 100%; /* Largura total */
+}
+
+.login-button:hover {
+    background-color: #004c66; /* Cor do botão ao passar o mouse */
+}
+
+/* Estilo do texto de recuperação de senha */
+.forgot-password {
+    margin-top: 10px; /* Margem acima do texto */
+    text-align: center; /* Centraliza o texto */
+}
+
+.forgot-password a {
+    color: #00334e; /* Cor do link */
+    text-decoration: none; /* Remove o sublinhado do link */
+}
+
+.forgot-password a:hover {
+    text-decoration: underline; /* Sublinha o link ao passar o mouse */
+}
+
+/* Estilo do container de recuperação */
+.recuperacao-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    height: calc(100vh - 140px); /* Altura total menos a altura da navbar e footer */
+}
+
+/* Estilo do formulário de recuperação */
+.recuperacao-form {
+    background-color: #f9f9f9; /* Cor de fundo do formulário */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra do card */
+    width: 300px; /* Largura do formulário */
+}
+
+/* Estilo dos grupos de formulário */
+.form-group {
+    margin-bottom: 15px; /* Espaçamento entre os grupos */
+}
+
+.form-group label {
+    display: block; /* Exibe o rótulo como bloco */
+    margin-bottom: 5px; /* Espaçamento abaixo do rótulo */
+}
+
+/* Estilo dos campos de entrada */
+input[type="email"] {
+    width: 100%; /* Largura total */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+
+/* Estilo do botão de enviar */
+.recuperacao-button {
+    background-color: #00334e; /* Cor do botão */
+    color: white; /* Cor do texto */
+    padding: 10px 20px; /* Espaçamento interno */
+    border: none; /* Remove borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    font-size: 16px; /* Tamanho da fonte */
+    width: 100%; /* Largura total */
+}
+
+.recuperacao-button:hover {
+    background-color: #004c66; /* Cor do botão ao passar o mouse */
+}
+/* Estilo do Rodapé */
+.footer {
+    background-color: #00334e; /* Cor do rodapé */
+    color: white; /* Cor do texto */
+    text-align: center; /* Centraliza o texto */
+    padding: 10px; /* Espaçamento interno */
+    position: relative; /* Para controle de posicionamento */
+    width: 100%; /* Largura total */
+    margin-top: auto; /* Empurra o rodapé para o fundo */
+}
