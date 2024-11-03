@@ -200,6 +200,30 @@ select {
     background-color: #005577; /* Cor do botão ao passar o mouse */
 }
 
+/* Seção de adicionar à lista de desejos */
+.desejos-container {
+    margin-top: 20px; /* Espaçamento acima da seção de desejos */
+    padding: 15px; /* Espaçamento interno */
+    background-color: #f9f9f9; /* Fundo da seção */
+    border-radius: 8px; /* Bordas arredondadas */
+    display: flex; /* Adiciona flexbox */
+    justify-content: center; /* Centraliza os itens */
+    align-items: center; /* Alinha verticalmente */
+    gap: 10px; /* Espaço entre o texto e o botão */
+}
+
+.adicionar-desejos {
+    background-color: #00334e; /* Cor do botão */
+    color: white; /* Cor do texto */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    border: none; /* Remove a borda do botão */
+    border-radius: 5px; /* Bordas arredondadas do botão */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+}
+
+.adicionar-desejos:hover {
+    background-color: #005577; /* Cor do botão ao passar o mouse */
+}
 
 /* Rodapé */
 .footer {
