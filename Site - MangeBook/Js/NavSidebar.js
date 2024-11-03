@@ -8,6 +8,7 @@ function toggleSidebar() {
   }
 }
 
+// Função para alternar a visibilidade do menu Dropdown da side bar
 function toggleDropdown() {
   const dropdownMenu = document.getElementById("dropdown-menu");
   const setaIcon = document.getElementById("seta-icon");
