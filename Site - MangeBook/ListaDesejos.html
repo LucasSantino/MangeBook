@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MangeBook - Biblioteca</title>
   <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
+  <link rel="stylesheet" href="/Site - MangeBook/css/MeusLivros.css">
   <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
+  <script defer src="/Site - MangeBook/Js/ListaDesejos.js"></script>
 </head>
 <body>
   <div class="container">
@@ -47,3 +49,108 @@
           <li><a href="sobre.html">Sobre</a></li>
         </ul>
     </div>
+    <main>
+        <div class="welcome-container">
+            <h2 class="welcome-title">Livros Desejos</h2>
+            <p>Seja Bem-vindo à sua Biblioteca, explore todos os livros desejados por você em um só lugar.</p>
+      <!-- Barra de Pesquisa 2-->
+      <div class="search-container2">
+        <input type="text" class="search-bar2" placeholder="Pesquisar em Lista de Desejos...">
+        <button class="search-icon2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+      <div class="livros-container">
+        <div class="tabela-container">
+          <!-- Tabela de Livros -->
+          <table class="livros-tabela">
+            <thead>
+              <tr>
+                <th>Thumbnail</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Ano</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><img src="/Site - MangeBook/imagens/Harry Potter 1.webp" alt="Capa do Livro" class="thumbnail"></td>
+                <td>Harry Potter e a Pedra Filosofal</td>
+                <td>JK Roling</td>
+                <td>2007</td>
+                <td>
+                    <button class="btn-remover">Remover</button>
+                    <button class="btn-avaliar">Avaliar</button>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="/Site - MangeBook/imagens/Harry Potter 2.webp" alt="Capa do Livro" class="thumbnail"></td>
+                <td>Harry Potter e a Camara Secreta</td>
+                <td>JK Rowling</td>
+                <td>1949</td>
+                <td>
+                    <button class="btn-remover">Remover</button>
+                    <button class="btn-avaliar">Avaliar</button>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="/Site - MangeBook/imagens/Harry Potter3.webp" alt="Capa do Livro" class="thumbnail"></td>
+                <td>Harry Potter e Prisioneiro de Azcaban</td>
+                <td>JK Rowling</td>
+                <td>1899</td>
+                <td>
+                    <button class="btn-remover">Remover</button>
+                    <button class="btn-avaliar">Avaliar</button>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="/Site - MangeBook/imagens/PercyJacksom3.jpg" alt="Capa do Livro" class="thumbnail"></td>
+                <td>Percy Jacksom e MAldição do Titã</td>
+                <td>Rick Riordan</td>
+                <td>2005</td>
+                <td>
+                    <button class="btn-remover">Remover</button>
+                    <button class="btn-avaliar">Avaliar</button>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="/Site - MangeBook/imagens/PercyJacksom4.jpg" alt="Capa do Livro" class="thumbnail"></td>
+                <td>Percy Jacksom e a Batalha do Labirinto</td>
+                <td>Paulo Coelho</td>
+                <td>1988</td>
+                <td>
+                    <button class="btn-remover">Remover</button>
+                    <button class="btn-avaliar">Avaliar</button>
+                </td>
+              </tr>
+              <tr>
+                <td><img src="/Site - MangeBook/imagens/PercyJacksom5.jpg" alt="Capa do Livro" class="thumbnail"></td>
+                <td>Percy Jacksom e o Ultimo Olimpiano</td>
+                <td>Rick Riordan</td>
+                <td>1997</td>
+                <td>
+                  <button class="btn-remover">Remover</button>
+                  <button class="btn-avaliar">Avaliar</button>
+                </td>
+              </tr>
+              <!-- Adicione mais livros aqui, se desejar -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+      <p>&copy; 2024 MangeBook. Todos os direitos reservados.</p>
+      <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Serviço</a></p>
+      <p>Entre em contato: <a href="mailto:contato@mangebook.com">contato@mangebook.com</a></p>
+    </footer>
+  </div>
+</body>
+</html>
