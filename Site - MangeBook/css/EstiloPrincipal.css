@@ -91,6 +91,7 @@
 .sidebar ul li a:hover {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 5px;
+    margin-right: 8px;
 }
 
 .close-btn {
@@ -103,6 +104,40 @@
     font-size: 24px;
     cursor: pointer;
 }
+
+/* Dropdown dentro da sidebar */
+.dropdown-menu {
+    display: block; /* Oculto por padrão */
+    list-style-type: none;
+    padding-left: 20px; /* Espaçamento para alinhamento */
+}
+
+.dropdown-menu li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 0;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Estilos para o ícone da seta */
+.seta-icone {
+    width: 16px; /* Ajuste conforme necessário */
+    transition: transform 0.3s ease; /* Transição suave para a rotação */
+    margin-left: 8px; /* Espaçamento entre o texto e o ícone */
+    filter: invert(1); /* Deixa a imagem branca */
+}
+
+.rotacionado {
+    transform: rotate(180deg); /* Rotação da seta quando o dropdown é visível */
+}
+
 
 /* Conteúdo principal */
 main {
@@ -137,7 +172,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 40px 50px; /* Espaçamento horizontal de 40px e vertical de 50px */
+    gap: 50px 50px; /* Espaçamento horizontal de 40px e vertical de 50px */
     max-width: 1000px; /* Largura máxima para comportar 5 livros com mais espaço */
     margin: 0 auto;
 }
@@ -147,8 +182,8 @@ main {
     background-color: #f0f0f0;
     padding: 15px;
     border-radius: 5px;
-    width: 140px; /* Largura fixa */
-    height: 220px; /* Altura fixa */
+    width: 180px; /* Largura fixa */
+    height: 300px; /* Altura fixa */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
@@ -162,7 +197,7 @@ main {
 /* Imagem do livro */
 .book-image {
     width: 100%;
-    height: 150px;
+    height: 200px;
     object-fit: cover;
     border-radius: 5px;
 }
