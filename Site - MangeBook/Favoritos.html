@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MangeBook - Biblioteca</title>
+  <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
+  <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
+</head>
+<body>
+  <div class="container">
+    <!-- Navbar -->
+    <header class="navbar">
+      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+      <h1 class="logo">
+        <a href="index.html" style="color: white; text-decoration: none;">MangeBook</a>
+      </h1>
+
+      <!-- Barra de pesquisa com ícone SVG -->
+      <div class="search-container">
+        <input type="text" class="search-bar" placeholder="Pesquisar livros...">
+        <button class="search-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li>
+            <a href="#" onclick="toggleDropdown()">
+              <i class="fas fa-book"></i> Minha Biblioteca
+              <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon" class="seta-icone" alt="Seta para baixo">
+            </a>
+            <ul id="dropdown-menu" class="dropdown-menu" style="display: none;">
+              <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
+              <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
+              <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
+            </ul>
+          </li>
+          <li><a href="perfil.html">Perfil</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+        </ul>
+    </div>
