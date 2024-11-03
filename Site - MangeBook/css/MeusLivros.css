@@ -1,0 +1,163 @@
+/* Estilo do corpo */
+body {
+    background-color: #f0f0f0; /* Cor de fundo */
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+/* Estilo da navbar */
+.navbar {
+    background-color: #00334e;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Container principal */
+main {
+    width: 90%; /* Aumente a porcentagem conforme necessário */
+    max-width: 1200px; /* Limite a largura máxima */
+    margin: 20px auto; /* Centraliza o conteúdo e dá um espaçamento acima e abaixo */
+    padding: 20px; /* Espaçamento interno */
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Estilo do container de boas-vindas */
+.welcome-container {
+    background-color: #ffffff; /* Cor de fundo do container */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para o efeito de elevação */
+    padding: 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto dentro do container */
+    margin: 20px auto; /* Margem automática para centralizar */
+    width: 100%; /* Largura total do container */
+    max-width: 940px; /* Ajuste conforme necessário para se alinhar com a tabela */
+    }
+    
+
+/* Estilo para a barra de pesquisa 2*/
+.search-container2 {
+    display: flex; /* Usando Flexbox para alinhar itens */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin: 20px 0; /* Margem superior e inferior */
+    border-radius: 30%;
+}
+
+/* Estilo da barra de pesquisa 2*/
+.search-bar2 {
+    width: 300px; /* Largura fixa ou percentual */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ddd; /* Borda da barra de pesquisa */
+    border-radius: 10px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+/* Estilo do botão de pesquisa 2*/
+.search-icon2 {
+    background-color: #00334e; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    margin-left: 10px; /* Margem à esquerda do botão */
+}
+
+.search-icon:hover2 {
+    background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+}
+
+.tabela-container {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin: 20px auto; /* Adiciona margem superior e inferior */
+    max-width: 80%; /* Define a largura máxima do container */
+}
+
+.livros-tabela {
+    width: 100%; /* Faz a tabela ocupar toda a largura do container */
+    border-collapse: collapse; /* Para que as bordas das células se fundam */
+    background-color: white; /* Cor de fundo da tabela */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra da tabela */
+}
+
+.livros-tabela th, .livros-tabela td {
+    padding: 12px; /* Espaçamento interno das células */
+    text-align: center; /* Alinhamento do texto centralizado */
+    border: 1px solid #ddd; /* Borda das células */
+    width: 20%; /* Define a mesma largura para todas as células (20% para 5 colunas) */
+}
+
+.livros-tabela th {
+    background-color: #00334e; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+    font-weight: bold; /* Negrito */
+}
+
+/* Efeito de hover nas linhas da tabela */
+.livros-tabela tr:hover {
+    background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
+}
+
+.thumbnail {
+    width: 100px;  /* Ajuste para o tamanho desejado */
+    height: auto;  /* Mantém a proporção da imagem */
+    max-height: 150px; /* Limita a altura máxima, ajuste conforme necessário */
+    display: block; /* Para centralizar as imagens dentro das células */
+    margin: 0 auto; /* Margem automática para centralização */
+}
+
+.btn-favoritar, .btn-remover, .btn-avaliar {
+    padding: 6px 12px;
+    margin: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Efeito de transição ao passar o mouse */
+    width: 100px; /* Largura fixa para todos os botões */
+}
+
+.btn-favoritar {
+    background-color: #00334e; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-favoritar:hover {
+    background-color: #0056b3; /* Tom mais escuro ao passar o mouse */
+}
+
+.btn-remover {
+    background-color: #00334e; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-remover:hover {
+    background-color: #0056b3; /* Tom mais escuro ao passar o mouse */
+}
+
+.btn-avaliar {
+    background-color: #00334e; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.btn-avaliar:hover {
+    background-color: #0056b3; /* Tom mais escuro ao passar o mouse */
+}
+
+/* Rodapé */
+.footer {
+    background-color: #00334e; /* Cor de fundo do rodapé */
+    color: white; /* Cor do texto do rodapé */
+    text-align: center; /* Centraliza o texto do rodapé */
+    padding: 20px; /* Espaçamento interno do rodapé */
+    position: relative; /* Posição relativa para o rodapé */
+    bottom: 0; /* Posiciona o rodapé no fundo da página */
+    width: 100%; /* Largura total do rodapé */
+}
