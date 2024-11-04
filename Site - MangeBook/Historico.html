@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MangeBook - Biblioteca</title>
   <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
+  <link rel="stylesheet" href="/Site - MangeBook/css/Historico.css">
+  <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
+</head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MangeBook - Biblioteca</title>
+  <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
+  <link rel="stylesheet" href="/Site - MangeBook/css/Historico.css">
   <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
 </head>
 <body>
@@ -57,3 +68,163 @@
           <li><a href="sobre.html">Sobre</a></li>
         </ul>
       </div>
+
+      <main>
+        <h2 class="welcome-title">Histórico</h2>
+        <p>Abaixo estão os livros que você reservou, devolveu e que estão em atraso.</p>
+
+        <div class="tabela-container">
+            <h3>Livros Reservados</h3>
+            <table class="livros-tabela">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Data de Reserva</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Harry Potter e a Pedra Filosofal</td>
+                        <td>JK Rowling</td>
+                        <td>01/10/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>Percy Jackson e a Maldição do Titã</td>
+                        <td>Rick Riordan</td>
+                        <td>15/10/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>O Senhor dos Anéis: A Sociedade do Anel</td>
+                        <td>J.R.R. Tolkien</td>
+                        <td>20/10/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>As Crônicas de Nárnia</td>
+                        <td>C.S. Lewis</td>
+                        <td>22/10/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>1984</td>
+                        <td>George Orwell</td>
+                        <td>25/10/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>Dom Quixote</td>
+                        <td>Miguel de Cervantes</td>
+                        <td>27/10/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>O Apanhador no Campo de Centeio</td>
+                        <td>J.D. Salinger</td>
+                        <td>30/10/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tabela-container">
+            <h3>Livros Devolvidos</h3>
+            <table class="livros-tabela">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Data de Devolução</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Harry Potter e a Câmara Secreta</td>
+                        <td>JK Rowling</td>
+                        <td>25/10/2024</td>
+                    </tr>
+                    <tr>
+                        <td>Percy Jackson e a Batalha do Labirinto</td>
+                        <td>Rick Riordan</td>
+                        <td>30/10/2024</td>
+                    </tr>
+                    <tr>
+                        <td>O Hobbit</td>
+                        <td>J.R.R. Tolkien</td>
+                        <td>01/11/2024</td>
+                    </tr>
+                    <tr>
+                        <td>Dom Casmurro</td>
+                        <td>Machado de Assis</td>
+                        <td>03/11/2024</td>
+                    </tr>
+                    <tr>
+                        <td>A Revolução dos Bichos</td>
+                        <td>George Orwell</td>
+                        <td>05/11/2024</td>
+                    </tr>
+                    <tr>
+                        <td>O Morro dos Ventos Uivantes</td>
+                        <td>Emily Brontë</td>
+                        <td>08/11/2024</td>
+                    </tr>
+                    <tr>
+                        <td>Moby Dick</td>
+                        <td>Herman Melville</td>
+                        <td>10/11/2024</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tabela-container">
+            <h3>Livros em Atraso</h3>
+            <table class="livros-tabela">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Data de Empréstimo</th>
+                        <th>Data de Devolução Prevista</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>O Código Da Vinci</td>
+                        <td>Dan Brown</td>
+                        <td>10/10/2024</td>
+                        <td>20/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>Os Miseráveis</td>
+                        <td>Victor Hugo</td>
+                        <td>15/10/2024</td>
+                        <td>25/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>Crime e Castigo</td>
+                        <td>Fyodor Dostoevsky</td>
+                        <td>18/10/2024</td>
+                        <td>28/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </main>
+    <!-- Rodapé -->
+    <footer class="footer">
+        <p>&copy; 2024 MangeBook. Todos os direitos reservados.</p>
+        <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Serviço</a></p>
+        <p>Entre em contato: <a href="mailto:contato@mangebook.com">contato@mangebook.com</a></p>
+    </footer>
+</div>
+</body>
+</html>

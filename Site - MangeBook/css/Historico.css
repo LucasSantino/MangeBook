@@ -1,0 +1,52 @@
+/* Estilos para a página de Histórico */
+main {
+    padding: 20px;
+}
+
+.welcome-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00334e;
+}
+
+.tabela-container {
+    display: flex;
+    flex-direction: column; /* Muda para coluna para que os títulos e tabelas fiquem empilhados */
+    align-items: center; /* Centraliza horizontalmente */
+    padding: 20px;
+}
+
+.livros-tabela {
+    width: 100%;
+    max-width: 800px; /* Define uma largura máxima para a tabela */
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.livros-tabela thead th {
+    background-color: #00334e;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center; /* Centraliza apenas os cabeçalhos */
+    font-weight: bold;
+}
+
+.livros-tabela tbody td {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center; /* Centraliza o conteúdo das células */
+}
+
+.livros-tabela tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Rodapé */
+.footer {
+    background-color: #00334e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
