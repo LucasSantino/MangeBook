@@ -1,0 +1,104 @@
+/* Estilos gerais do contêiner principal */
+.main-content {
+    display: flex;
+    flex-direction: column; /* Alinha os itens na coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    padding: 20px;
+    margin: 100px auto; /* Espaçamento automático */
+    max-width: 1200px; /* Largura máxima do contêiner */
+    background-color: #f9f9f9; /* Cor de fundo */
+    border-radius: 12px; /* Bordas arredondadas */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra */
+}
+
+/* Título */
+h2 {
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    text-align: center; /* Centraliza o texto do título */
+    font-size: 24px; /* Tamanho da fonte */
+    color: #00334e; /* Cor do título */
+}
+
+/* Formulário de cadastro de usuários */
+.user-form {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff; /* Fundo branco para o formulário */
+    border-radius: 24px; /* Bordas arredondadas */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transições para hover */
+}
+
+/* Efeito de hover no formulário */
+.user-form:hover {
+    transform: translateY(-4px); /* Leve elevação */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Sombra mais intensa */
+}
+
+/* Estilo dos grupos de formulário */
+.form-group {
+    display: flex;
+    flex-direction: column; /* Mudando para coluna para melhor visualização */
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+}
+
+/* Estilo dos rótulos */
+.form-group label {
+    font-weight: bold; /* Negrito para rótulos */
+    padding-bottom: 5px; /* Espaçamento abaixo do rótulo */
+    color: #00334e; /* Cor dos rótulos */
+}
+
+/* Estilo dos inputs e selects */
+.form-group input,
+.form-group select {
+    padding: 10px; /* Aumenta o espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    border: 1px solid #ccc; /* Borda */
+    border-radius: 12px; /* Bordas arredondadas */
+    transition: border-color 0.3s; /* Transição suave */
+}
+
+/* Estilo específico para o input de arquivo */
+.thumbnail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os itens à esquerda */
+}
+
+/* Estilo da imagem pré-visualizada */
+.thumbnail-preview {
+    margin-top: 10px; /* Espaçamento acima da imagem */
+    max-width: 200px; /* Largura máxima da imagem */
+    max-height: 200px; /* Altura máxima da imagem */
+    border: 1px solid #ccc; /* Borda para a imagem */
+    border-radius: 4px; /* Bordas arredondadas */
+}
+
+/* Estilo ao focar nos inputs e selects */
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #00334e; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+/* Botão de envio */
+button[type="submit"] {
+    padding: 12px 20px; /* Padding do botão */
+    background-color: #00334e; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Remove bordas */
+    border-radius: 12px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de ponteiro */
+    margin-top: 20px; /* Margem acima do botão */
+    display: block; /* Exibe como bloco */
+    width: 100%; /* Largura total */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049; /* Cor ao passar o mouse */
+}

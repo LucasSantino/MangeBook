@@ -40,11 +40,12 @@ main {
 }
 
 .foto-perfil {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+    width: 150px; /* Largura da imagem */
+    height: 150px; /* Altura da imagem */
+    border-radius: 50%; /* Bordas arredondadas para que fique redonda */
     margin-bottom: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para a imagem */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
 }
 
 .perfil-container button {
