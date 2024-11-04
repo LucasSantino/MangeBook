@@ -1,0 +1,105 @@
+/* Reset de estilo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos do container principal */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 20px auto; /* Você pode ajustar esse valor */
+    width: 95%; /* Diminua para 95% ou outro valor conforme necessário */
+    max-width: 1200px;
+}
+
+.perfil-wrapper {
+    display: flex;
+    justify-content: space-between; /* Para espaçar os containers de perfil e informações */
+    align-items: flex-start; /* Para alinhar os containers no topo */
+    margin-top: 150px; /* Aumentando a distância acima do container pai */
+    margin-bottom: 150px; /* Espaçamento abaixo do container pai, se desejado */
+    background-color: #f8f9fa; /* Cor de fundo mais escura */
+    border-radius: 15px; /* Bordas mais arredondadas */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+    min-height: 400px; /* Aumentando a altura mínima do container */
+    padding: 60px; /* Adicione preenchimento, se necessário */
+    
+}
+
+
+/* Estilo do container da imagem de perfil */
+.perfil-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px; /* Espaçamento à direita do container de perfil */
+    margin-top: 10px; /* Adicionando espaço entre o perfil e informações */
+}
+
+.foto-perfil {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.perfil-container button {
+    width: 150px;  /* Defina a largura desejada */
+    height: 40px;  /* Defina a altura desejada */
+    margin: 5px 0; /* Espaçamento vertical entre os botões */
+    padding: 0;     /* Remova o padding para manter o tamanho fixo */
+    background-color: #00334e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center; /* Alinha o texto ao centro */
+}
+
+.perfil-container button:hover {
+    background-color: #0052a3;
+}
+
+/* Estilo do container das informações do usuário */
+.informacoes-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px; /* Espaçamento à esquerda do container de informações */
+    margin-top: 10px; /* Adicionando espaço entre o perfil e informações */
+    margin-bottom: 10px;
+}
+
+
+
+.informacoes-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.informacoes-tabela td {
+    padding: 15px;
+    font-size: 1rem;
+    color: #333;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.informacoes-tabela td:first-child {
+    font-weight: bold;
+    color: #00334e;
+    text-align: left;
+    width: 35%;
+}
+
+.informacoes-tabela td:last-child {
+    text-align: left;
+    color: #666;
+    width: 65%;
+}
