@@ -1,0 +1,148 @@
+/* Reset de estilo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+/* Container principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #00334e;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.logo {
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Barra de pesquisa */
+.search-container {
+    position: relative;
+    width: 250px;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 8px 40px 8px 10px;
+    border-radius: 5px;
+    border: none;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #00334e;
+    color: white;
+    padding-top: 60px;
+    transition: 0.3s;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar ul li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-right: 8px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Dropdown dentro da sidebar */
+.dropdown-menu {
+    display: block; /* Oculto por padrão */
+    list-style-type: none;
+    padding-left: 20px; /* Espaçamento para alinhamento */
+}
+
+.dropdown-menu li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 0;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Estilos para o ícone da seta */
+.seta-icone {
+    width: 16px; /* Ajuste conforme necessário */
+    transition: transform 0.3s ease; /* Transição suave para a rotação */
+    margin-left: 8px; /* Espaçamento entre o texto e o ícone */
+    filter: invert(1); /* Deixa a imagem branca */
+}
+
+.rotacionado {
+    transform: rotate(180deg); /* Rotação da seta quando o dropdown é visível */
+}
+
+/* Rodapé */
+.footer {
+    background-color: #00334e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
