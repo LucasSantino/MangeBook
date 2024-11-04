@@ -24,5 +24,18 @@ function toggleDropdown() {
   }
 }
 
+// Função para alternar a visibilidade do menu Dropdown do perfil
+function toggleProfileDropdown() {
+  const dropdownMenu = document.getElementById("profile-dropdown-menu");
+  const profileSetaIcon = document.getElementById("profile-seta-icon");
 
-  
+  dropdownMenu.classList.toggle("visible"); // Alterna a visibilidade do dropdown
+  profileSetaIcon.classList.toggle("rotacionado"); // Alterna a rotação da seta
+
+  // Altera a propriedade de display com base na visibilidade
+  if (dropdownMenu.classList.contains("visible")) {
+    dropdownMenu.style.display = "block"; // Mostra o dropdown
+  } else {
+    dropdownMenu.style.display = "none"; // Oculta o dropdown
+  }
+}

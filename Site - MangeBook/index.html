@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -6,6 +6,12 @@
   <title>MangeBook - Biblioteca</title>
   <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
   <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
+  <style>
+    /* Adicione esta classe ao seu CSS */
+    .visible {
+      display: block !important; /* Garante que o dropdown seja exibido */
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -29,25 +35,34 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()">×</button>
-        <ul>
-          <li><a href="index.html">Início</a></li>
-          <li>
-            <a href="#" onclick="toggleDropdown()">
-              <i class="fas fa-book"></i> Minha Biblioteca
-              <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon" class="seta-icone" alt="Seta para baixo">
-            </a>
-            <ul id="dropdown-menu" class="dropdown-menu" style="display: none;">
-              <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
-              <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
-              <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
-            </ul>
-          </li>
-          <li><a href="/Site - MangeBook/PerfilUsuario.html">Perfil</a></li>
-          <li><a href="sobre.html">Sobre</a></li>
-        </ul>
+      <button class="close-btn" onclick="toggleSidebar()">×</button>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li>
+          <a href="#" onclick="toggleDropdown()">
+            <i class="fas fa-book"></i> Minha Biblioteca
+            <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon" class="seta-icone" alt="Seta para baixo">
+          </a>
+          <ul id="dropdown-menu" class="dropdown-menu" style="display: none;">
+            <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
+            <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
+            <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="#" onclick="toggleProfileDropdown()">
+            Perfil
+            <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="profile-seta-icon" class="seta-icone" alt="Seta para baixo">
+          </a>
+          <ul id="profile-dropdown-menu" class="dropdown-menu" style="display: none;">
+            <li><a href="/Site - MangeBook/PerfilUsuario.html">Informações de Perfil</a></li>
+            <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
+            <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
+          </ul>
+        </li>
+        <li><a href="sobre.html">Sobre</a></li>
+      </ul>
     </div>
-    
 
     <!-- Conteúdo principal -->
     <main>
