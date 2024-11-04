@@ -1,0 +1,201 @@
+/* Estilo do corpo */
+body {
+    background-color: #f0f0f0; /* Cor de fundo */
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+/* Estilo da navbar */
+.navbar {
+    background-color: #00334e;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Container principal */
+main {
+    width: 100%; /* Aumente a porcentagem conforme necessário */
+    max-width: 1200px; /* Limite a largura máxima */
+    margin: 50px auto; /* Aumenta a margem superior */
+    padding: 20px; /* Espaçamento interno */
+}
+
+/* Estilo do container de boas-vindas */
+.welcome-container {
+    background-color: #ffffff; /* Cor de fundo do container */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para o efeito de elevação */
+    padding: 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto dentro do container */
+    margin: 20px auto; /* Margem automática para centralizar */
+    width: 100%; /* Largura total do container */
+    max-width: 940px; /* Ajuste conforme necessário para se alinhar com a tabela */
+}
+
+/* Estilo para a barra de pesquisa 2 */
+.search-container2 {
+    display: flex; /* Usando Flexbox para alinhar itens */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin: 20px 0; /* Margem superior e inferior */
+}
+
+/* Estilo da barra de pesquisa 2 */
+.search-bar2 {
+    width: 300px; /* Largura fixa ou percentual */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ddd; /* Borda da barra de pesquisa */
+    border-radius: 10px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+/* Estilo do botão de pesquisa 2 */
+.search-icon2 {
+    background-color: #00334e; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    margin-left: 10px; /* Margem à esquerda do botão */
+}
+
+/* Efeito de hover no botão de pesquisa 2 */
+.search-icon2:hover {
+    background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+}
+
+/* Estilo do container de livros */
+.livros-container {
+    margin-top: 20px; /* Espaçamento superior */
+    overflow-x: auto; /* Permite rolagem horizontal se necessário */
+}
+
+/* Tabela de Livros */
+.livros-tabela {
+    width: 100%; /* Faz a tabela ocupar toda a largura do container */
+    max-width: 940px; /* Igual à largura máxima do welcome-container */
+    border-collapse: collapse; /* Para que as bordas das células se fundam */
+    background-color: white; /* Cor de fundo da tabela */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra da tabela */
+    margin: 20px auto; /* Centraliza a tabela */
+}
+
+.livros-tabela th, .livros-tabela td {
+    padding: 12px; /* Espaçamento interno das células */
+    text-align: center; /* Alinhamento do texto centralizado */
+    border: 1px solid #ddd; /* Borda das células */
+    height: 80px; /* Define uma altura fixa para as células */
+}
+
+.livros-tabela th {
+    background-color: #00334e; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+    font-weight: bold; /* Negrito */
+}
+
+/* Efeito de hover nas linhas da tabela */
+.livros-tabela tr:hover {
+    background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilo dos botões */
+.btn-container {
+    display: flex; /* Ativa o Flexbox */
+    flex-direction: column; /* Coloca os botões em coluna */
+    gap: 10px; /* Espaçamento entre os botões */
+    align-items: center; /* Centraliza os botões */
+}
+
+.btn-editar, .btn-remover {
+    flex: 1; /* Faz os botões ocuparem a mesma largura */
+    padding: 10px; /* Altura do botão */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    transition: background-color 0.3s; /* Efeito de transição ao passar o mouse */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    min-width: 100px; /* Largura mínima para os botões */
+}
+
+/* Estilos específicos dos botões */
+.btn-editar {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: #218838; /* Verde mais escuro ao passar o mouse */
+}
+
+.btn-remover {
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+}
+
+.btn-remover:hover {
+    background-color: #c82333; /* Vermelho mais escuro ao passar o mouse */
+}
+
+/* Estilo da navegação de páginas */
+.pagination {
+    display: flex; /* Flexbox para layout */
+    justify-content: center; /* Centraliza os botões */
+    align-items: center; /* Alinha verticalmente */
+    margin-top: 20px; /* Espaçamento superior */
+}
+
+.btn-navegacao {
+    padding: 10px 20px; /* Espaçamento interno dos botões */
+    margin: 0 5px; /* Margem entre os botões */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    background-color: #00334e; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    transition: background-color 0.3s; /* Efeito de transição */
+}
+
+.btn-navegacao:hover {
+    background-color: #0056b3; /* Tom mais escuro ao passar o mouse */
+}
+
+/* Estilo do texto da página */
+.pagination span {
+    margin: 0 15px; /* Margem lateral para o texto */
+    color: #333; /* Cor do texto */
+}
+
+/* Rodapé */
+.footer {
+    background-color: #00334e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    margin: 0;
+}
+
+/* Estilo Responsivo */
+@media (max-width: 768px) {
+    .livros-tabela th, .livros-tabela td {
+        padding: 8px; /* Reduz o padding em telas menores */
+        height: auto; /* Remove a altura fixa */
+        font-size: 14px; /* Tamanho da fonte menor */
+    }
+
+    .btn-container {
+        flex-direction: row; /* Coloca os botões em linha */
+        justify-content: space-around; /* Espaça os botões igualmente */
+        width: 100%; /* Faz os botões ocuparem a largura total */
+    }
+
+    .search-bar2 {
+        width: 100%; /* Faz a barra de pesquisa ocupar toda a largura */
+        max-width: 300px; /* Largura máxima da barra de pesquisa */
+    }
+
+    .welcome-container {
+        padding: 10px; /* Reduz o padding do container em telas menores */
+    }
+}
