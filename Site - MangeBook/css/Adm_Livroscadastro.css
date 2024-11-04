@@ -1,0 +1,161 @@
+/* Estilos gerais do contêiner principal */
+.main-content {
+    display: flex;
+    flex-direction: column; /* Alinha os itens na coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    padding: 20px;
+    margin: 190px auto; /* Espaçamento automático */
+    max-width: 1200px; /* Largura máxima do contêiner */
+    background-color: #f9f9f9; /* Cor de fundo */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+h2 {
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    text-align: center; /* Centraliza o texto do título */
+}
+
+/* Formulário de cadastro de livros */
+.book-form {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo dos grupos de formulário */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Espaçamento entre os campos */
+}
+
+/* Container para a miniatura */
+.thumbnail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os itens à esquerda */
+    margin-right: auto; /* Espaçamento à direita */
+}
+
+.thumbnail-container input[type="file"] {
+    width: 100%; /* Largura total para o input */
+    padding: 10px; /* Um pouco de padding */
+    border: 1px solid #ccc; /* Borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    margin-top: 10px; /* Espaçamento acima do input */
+}
+
+.thumbnail-preview {
+    margin-top: 10px; /* Espaçamento acima da imagem */
+    max-width: 200px; /* Largura máxima da imagem */
+    max-height: 200px; /* Altura máxima da imagem */
+    border: 1px solid #ccc; /* Borda para a imagem */
+    border-radius: 4px; /* Bordas arredondadas */
+}
+
+.form-group label {
+    font-weight: bold; /* Negrito para rótulos */
+    padding-right: 15px; /* Espaçamento à direita do rótulo */
+    width: 25%; /* Largura do rótulo */
+    text-align: right; /* Alinha o texto à direita */
+}
+
+.form-group input,
+.form-group textarea {
+    flex: 1; /* Permite que os campos se expandam */
+    padding: 8px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    border: 1px solid #ccc; /* Borda */
+    border-radius: 4px; /* Bordas arredondadas */
+}
+
+/* Estilo do campo de descrição */
+.form-group textarea {
+    height: 100px; /* Altura fixa para o campo de descrição */
+    overflow-y: auto; /* Adiciona scroll vertical se o texto exceder */
+}
+
+/* Botão de envio */
+button[type="submit"] {
+    padding: 12px 20px; /* Padding do botão */
+    background-color: #00334e; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Remove bordas */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de ponteiro */
+    margin-top: 20px; /* Margem acima do botão */
+    display: block; /* Exibe como bloco */
+    width: 100%; /* Largura total */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049; /* Cor ao passar o mouse */
+}
+
+/* Container de detalhes do livro */
+.detalhes-container {
+    display: flex; /* Alinha os itens em linha */
+    align-items: stretch; /* Estica para a mesma altura */
+    gap: 20px; /* Espaço entre imagem e tabela */
+    background-color: #fff; /* Fundo branco */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    padding: 20px; /* Padding interno */
+    margin-top: 20px; /* Espaçamento acima da pré-visualização */
+}
+
+/* Miniatura do livro */
+.book-thumbnail {
+    width: 300px; /* Largura fixa para a imagem */
+    max-width: 100%; /* Permite que a imagem seja responsiva */
+    max-height: 400px; /* Limita a altura para não exceder o container */
+    height: auto; /* Mantém a proporção */
+    object-fit: contain; /* Ajusta a imagem para caber no contêiner sem cortar */
+    border-radius: 8px; /* Bordas arredondadas */
+    flex-shrink: 0; /* Evita que a imagem encolha */
+}
+
+
+/* Container dos detalhes */
+.detalhes-livro {
+    flex: 1; /* Permite que o container ocupe o espaço restante */
+    display: flex;
+    flex-direction: column; /* Alinha os itens na coluna */
+    justify-content: space-between; /* Espaça os elementos verticalmente */
+}
+
+/* Tabela de detalhes */
+table {
+    width: 100%; /* Ocupa toda a largura disponível */
+    height: 100%; /* Mantém a altura total */
+    border-collapse: separate; /* Permite bordas arredondadas */
+    border-spacing: 0; /* Remove espaços entre células */
+    border-radius: 8px; /* Borda arredondada na tabela */
+    overflow: hidden; /* Garante que o conteúdo respeite as bordas */
+}
+
+th, td {
+    padding: 10px; /* Espaçamento interno */
+    text-align: left; /* Alinhamento à esquerda */
+    border-radius: 8px; /* Bordas arredondadas nas células */
+    border: none; /* Remove as bordas */
+}
+
+th {
+    background-color: #f0f0f0; /* Cor de fundo dos cabeçalhos */
+    font-weight: bold; /* Negrito para os cabeçalhos */
+}
+
+/* Estilo específico para garantir que o texto tenha tamanho fixo */
+textarea::placeholder {
+    color: #aaa; /* Cor do texto placeholder */
+}
+
+.text-length-indicator {
+    font-size: 12px; /* Tamanho do texto do indicador */
+    color: #666; /* Cor do texto do indicador */
+    margin-top: 5px; /* Espaçamento acima do indicador */
+}
