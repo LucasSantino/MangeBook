@@ -1,0 +1,31 @@
+/* Estilos para a página de Notificações */
+main {
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center; /* Centraliza o título das notificações */
+    margin-bottom: 20px;
+    color: #00334e; /* Cor do texto do título */
+  }
+  
+  .notificacao-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaçamento entre as notificações */
+  }
+  
+  .notificacao {
+    background-color: #f0f0f0; /* Cor de fundo das notificações */
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .data-notificacao {
+    display: block;
+    margin-top: 10px; /* Espaçamento acima da data */
+    font-size: 0.9rem; /* Tamanho da fonte da data */
+    color: #666; /* Cor do texto da data */
+  }
+  

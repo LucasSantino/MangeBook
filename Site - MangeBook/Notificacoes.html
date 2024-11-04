@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MangeBook - Biblioteca</title>
+  <title>MangeBook - Notificações</title>
   <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
-  <link rel="stylesheet" href="/Site - MangeBook/css/PerfilUsuario.css">
+  <link rel="stylesheet" href="/Site - MangeBook/css/Notificacoes.css"> 
   <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
-  <body>
+</head>
+<body>
     <div class="container">
       <!-- Navbar -->
       <header class="navbar">
@@ -58,49 +59,20 @@
         </ul>
       </div>
 
+    <!-- Conteúdo principal -->
     <main>
-      <!-- Container das informações do usuário -->
-        <!-- Container da imagem de perfil -->
-        <div class="perfil-wrapper">
-            <div class="perfil-container">
-                <img src="/Site - MangeBook/imagens/perfil.png" alt="Imagem de Perfil" class="foto-perfil">
-                <button>Alterar Imagem</button>
-                <button>Editar Perfil</button>
-                <button>Alterar Senha</button>
-            </div>
-        
-            <div class="informacoes-container">
-                <h2>Informações do Usuário</h2>
-                <table class="informacoes-tabela">
-                    <tr>
-                        <td>Nome Completo:</td>
-                        <td>Nome do Usuário</td>
-                    </tr>
-                    <tr>
-                        <td>Email:</td>
-                        <td>email@exemplo.com</td>
-                    </tr>
-                    <tr>
-                        <td>Data de Nascimento:</td>
-                        <td>01/01/2000</td>
-                    </tr>
-                    <tr>
-                        <td>CPF:</td>
-                        <td>123.456.789-00</td>
-                    </tr>
-                    <tr>
-                        <td>Endereço:</td>
-                        <td>Rua Exemplo, 123</td>
-                    </tr>
-                    <tr>
-                        <td>Senha:</td>
-                        <td>********</td>
-                    </tr>
-                </table>
-            </div>
+      <h2>Notificações</h2>
+      <div class="notificacao-container">
+        <div class="notificacao">
+          <p>Você recebeu um novo livro na sua lista de desejos!</p>
+          <span class="data-notificacao">Data: 01/11/2024</span>
         </div>
-        
-
+        <div class="notificacao">
+          <p>Seu livro "O Alquimista" foi reservado com sucesso!</p>
+          <span class="data-notificacao">Data: 02/11/2024</span>
+        </div>
+        <!-- Adicione mais notificações conforme necessário -->
+      </div>
     </main>
 
     <!-- Rodapé -->
@@ -110,6 +82,5 @@
       <p>Entre em contato: <a href="mailto:contato@mangebook.com">contato@mangebook.com</a></p>
     </footer>
   </div>
-
 </body>
 </html>
