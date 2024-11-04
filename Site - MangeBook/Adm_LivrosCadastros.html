@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangeBook - Administração</title>
+    <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
+    <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Navbar -->
+        <header class="navbar">
+          <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+          <h1 class="logo">
+            <a href="index.html" style="color: white; text-decoration: none;">MangeBook</a>
+          </h1>
+    
+          <!-- Barra de pesquisa com ícone SVG -->
+          <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Pesquisar livros...">
+            <button class="search-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
+            <button class="close-btn" onclick="toggleSidebar()">×</button>
+            <ul>
+                <li><a href="adminIndex.html">Início</a></li>
+                <li>
+                    <a href="#" onclick="toggleBooksDropdown()">
+                      <i class="fas fa-book"></i> Livros
+                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-books" class="seta-icone" alt="Seta para baixo">
+                    </a>
+                    <ul id="dropdown-menu-books" class="dropdown-menu" style="display: none;">
+                      <li><a href="gerenciarLivros.html">Cadastro de Livros</a></li>
+                      <li><a href="livrosCadastrados.html">Livros Cadastrados</a></li>
+                    </ul>
+                  </li>
+                  
+                  <li>
+                    <a href="#" onclick="toggleUsersDropdown()">
+                      <i class="fas fa-users"></i>Usuários
+                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-users" class="seta-icone" alt="Seta para baixo">
+                    </a>
+                    <ul id="dropdown-menu-users" class="dropdown-menu" style="display: none;">
+                      <li><a href="cadastroUsuarios.html">Cadastro de Usuários</a></li>
+                      <li><a href="usuariosCadastrados.html">Usuários Cadastrados</a></li>
+                    </ul>
+                  </li>
+                  
+                  <li>
+                    <a href="#" onclick="toggleStatisticsDropdown()">
+                      Estatísticas
+                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-statistics" class="seta-icone" alt="Seta para baixo">
+                    </a>
+                    <ul id="dropdown-menu-statistics" class="dropdown-menu" style="display: none;">
+                      <li><a href="dashboard.html">Dashboard</a></li>
+                      <li><a href="relatorios.html">Relatórios</a></li>
+                    </ul>
+                  </li>
+                <li><a href="configuracoes.html">Configurações</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Rodapé -->
+    <footer class="footer">
+      <p>&copy; 2024 MangeBook. Todos os direitos reservados.</p>
+      <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Serviço</a></p>
+      <p>Entre em contato: <a href="mailto:contato@mangebook.com">contato@mangebook.com</a></p>
+    </footer>
+  </div>
+</body>
+</html>
