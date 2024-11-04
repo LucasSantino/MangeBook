@@ -28,9 +28,8 @@ main {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para o efeito de elevação */
     padding: 20px; /* Espaçamento interno */
     text-align: center; /* Centraliza o texto dentro do container */
-    margin: 20px auto; /* Margem automática para centralizar */
-    width: 100%; /* Largura total do container */
-    max-width: 940px; /* Ajuste conforme necessário para se alinhar com a tabela */
+    margin: 40px auto; /* Margem automática para centralizar */
+    max-width: 940px; /* Largura máxima do container */
 }
 
 /* Estilo para a barra de pesquisa 2 */
@@ -44,10 +43,10 @@ main {
 /* Estilo da barra de pesquisa 2 */
 .search-bar2 {
     width: 300px; /* Largura fixa ou percentual */
-    padding: 10px; /* Espaçamento interno */
+    padding: 6px; /* Diminuído */
     border: 1px solid #ddd; /* Borda da barra de pesquisa */
     border-radius: 10px; /* Bordas arredondadas */
-    font-size: 16px; /* Tamanho da fonte */
+    font-size: 14px; /* Diminuído */
 }
 
 /* Estilo do botão de pesquisa 2 */
@@ -56,7 +55,7 @@ main {
     color: white; /* Cor do texto */
     border: none; /* Sem borda */
     border-radius: 4px; /* Bordas arredondadas */
-    padding: 10px; /* Espaçamento interno */
+    padding: 6px; /* Diminuído */
     cursor: pointer; /* Muda o cursor ao passar por cima */
     margin-left: 10px; /* Margem à esquerda do botão */
 }
@@ -75,21 +74,23 @@ main {
 /* Tabela de Livros */
 .livros-tabela {
     width: 100%; /* Faz a tabela ocupar toda a largura do container */
-    max-width: 940px; /* Igual à largura máxima do welcome-container */
+    max-width: 940px; /* Ajuste para a largura máxima do welcome-container */
     border-collapse: collapse; /* Para que as bordas das células se fundam */
     background-color: white; /* Cor de fundo da tabela */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra da tabela */
     margin: 20px auto; /* Centraliza a tabela */
+    margin-top: 5px; /* Reduzido para 5px */
 }
 
 .livros-tabela th, .livros-tabela td {
-    padding: 12px; /* Espaçamento interno das células */
+    padding: 8px; /* Diminuído para td */
     text-align: center; /* Alinhamento do texto centralizado */
     border: 1px solid #ddd; /* Borda das células */
-    height: 80px; /* Define uma altura fixa para as células */
+    font-size: 12px; /* Tamanho da fonte reduzido */
 }
 
 .livros-tabela th {
+    height: 40px; /* Altura aumentada para th */
     background-color: #00334e; /* Cor de fundo do cabeçalho */
     color: white; /* Cor do texto do cabeçalho */
     font-weight: bold; /* Negrito */
@@ -110,7 +111,7 @@ main {
 
 .btn-editar, .btn-remover {
     flex: 1; /* Faz os botões ocuparem a mesma largura */
-    padding: 10px; /* Altura do botão */
+    padding: 6px; /* Diminuído */
     cursor: pointer; /* Muda o cursor ao passar por cima */
     transition: background-color 0.3s; /* Efeito de transição ao passar o mouse */
     border: none; /* Sem borda */
@@ -179,19 +180,12 @@ main {
 /* Estilo Responsivo */
 @media (max-width: 768px) {
     .livros-tabela th, .livros-tabela td {
-        padding: 8px; /* Reduz o padding em telas menores */
-        height: auto; /* Remove a altura fixa */
-        font-size: 14px; /* Tamanho da fonte menor */
-    }
-
-    .btn-container {
-        flex-direction: row; /* Coloca os botões em linha */
-        justify-content: space-around; /* Espaça os botões igualmente */
-        width: 100%; /* Faz os botões ocuparem a largura total */
+        padding: 2px; /* Ajustado para menor padding em telas menores */
+        font-size: 10px; /* Diminuído em telas menores */
     }
 
     .search-bar2 {
-        width: 100%; /* Faz a barra de pesquisa ocupar toda a largura */
+        width: 100%;
         max-width: 300px; /* Largura máxima da barra de pesquisa */
     }
 
