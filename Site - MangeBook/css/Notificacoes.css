@@ -1,31 +1,92 @@
 /* Estilos para a página de Notificações */
 main {
     padding: 20px;
-  }
-  
-  h2 {
-    text-align: center; /* Centraliza o título das notificações */
+}
+
+.welcome-title {
+    text-align: center;
     margin-bottom: 20px;
-    color: #00334e; /* Cor do texto do título */
-  }
-  
-  .notificacao-container {
+    color: #00334e;
+}
+
+.notificacoes-container {
     display: flex;
-    flex-direction: column;
-    gap: 10px; /* Espaçamento entre as notificações */
-  }
-  
-  .notificacao {
-    background-color: #f0f0f0; /* Cor de fundo das notificações */
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .data-notificacao {
-    display: block;
-    margin-top: 10px; /* Espaçamento acima da data */
-    font-size: 0.9rem; /* Tamanho da fonte da data */
-    color: #666; /* Cor do texto da data */
-  }
-  
+    justify-content: center;
+    padding: 20px;
+}
+
+.tabela-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.notificacoes-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.notificacoes-tabela thead th {
+    background-color: #00334e;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center; /* Centraliza apenas os cabeçalhos */
+    font-weight: bold;
+}
+
+.notificacoes-tabela tbody td {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center; /* Centraliza o conteúdo das células na coluna de ações */
+}
+
+.notificacoes-tabela tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn-marcar-lida,
+.btn-excluir {
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px; /* Define a mesma largura para ambos os botões */
+    text-align: center;
+    display: inline-block; /* Garante que os botões fiquem centralizados */
+}
+
+.btn-marcar-lida {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-excluir {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-marcar-lida:hover {
+    background-color: #45a049;
+}
+
+.btn-excluir:hover {
+    background-color: #c0392b;
+}
+
+/* Estilo para notificações lidas */
+.lida {
+    background-color: #d3eedd; /* Fundo diferente para notificações lidas */
+    color: #666; /* Cor do texto de notificações lidas */
+}
+
+/* Rodapé */
+.footer {
+    background-color: #00334e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+}
