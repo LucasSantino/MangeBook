@@ -74,11 +74,19 @@
     height: 100%;
     background-color: #00334e;
     color: white;
-    padding-top: 60px;
+    padding-top: 120px; /* Ajuste para espaçar as opções mais para baixo */
     transition: 0.3s;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
+/* Remover pontos de lista */
+.sidebar ul {
+    list-style-type: none; /* Remove os pontos da lista */
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilos dos links da sidebar */
 .sidebar ul li a {
     color: #f0f0f0;
     text-decoration: none;
@@ -138,7 +146,6 @@
     transform: rotate(180deg); /* Rotação da seta quando o dropdown é visível */
 }
 
-
 /* Conteúdo principal */
 main {
     margin-top: 70px;
@@ -193,7 +200,6 @@ main {
     color: inherit; /* Herda a cor do texto do elemento pai */
 }
 
-
 /* Imagem do livro */
 .book-image {
     width: 100%;
@@ -243,6 +249,20 @@ main {
 
     .book-card {
         width: 45%;
+    }
+
+    /* Responsividade da sidebar */
+    .sidebar {
+        width: 200px; /* Diminui a largura da sidebar em telas menores */
+    }
+
+    .navbar {
+        flex-direction: column; /* Muda a navbar para uma coluna em dispositivos menores */
+        align-items: center;
+    }
+
+    .search-container {
+        width: 200px; /* Ajusta a largura da barra de pesquisa */
     }
 }
 
