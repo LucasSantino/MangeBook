@@ -74,7 +74,7 @@
     height: 100%;
     background-color: #00334e;
     color: white;
-    padding-top: 120px; /* Ajuste para espaçar as opções mais para baixo */
+    padding-top: 180px; /* Ajuste para espaçar as opções mais para baixo */
     transition: 0.3s;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
@@ -113,11 +113,22 @@
     cursor: pointer;
 }
 
+/* Adicionando espaçamento entre as opções da sidebar (exceto dropdown) */
+.sidebar ul li {
+    margin-bottom: 15px; /* Espaçamento entre os itens da lista */
+}
+
+/* Removendo o espaçamento para itens do dropdown */
+.sidebar .dropdown-menu li {
+    margin-bottom: 0; /* Sem espaçamento entre os itens do dropdown */
+}
+
 /* Dropdown dentro da sidebar */
 .dropdown-menu {
     display: block; /* Oculto por padrão */
     list-style-type: none;
     padding-left: 20px; /* Espaçamento para alinhamento */
+    background-color: #00577b; /* Cor de fundo padrão do dropdown */
 }
 
 .dropdown-menu li a {
@@ -138,13 +149,35 @@
 .seta-icone {
     width: 16px; /* Ajuste conforme necessário */
     transition: transform 0.3s ease; /* Transição suave para a rotação */
-    margin-left: 8px; /* Espaçamento entre o texto e o ícone */
+    margin-left: 40px; /* Espaçamento entre o texto e o ícone */
     filter: invert(1); /* Deixa a imagem branca */
 }
 
 .rotacionado {
     transform: rotate(180deg); /* Rotação da seta quando o dropdown é visível */
 }
+
+/* Estilo para o botão de sair (igual as opções da navbar) */
+.logout-btn {
+    color: white; /* Cor do texto (branco) */
+    text-decoration: none; /* Remove o sublinhado */
+    font-size: 18px; /* Tamanho da fonte */
+    padding: 10px; /* Espaçamento interno */
+    display: block;
+    background-color: #00334e; /* Cor de fundo igual ao da navbar */
+    border-radius: 5px; /* Bordas arredondadas */
+    transition: background-color 0.3s ease, transform 0.2s; /* Transições suaves */
+    margin-top: auto; /* Garante que o botão fique no final da lista */
+}
+
+/* Efeito hover para o botão de sair */
+.logout-btn:hover {
+    background-color: #00577b; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.05); /* Aumenta um pouco o tamanho do botão */
+    border-radius: 5px;
+}
+
+
 
 /* Conteúdo principal */
 main {
