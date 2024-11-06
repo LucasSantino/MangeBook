@@ -37,9 +37,11 @@
     cursor: pointer;
 }
 
+/* Logo */
 .logo {
     font-size: 24px;
     text-align: center;
+    margin-top: 0; /* Removido o margin-top exagerado */
 }
 
 /* Barra de pesquisa */
@@ -65,6 +67,21 @@
     cursor: pointer;
 }
 
+/* Estilo para a imagem no topo da sidebar */
+.sidebar-image {
+    display: flex; /* Usando flexbox para garantir centralização */
+    justify-content: center; /* Centraliza a imagem */
+    margin-bottom: 20px; /* Espaço abaixo da imagem */
+}
+
+.sidebar-img {
+    width: 100%; /* Ajusta a largura da imagem para ocupar toda a largura da sidebar */
+    max-width: 220px; /* Largura máxima para a imagem */
+    height: auto; /* Mantém a proporção da imagem */
+    border-radius: 10px; /* Bordas arredondadas para um acabamento suave */
+    margin-top: 5px; /* Espaço acima da imagem */
+}
+
 /* Sidebar */
 .sidebar {
     position: fixed;
@@ -74,7 +91,7 @@
     height: 100%;
     background-color: #00334e;
     color: white;
-    padding-top: 180px; /* Ajuste para espaçar as opções mais para baixo */
+    padding-top: 80px; /* Ajuste para espaçar as opções mais para baixo */
     transition: 0.3s;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
@@ -176,8 +193,6 @@
     transform: scale(1.05); /* Aumenta um pouco o tamanho do botão */
     border-radius: 5px;
 }
-
-
 
 /* Conteúdo principal */
 main {

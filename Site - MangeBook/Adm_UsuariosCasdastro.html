@@ -26,45 +26,40 @@
                 </button>
             </div>
         </header>
-
-        <!-- Sidebar -->
-        <div id="sidebar" class="sidebar">
-            <button class="close-btn" onclick="toggleSidebar()">×</button>
-            <ul>
-                <li><a href="/Site - MangeBook/index.html">Início</a></li>
-                <li>
-                    <a href="#" onclick="toggleBooksDropdown()">
-                      <i class="fas fa-book"></i> Livros
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-books" class="seta-icone" alt="Seta para baixo">
-                    </a>
-                    <ul id="dropdown-menu-books" class="dropdown-menu" style="display: none;">
-                        <li><a href="/Site - MangeBook/Adm_LivrosCadastros.html">Cadastro de Livros</a></li>
-                        <li><a href="/Site - MangeBook/Adm_LivrosLista.html">Livros Cadastrados</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" onclick="toggleUsersDropdown()">
-                      <i class="fas fa-users"></i> Usuários
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-users" class="seta-icone" alt="Seta para baixo">
-                    </a>
-                    <ul id="dropdown-menu-users" class="dropdown-menu" style="display: none;">
-                        <li><a href="/Site - MangeBook/Adm_UsuariosCasdastro.html">Cadastro de Usuários</a></li>
-                        <li><a href="/Site - MangeBook/Adm_UsuariosCadastrados.html">Usuários Cadastrados</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" onclick="toggleStatisticsDropdown()">
-                      Estatísticas
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-statistics" class="seta-icone" alt="Seta para baixo">
-                    </a>
-                    <ul id="dropdown-menu-statistics" class="dropdown-menu" style="display: none;">
-                        <li><a href="/Site - MangeBook/Adm_Dashboard.html">Dashboard</a></li>
-                        <li><a href="relatorios.html">Relatórios</a></li>
-                    </ul>
-                </li>
-                <li><a href="configuracoes.html">Configurações</a></li>
-                <li><a href="sobre.html">Sobre</a></li>
-           <!-- Botão de Sair -->
+         <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">×</button>
+        <!-- Imagem no topo da sidebar -->
+        <div class="sidebar-image">
+        <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
+        </div>
+        <ul>
+        <li><a href="index.html">Início</a></li>
+        <li>
+            <a href="#" onclick="toggleDropdown()">
+            <i class="fas fa-book"></i> Minha Biblioteca
+            <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon" class="seta-icone" alt="Seta para baixo">
+            </a>
+            <ul id="dropdown-menu" class="dropdown-menu" style="display: none;">
+            <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
+            <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
+            <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="toggleProfileDropdown()">
+            Perfil
+            <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="profile-seta-icon" class="seta-icone" alt="Seta para baixo">
+            </a>
+            <ul id="profile-dropdown-menu" class="dropdown-menu" style="display: none;">
+            <li><a href="/Site - MangeBook/PerfilUsuario.html">Informações de Perfil</a></li>
+            <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
+            <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
+            </ul>
+        </li>
+        <li><a href="sobre.html">Sobre</a></li>
+    
+        <!-- Botão de Sair -->
         <li><a href="/logout.html" class="logout-btn">Sair</a></li>
         </ul>
     </div>
