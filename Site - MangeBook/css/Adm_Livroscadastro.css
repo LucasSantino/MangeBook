@@ -18,10 +18,16 @@ h2 {
 
 /* Formulário de cadastro de livros */
 .book-form {
-    width: 100%;
+    width: 100%; /* O formulário vai ocupar 100% da largura disponível do contêiner pai */
     padding: 20px;
     display: flex;
     flex-direction: column;
+    margin: 0 auto; /* Centraliza o formulário */
+    background-color: #ffffff; /* Fundo branco */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    max-height: 900px; /* Altura máxima do formulário */
+    overflow-y: auto; /* Adiciona rolagem vertical, caso o conteúdo ultrapasse a altura máxima */
 }
 
 /* Estilo dos grupos de formulário */
@@ -117,7 +123,6 @@ button[type="submit"]:hover {
     border-radius: 8px; /* Bordas arredondadas */
     flex-shrink: 0; /* Evita que a imagem encolha */
 }
-
 
 /* Container dos detalhes */
 .detalhes-livro {
