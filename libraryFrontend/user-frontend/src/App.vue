@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Navbar from './components/Navbar.vue'; // Ajuste o caminho se necessário
+import Navbar from './components/SideBar.vue'; // Ajuste o caminho se necessário
 import Footer from './components/Footer.vue'; // Importe o Footer
 
 export default {
