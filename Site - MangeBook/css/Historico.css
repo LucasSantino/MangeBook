@@ -3,10 +3,44 @@ main {
     padding: 20px;
 }
 
+
 .welcome-title {
     text-align: center;
     margin-bottom: 20px;
     color: #00334e;
+}
+
+/* Estilo para a barra de pesquisa 2*/
+.search-container2 {
+    display: flex; /* Usando Flexbox para alinhar itens */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin: 20px 0; /* Margem superior e inferior */
+    border-radius: 30%;
+}
+
+/* Estilo da barra de pesquisa 2*/
+.search-bar2 {
+    width: 300px; /* Largura fixa ou percentual */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ddd; /* Borda da barra de pesquisa */
+    border-radius: 10px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+/* Estilo do botão de pesquisa 2*/
+.search-icon2 {
+    background-color: #00334e; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    margin-left: 10px; /* Margem à esquerda do botão */
+}
+
+.search-icon:hover2 {
+    background-color: #0056b3; /* Cor mais escura ao passar o mouse */
 }
 
 .tabela-container {

@@ -65,10 +65,23 @@
         </ul>
     </div>
 
-      <main>
-        <h2 class="welcome-title">Histórico</h2>
-        <p>Abaixo estão os livros que você reservou, devolveu e que estão em atraso.</p>
-
+    <main>
+        <!-- Container de Boas-Vindas -->
+        <div class="welcome-container">
+            <h2 class="welcome-title">Histórico</h2>
+            <p>Abaixo estão os livros que você reservou, devolveu e que estão em atraso.</p>
+            <!-- Barra de Pesquisa 2 -->
+        <div class="search-container2">
+            <input type="text" class="search-bar2" placeholder="Livros reservados, devolvidos ou atrasados...">
+            <button class="search-icon2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+    
+        <!-- Livros Reservados -->
         <div class="tabela-container">
             <h3>Livros Reservados</h3>
             <table class="livros-tabela">
@@ -123,17 +136,35 @@
                         <td>30/10/2024</td>
                         <td>Reservado</td>
                     </tr>
+                    <tr>
+                        <td>O Guia do Mochileiro das Galáxias</td>
+                        <td>Douglas Adams</td>
+                        <td>02/11/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>O Perfume</td>
+                        <td>Patrick Süskind</td>
+                        <td>05/11/2024</td>
+                        <td>Reservado</td>
+                    </tr>
+                    <tr>
+                        <td>A Caverna</td>
+                        <td>José Saramago</td>
+                        <td>07/11/2024</td>
+                        <td>Reservado</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-        
         <!-- Navegação de Páginas -->
         <div class="pagination">
             <button class="btn-navegacao" aria-label="Página anterior">Anterior</button>
             <span>Página 1 de 10</span>
             <button class="btn-navegacao" aria-label="Próxima página">Próximo</button>
         </div>
-
+    
+        <!-- Livros Devolvidos -->
         <div class="tabela-container">
             <h3>Livros Devolvidos</h3>
             <table class="livros-tabela">
@@ -180,17 +211,32 @@
                         <td>Herman Melville</td>
                         <td>10/11/2024</td>
                     </tr>
+                    <tr>
+                        <td>Admirável Mundo Novo</td>
+                        <td>Aldous Huxley</td>
+                        <td>12/11/2024</td>
+                    </tr>
+                    <tr>
+                        <td>O Grande Gatsby</td>
+                        <td>F. Scott Fitzgerald</td>
+                        <td>15/11/2024</td>
+                    </tr>
+                    <tr>
+                        <td>A Arte da Guerra</td>
+                        <td>Sun Tzu</td>
+                        <td>18/11/2024</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-        
         <!-- Navegação de Páginas -->
         <div class="pagination">
             <button class="btn-navegacao" aria-label="Página anterior">Anterior</button>
             <span>Página 1 de 10</span>
             <button class="btn-navegacao" aria-label="Próxima página">Próximo</button>
         </div>
-
+    
+        <!-- Livros em Atraso -->
         <div class="tabela-container">
             <h3>Livros em Atraso</h3>
             <table class="livros-tabela">
@@ -225,17 +271,66 @@
                         <td>28/10/2024</td>
                         <td>Atrasado</td>
                     </tr>
+                    <tr>
+                        <td>A Metamorfose</td>
+                        <td>Franz Kafka</td>
+                        <td>05/10/2024</td>
+                        <td>15/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>Fahrenheit 451</td>
+                        <td>Ray Bradbury</td>
+                        <td>07/10/2024</td>
+                        <td>17/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>Brave New World</td>
+                        <td>Aldous Huxley</td>
+                        <td>10/10/2024</td>
+                        <td>20/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>O Processo</td>
+                        <td>Franz Kafka</td>
+                        <td>12/10/2024</td>
+                        <td>22/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>O Senhor das Moscas</td>
+                        <td>William Golding</td>
+                        <td>14/10/2024</td>
+                        <td>24/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>O Nome da Rosa</td>
+                        <td>Umberto Eco</td>
+                        <td>20/10/2024</td>
+                        <td>30/10/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
+                    <tr>
+                        <td>O Sol é para Todos</td>
+                        <td>Harper Lee</td>
+                        <td>22/10/2024</td>
+                        <td>01/11/2024</td>
+                        <td>Atrasado</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-
         <!-- Navegação de Páginas -->
         <div class="pagination">
             <button class="btn-navegacao" aria-label="Página anterior">Anterior</button>
             <span>Página 1 de 10</span>
             <button class="btn-navegacao" aria-label="Próxima página">Próximo</button>
         </div>
-      </main>
+    </main>
+    
 
     <!-- Rodapé -->
     <footer class="footer">
