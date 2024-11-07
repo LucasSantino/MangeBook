@@ -8,16 +8,6 @@
   <link rel="stylesheet" href="/Site - MangeBook/css/Historico.css">
   <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
 </head>
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MangeBook - Biblioteca</title>
-  <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
-  <link rel="stylesheet" href="/Site - MangeBook/css/Historico.css">
-  <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
-</head>
 <body>
     <div class="container">
       <!-- Navbar -->
@@ -74,6 +64,7 @@
         <li><a href="/logout.html" class="logout-btn">Sair</a></li>
         </ul>
     </div>
+
       <main>
         <h2 class="welcome-title">Histórico</h2>
         <p>Abaixo estão os livros que você reservou, devolveu e que estão em atraso.</p>
@@ -135,6 +126,13 @@
                 </tbody>
             </table>
         </div>
+        
+        <!-- Navegação de Páginas -->
+        <div class="pagination">
+            <button class="btn-navegacao" aria-label="Página anterior">Anterior</button>
+            <span>Página 1 de 10</span>
+            <button class="btn-navegacao" aria-label="Próxima página">Próximo</button>
+        </div>
 
         <div class="tabela-container">
             <h3>Livros Devolvidos</h3>
@@ -185,6 +183,13 @@
                 </tbody>
             </table>
         </div>
+        
+        <!-- Navegação de Páginas -->
+        <div class="pagination">
+            <button class="btn-navegacao" aria-label="Página anterior">Anterior</button>
+            <span>Página 1 de 10</span>
+            <button class="btn-navegacao" aria-label="Próxima página">Próximo</button>
+        </div>
 
         <div class="tabela-container">
             <h3>Livros em Atraso</h3>
@@ -223,7 +228,15 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Navegação de Páginas -->
+        <div class="pagination">
+            <button class="btn-navegacao" aria-label="Página anterior">Anterior</button>
+            <span>Página 1 de 10</span>
+            <button class="btn-navegacao" aria-label="Próxima página">Próximo</button>
+        </div>
       </main>
+
     <!-- Rodapé -->
     <footer class="footer">
         <p>&copy; 2024 MangeBook. Todos os direitos reservados.</p>

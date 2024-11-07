@@ -82,6 +82,36 @@ main {
     color: #666; /* Cor do texto de notificações lidas */
 }
 
+
+/* Estilo da navegação de páginas */
+.pagination {
+    display: flex; /* Flexbox para layout */
+    justify-content: center; /* Centraliza os botões */
+    align-items: center; /* Alinha verticalmente */
+    margin-top: 20px; /* Espaçamento superior */
+}
+
+.btn-navegacao {
+    padding: 10px 20px; /* Espaçamento interno dos botões */
+    margin: 0 5px; /* Margem entre os botões */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    background-color: #00334e; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    transition: background-color 0.3s; /* Efeito de transição */
+}
+
+.btn-navegacao:hover {
+    background-color: #0056b3; /* Tom mais escuro ao passar o mouse */
+}
+
+/* Estilo do texto da página */
+.pagination span {
+    margin: 0 15px; /* Margem lateral para o texto */
+    color: #333; /* Cor do texto */
+}
+
 /* Rodapé */
 .footer {
     background-color: #00334e;

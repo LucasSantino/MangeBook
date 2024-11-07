@@ -29,58 +29,57 @@
       </div>
     </header>
 
-     <!-- Sidebar -->
-     <div id="sidebar" class="sidebar">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
       <button class="close-btn" onclick="toggleSidebar()">×</button>
       <!-- Imagem no topo da sidebar -->
       <div class="sidebar-image">
-      <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
+        <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
       </div>
       <ul>
-      <li><a href="index.html">Início</a></li>
-      <li>
+        <li><a href="index.html">Início</a></li>
+        <li>
           <a href="#" onclick="toggleDropdown()">
-          <i class="fas fa-book"></i> Minha Biblioteca
-          <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon" class="seta-icone" alt="Seta para baixo">
+            <i class="fas fa-book"></i> Minha Biblioteca
+            <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon" class="seta-icone" alt="Seta para baixo">
           </a>
           <ul id="dropdown-menu" class="dropdown-menu" style="display: none;">
-          <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
-          <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
-          <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
+            <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
+            <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
+            <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
           </ul>
-      </li>
-      <li>
+        </li>
+        <li>
           <a href="#" onclick="toggleProfileDropdown()">
-          Perfil
-          <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="profile-seta-icon" class="seta-icone" alt="Seta para baixo">
+            Perfil
+            <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="profile-seta-icon" class="seta-icone" alt="Seta para baixo">
           </a>
           <ul id="profile-dropdown-menu" class="dropdown-menu" style="display: none;">
-          <li><a href="/Site - MangeBook/PerfilUsuario.html">Informações de Perfil</a></li>
-          <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
-          <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
+            <li><a href="/Site - MangeBook/PerfilUsuario.html">Informações de Perfil</a></li>
+            <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
+            <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
           </ul>
-      </li>
-      <li><a href="sobre.html">Sobre</a></li>
-  
-      <!-- Botão de Sair -->
-      <li><a href="/logout.html" class="logout-btn">Sair</a></li>
+        </li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <!-- Botão de Sair -->
+        <li><a href="/logout.html" class="logout-btn">Sair</a></li>
       </ul>
-  </div>
+    </div>
 
-     <main>
-            <div class="welcome-container">
-                <h2 class="welcome-title">Meus Livros</h2>
-                <p>Seja Bem-vindo à sua Biblioteca, explore todos os livros selecionados por você em um só lugar</p>
-                <!-- Barra de Pesquisa 2 -->
-                <div class="search-container2">
-                    <input type="text" class="search-bar2" placeholder="Pesquisar em Meus livros...">
-                    <button class="search-icon2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+    <main>
+      <div class="welcome-container">
+        <h2 class="welcome-title">Meus Livros</h2>
+        <p>Seja Bem-vindo à sua Biblioteca, explore todos os livros selecionados por você em um só lugar</p>
+        <!-- Barra de Pesquisa 2 -->
+        <div class="search-container2">
+          <input type="text" class="search-bar2" placeholder="Pesquisar em Meus livros...">
+          <button class="search-icon2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
 
       <div class="livros-container">
         <div class="tabela-container">
@@ -102,9 +101,9 @@
                 <td>JK Roling</td>
                 <td>2007</td>
                 <td>
-                    <button class="btn-favoritar">Favoritar</button>
-                    <button class="btn-remover">Remover</button>
-                    <button class="btn-avaliar">Avaliar</button>
+                  <button class="btn-favoritar">Favoritar</button>
+                  <button class="btn-remover">Remover</button>
+                  <button class="btn-avaliar">Avaliar</button>
                 </td>
               </tr>
               <tr>
@@ -113,9 +112,9 @@
                 <td>JK Rowling</td>
                 <td>1949</td>
                 <td>
-                    <button class="btn-favoritar">Favoritar</button>
-                    <button class="btn-remover">Remover</button>
-                    <button class="btn-avaliar">Avaliar</button>
+                  <button class="btn-favoritar">Favoritar</button>
+                  <button class="btn-remover">Remover</button>
+                  <button class="btn-avaliar">Avaliar</button>
                 </td>
               </tr>
               <tr>
@@ -124,9 +123,9 @@
                 <td>JK Rowling</td>
                 <td>1899</td>
                 <td>
-                    <button class="btn-favoritar">Favoritar</button>
-                    <button class="btn-remover">Remover</button>
-                    <button class="btn-avaliar">Avaliar</button>
+                  <button class="btn-favoritar">Favoritar</button>
+                  <button class="btn-remover">Remover</button>
+                  <button class="btn-avaliar">Avaliar</button>
                 </td>
               </tr>
               <tr>
@@ -135,9 +134,9 @@
                 <td>Rick Riordan</td>
                 <td>2005</td>
                 <td>
-                    <button class="btn-favoritar">Favoritar</button>
-                    <button class="btn-remover">Remover</button>
-                    <button class="btn-avaliar">Avaliar</button>
+                  <button class="btn-favoritar">Favoritar</button>
+                  <button class="btn-remover">Remover</button>
+                  <button class="btn-avaliar">Avaliar</button>
                 </td>
               </tr>
               <tr>
@@ -146,14 +145,14 @@
                 <td>Paulo Coelho</td>
                 <td>1988</td>
                 <td>
-                    <button class="btn-favoritar">Favoritar</button>
-                    <button class="btn-remover">Remover</button>
-                    <button class="btn-avaliar">Avaliar</button>
+                  <button class="btn-favoritar">Favoritar</button>
+                  <button class="btn-remover">Remover</button>
+                  <button class="btn-avaliar">Avaliar</button>
                 </td>
               </tr>
               <tr>
                 <td><img src="/Site - MangeBook/imagens/PercyJacksom5.jpg" alt="Capa do Livro" class="thumbnail"></td>
-                <td>Percy Jacksom e o Ultimo Olimpiano</td>
+                <td>Percy Jacksom e o Último Olimpiano</td>
                 <td>Rick Riordan</td>
                 <td>1997</td>
                 <td>
@@ -162,9 +161,15 @@
                   <button class="btn-avaliar">Avaliar</button>
                 </td>
               </tr>
-              <!-- Adicione mais livros aqui, se desejar -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Navegação de Páginas -->
+        <div class="pagination">
+          <button class="btn-navegacao" aria-label="Página anterior">Anterior</button>
+          <span>Página 1 de 10</span>
+          <button class="btn-navegacao" aria-label="Próxima página">Próximo</button>
         </div>
       </div>
     </main>
