@@ -67,6 +67,21 @@
     cursor: pointer;
 }
 
+/* Icone de nbotificação */
+.notification-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 10px;
+  }
+  
+  .notification-img {
+    filter: brightness(0) invert(1); /* Torna o ícone branco */
+    width: 30px; /* Aumente o tamanho conforme necessário */
+    height: 30px;
+  }
+  
+
 /* Estilo para a imagem no topo da sidebar */
 .sidebar-image {
     display: flex; /* Usando flexbox para garantir centralização */
