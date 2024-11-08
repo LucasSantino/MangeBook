@@ -20,7 +20,8 @@
         <label for="password">Senha:</label>
         <input type="password" id="password" placeholder="Digite sua senha" required v-model="password">
       </div>
-      <button type="button" class="login-button" @click="handleSubmit">Entrar</button>
+      <!-- Botão para enviar o formulário -->
+      <button type="submit" class="login-button">Entrar</button>
       <p class="forgot-password">
         <a href="RecuperaSenha.html">Esqueceu sua senha?</a>
       </p>
@@ -29,7 +30,6 @@
 </template>
 
 <script>
-// Importação do componente NavBar
 import NavBar from '@/components/NavBar.vue';
 
 export default {
@@ -38,48 +38,49 @@ export default {
   },
   data() {
     return {
-      userType: '', // Tipo de usuário (admin ou user)
+      userType: '', // Tipo de usuário
       username: '', // Nome de usuário
-      password: ''  // Senha
+      password: '', // Senha
     };
   },
   methods: {
-    handleSubmit() {
-      const validUsernameAdmin = 'admin';  // Nome de usuário do administrador
-      const validPasswordAdmin = 'senha123'; // Senha do administrador
+  handleSubmit() {
+    // Definir as credenciais válidas para administrador e usuário comum
+    const validUsernameAdmin = 'admin'; // Nome de usuário do administrador
+    const validPasswordAdmin = 'senha123'; // Senha do administrador
 
-      const validUsernameUser = 'user';  // Nome de usuário do usuário comum
-      const validPasswordUser = 'senha123'; // Senha do usuário comum
+    const validUsernameUser = 'user'; // Nome de usuário do usuário comum
+    const validPasswordUser = 'senha123'; // Senha do usuário comum
 
-      // Lógica para autenticação
-      if (this.userType === 'admin' && this.username === validUsernameAdmin && this.password === validPasswordAdmin) {
-        // Se o usuário for administrador e a autenticação for bem-sucedida
-        localStorage.setItem('user', JSON.stringify({
-          username: this.username,
-          userType: this.userType,
-          isAuthenticated: true
-        }));
+    // Lógica para autenticação
+    if (this.userType === 'admin' && this.username === validUsernameAdmin && this.password === validPasswordAdmin) {
+      // Salva os dados no localStorage (token e informações do usuário)
+      localStorage.setItem('token', 'admin-token');
+      localStorage.setItem('user', JSON.stringify({
+        username: this.username,
+        userType: this.userType,
+      }));
 
-        // Redireciona para a página do administrador
-        this.$router.push('/admin');
-        alert('Login bem-sucedido como Administrador!');
-      } else if (this.userType === 'user' && this.username === validUsernameUser && this.password === validPasswordUser) {
-        // Se o usuário for comum e a autenticação for bem-sucedida
-        localStorage.setItem('user', JSON.stringify({
-          username: this.username,
-          userType: this.userType,
-          isAuthenticated: true
-        }));
+      // Redireciona para a página inicial (Index.vue) para qualquer tipo de usuário
+      this.$router.push('/');  // Redireciona para a página inicial
+      alert('Login bem-sucedido como Administrador!');
+    } else if (this.userType === 'user' && this.username === validUsernameUser && this.password === validPasswordUser) {
+      // Salva os dados no localStorage (token e informações do usuário)
+      localStorage.setItem('token', 'user-token');
+      localStorage.setItem('user', JSON.stringify({
+        username: this.username,
+        userType: this.userType,
+      }));
 
-        // Redireciona para a página do usuário comum
-        this.$router.push('/user');
-        alert('Login bem-sucedido como Usuário Comum!');
-      } else {
-        // Caso as credenciais estejam erradas
-        alert('Usuário, senha ou tipo de usuário incorretos!');
-      }
+      // Redireciona para a página inicial (Index.vue) para qualquer tipo de usuário
+      this.$router.push('/');  // Redireciona para a página inicial
+      alert('Login bem-sucedido como Usuário Comum!');
+    } else {
+      // Exibe um alerta caso as credenciais estejam incorretas
+      alert('Usuário, senha ou tipo de usuário incorretos!');
     }
   }
+}
 };
 </script>
 
@@ -115,6 +116,7 @@ body {
 
 .login-form h2 {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .form-group {
