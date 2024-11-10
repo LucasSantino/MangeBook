@@ -16,7 +16,7 @@
 
     <div>
       <button class="notification-icon">
-        <img src="/Site - MangeBook/imagens/IconeNotificação.png" alt="Notificações" class="notification-img" />
+        <img src="icone" alt="Notificações" class="notification-img" />
       </button>
     </div>
   </header>
