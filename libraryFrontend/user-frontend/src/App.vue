@@ -1,55 +1,44 @@
 <template>
   <div id="app">
-    <!-- Navbar com toggle de sidebar -->
-    <Navbar @toggle-sidebar="toggleSidebar" />
-
-    <!-- Sidebar com controle de visibilidade -->
-    <Sidebar :visible="sidebarVisible" @close-sidebar="toggleSidebar" />
-
-    <!-- Conteúdo Principal (componente renderizado por Vue Router) -->
-    <router-view></router-view> <!-- O conteúdo renderizado pelo Vue Router vai para cá -->
-
-    <!-- Rodapé (Footer fixo em todas as páginas) -->
-    <Footer /> <!-- O Footer é fixo aqui e não duplicado -->
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
+    <NavBar @toggle-sidebar="toggleSidebar" />
+    <!-- Sidebar, recebe a propriedade isSidebarOpen para abrir/fechar -->
+    <SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+    <MainContent></MainContent>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-// Importando os componentes necessários
-import Navbar from './components/NavBar.vue';  
-import Sidebar from './components/SideBar.vue';
-import Footer from './components/Footer.vue'; 
+import NavBar from './components/NavBar.vue';
+import SideBar from './components/SideBar.vue';
+import MainContent from './components/MainContent.vue';
+import Footer from './components/Footer.vue';
 
 export default {
-  name: 'App',
   components: {
-    Navbar,
-    Sidebar,
-    Footer,  // O Footer será renderizado no App.vue
+    NavBar,
+    SideBar,
+    MainContent,
+    Footer
   },
   data() {
     return {
-      sidebarVisible: false,
+      isSidebarOpen: false, // Controla a visibilidade da sidebar
     };
   },
   methods: {
     toggleSidebar() {
-      this.sidebarVisible = !this.sidebarVisible;
+      this.isSidebarOpen = !this.isSidebarOpen; // Alterna a visibilidade da sidebar
     },
   },
 };
 </script>
 
 <style>
-.footer {
-  background-color: #00334e;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  width: 100%;
-}
-
-nav {
-  margin-bottom: 20px;
+/* Estilos gerais */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 </style>

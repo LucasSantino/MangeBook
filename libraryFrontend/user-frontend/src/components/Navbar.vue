@@ -1,67 +1,38 @@
 <template>
-  <nav class="navbar">
-    <!-- Botão de menu para abrir/fechar a sidebar -->
-    <button @click="toggleSidebar" class="menu-btn">&#9776;</button>
-    
-    <!-- Logo -->
-    <div class="logo">
+  <header class="navbar">
+    <button class="menu-btn" @click="toggleSidebar">☰</button>
+    <h1 class="logo">
       <a href="index.html" style="color: white; text-decoration: none;">MangeBook</a>
-    </div>
-    
-    <!-- Barra de pesquisa -->
+    </h1>
+
     <div class="search-container">
-      <input type="text" class="search-bar" placeholder="Pesquisar livros..." v-model="searchQuery" />
-      <button class="search-icon" @click="search">
+      <input type="text" class="search-bar" placeholder="Pesquisar livros..." />
+      <button class="search-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
         </svg>
       </button>
     </div>
-    
-    <!-- Botão de notificação -->
+
     <div>
       <button class="notification-icon">
         <img src="/Site - MangeBook/imagens/IconeNotificação.png" alt="Notificações" class="notification-img" />
       </button>
     </div>
-  </nav>
+  </header>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      searchQuery: '' // Modelo para o valor da pesquisa
-    };
-  },
   methods: {
     toggleSidebar() {
-      this.$emit('toggle-sidebar');
+      this.$emit('toggle-sidebar'); // Emite um evento para controlar a visibilidade da sidebar
     },
-    search() {
-      // Aqui pode ser colocada a lógica de pesquisa, como enviar a busca para uma API
-      console.log('Pesquisar por:', this.searchQuery);
-    }
-  }
+  },
 };
 </script>
 
 <style scoped>
-/* Reset de estilo básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif; /* Fonte padrão */
-}
-
-/* Container principal */
-.container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
 /* Navbar */
 .navbar {
     background-color: #00334e;
@@ -116,17 +87,17 @@ export default {
     cursor: pointer;
 }
 
-/* Icone de nbotificação */
+/* Icone de notificação */
 .notification-icon {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0 10px;
-  }
-  
-  .notification-img {
+}
+
+.notification-img {
     filter: brightness(0) invert(1); /* Torna o ícone branco */
     width: 30px; /* Aumente o tamanho conforme necessário */
     height: 30px;
-  }
+}
 </style>
