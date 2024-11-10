@@ -269,7 +269,9 @@ main {
     margin: 20px auto; /* Margem automática para centralizar */
     width: 100%; /* Largura total do container */
     max-width: 940px; /* Ajuste conforme necessário para se alinhar com a tabela */
+    margin-top: 90px; /* Ajuste o valor para aumentar o espaçamento superior */
 }
+
 
 /* Seção de boas-vindas */
 .welcome-title {
