@@ -5,7 +5,8 @@
 
     <!-- Imagem no topo da sidebar -->
     <div class="sidebar-image">
-      <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
+      <!-- Aqui estamos utilizando a variável logo -->
+      <img :src="logo" alt="Imagem da Sidebar" class="sidebar-img">
     </div>
 
     <!-- Lista de Links -->
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+import logo from '@/assets/LogoMangeBook.png';  // Importando a imagem corretamente
+
 export default {
   props: {
     isSidebarOpen: {
@@ -60,6 +63,12 @@ export default {
       isDropdownOpen: false, // Controla a visibilidade do dropdown de "Minha Biblioteca"
       isProfileDropdownOpen: false, // Controla a visibilidade do dropdown de "Perfil"
     };
+  },
+  computed: {
+    // Usando computed para garantir que logo seja corretamente utilizado
+    logo() {
+      return logo;
+    }
   },
   methods: {
     closeSidebar() {
@@ -74,6 +83,8 @@ export default {
   }
 };
 </script>
+
+
 
 <style scoped>
 /* Estilo para a imagem no topo da sidebar */
