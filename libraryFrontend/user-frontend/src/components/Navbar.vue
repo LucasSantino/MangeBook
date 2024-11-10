@@ -32,7 +32,22 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+/* Reset de estilo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+/* Container principal */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 /* Navbar */
 .navbar {
     background-color: #00334e;
