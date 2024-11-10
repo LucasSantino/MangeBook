@@ -1,14 +1,13 @@
 <template>
   <div class="container">
-    <NavBar />
-    <SideBar />
-    <MainContent />
-    <Footer />
+    <NavBar /> <!-- Importação da Navbar-->
+    <SideBar /> <!-- Importação da SideBar-->
+    <MainContent /> <!-- Importação do Conteudo Principal-->
   </div>
 </template>
 
 <script>
-import Footer from "@/components/Footer.vue";
+
 import MainContent from "@/components/MainContent.vue";
 import NavBar from "@/components/NavBar.vue";
 import SideBar from "@/components/SideBar.vue";
@@ -18,7 +17,6 @@ export default {
     NavBar,
     SideBar,
     MainContent,
-    Footer
   },
 
   methods: {
