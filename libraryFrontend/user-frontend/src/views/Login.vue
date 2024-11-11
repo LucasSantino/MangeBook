@@ -1,6 +1,5 @@
 <template>
   <div class="login-container">
-    <!-- Aqui você usa o NavBar importado -->
     <NavBar />
     <form class="login-form" @submit.prevent="handleSubmit">
       <h2>Bem-vindo ao sistema MangeBook</h2>
@@ -34,7 +33,7 @@ import NavBar from '@/components/NavBar.vue';
 
 export default {
   components: {
-    NavBar,
+    NavBar
   },
   data() {
     return {
@@ -44,46 +43,47 @@ export default {
     };
   },
   methods: {
-  handleSubmit() {
-    // Definir as credenciais válidas para administrador e usuário comum
-    const validUsernameAdmin = 'admin'; // Nome de usuário do administrador
-    const validPasswordAdmin = 'senha123'; // Senha do administrador
+    handleSubmit() {
+      // Definir as credenciais válidas para administrador e usuário comum
+      const validUsernameAdmin = 'admin'; // Nome de usuário do administrador
+      const validPasswordAdmin = 'senha123'; // Senha do administrador
 
-    const validUsernameUser = 'user'; // Nome de usuário do usuário comum
-    const validPasswordUser = 'senha123'; // Senha do usuário comum
+      const validUsernameUser = 'user'; // Nome de usuário do usuário comum
+      const validPasswordUser = 'senha123'; // Senha do usuário comum
 
-    // Lógica para autenticação
-    if (this.userType === 'admin' && this.username === validUsernameAdmin && this.password === validPasswordAdmin) {
-      // Salva os dados no localStorage (token e informações do usuário)
-      localStorage.setItem('token', 'admin-token');
-      localStorage.setItem('user', JSON.stringify({
-        username: this.username,
-        userType: this.userType,
-      }));
+      // Lógica para autenticação
+      if (this.userType === 'admin' && this.username === validUsernameAdmin && this.password === validPasswordAdmin) {
+        // Salva os dados no localStorage (token e informações do usuário)
+        localStorage.setItem('token', 'admin-token');
+        localStorage.setItem('user', JSON.stringify({
+          username: this.username,
+          userType: this.userType,
+        }));
 
-      // Redireciona para a página inicial (Index.vue) para qualquer tipo de usuário
-      this.$router.push('/');  // Redireciona para a página inicial
-      alert('Login bem-sucedido como Administrador!');
-    } else if (this.userType === 'user' && this.username === validUsernameUser && this.password === validPasswordUser) {
-      // Salva os dados no localStorage (token e informações do usuário)
-      localStorage.setItem('token', 'user-token');
-      localStorage.setItem('user', JSON.stringify({
-        username: this.username,
-        userType: this.userType,
-      }));
+        // Redireciona para a página inicial (Index.vue)
+        this.$router.push('/index');  // Redireciona para a página de Index
+        alert('Login bem-sucedido como Administrador!');
+      } else if (this.userType === 'user' && this.username === validUsernameUser && this.password === validPasswordUser) {
+        // Salva os dados no localStorage (token e informações do usuário)
+        localStorage.setItem('token', 'user-token');
+        localStorage.setItem('user', JSON.stringify({
+          username: this.username,
+          userType: this.userType,
+        }));
 
-      // Redireciona para a página inicial (Index.vue) para qualquer tipo de usuário
-      this.$router.push('/');  // Redireciona para a página inicial
-      alert('Login bem-sucedido como Usuário Comum!');
-    } else {
-      // Exibe um alerta caso as credenciais estejam incorretas
-      alert('Usuário, senha ou tipo de usuário incorretos!');
+        // Redireciona para a página inicial (Index.vue)
+        this.$router.push('/index');  // Redireciona para a página de Index
+        alert('Login bem-sucedido como Usuário Comum!');
+      } else {
+        // Exibe um alerta caso as credenciais estejam incorretas
+        alert('Usuário, senha ou tipo de usuário incorretos!');
+      }
     }
   }
-}
 };
 </script>
 
+<style scoped>
 <style scoped>
 /* Estilos do formulário de login */
 * {
@@ -104,6 +104,8 @@ body {
   justify-content: center;
   align-items: center;
   height: calc(100vh - 140px);
+  flex-direction: column;
+  margin-bottom: 70px; /* Adicionando margem inferior para aumentar o espaçamento do footer */
 }
 
 .login-form {
@@ -166,13 +168,5 @@ select {
   text-decoration: underline;
 }
 
-.footer {
-  background-color: #00334e;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  position: relative;
-  width: 100%;
-  margin-top: auto;
-}
 </style>
+

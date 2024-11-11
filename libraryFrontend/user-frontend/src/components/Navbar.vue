@@ -26,7 +26,7 @@
 export default {
   methods: {
     toggleSidebar() {
-      this.$emit('toggle-sidebar'); // Emite um evento para controlar a visibilidade da sidebar
+      this.$emit('toggle-sidebar'); // Emite evento para alternar a visibilidade da sidebar
     },
   },
 };

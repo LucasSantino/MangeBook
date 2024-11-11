@@ -1,13 +1,12 @@
 <template>
   <div class="container">
-    <NavBar /> <!-- Importação da Navbar-->
-    <SideBar /> <!-- Importação da SideBar-->
-    <MainContent /> <!-- Importação do Conteudo Principal-->
+    <NavBar @toggle-sidebar="toggleSidebar" /> <!-- Passando o evento para abrir/fechar a Sidebar -->
+    <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" /> <!-- Passando o estado da Sidebar -->
+    <MainContent /> <!-- Importação do Conteúdo Principal-->
   </div>
 </template>
 
 <script>
-
 import MainContent from "@/components/MainContent.vue";
 import NavBar from "@/components/NavBar.vue";
 import SideBar from "@/components/SideBar.vue";
@@ -19,13 +18,23 @@ export default {
     MainContent,
   },
 
+  data() {
+    return {
+      sidebarOpen: false,  // Controle do estado de visibilidade da Sidebar
+      dropdown: {},        // Controle do dropdown, se necessário
+      currentPage: 1,      // Controle de páginas (se necessário para paginação)
+    };
+  },
+
   methods: {
     toggleSidebar() {
-      this.sidebarOpen = !this.sidebarOpen;
+      this.sidebarOpen = !this.sidebarOpen;  // Alterna o estado da Sidebar
     },
+
     toggleDropdown(menu) {
-      this.dropdown[menu] = !this.dropdown[menu];
+      this.dropdown[menu] = !this.dropdown[menu];  // Alterna o estado do dropdown
     },
+
     changePage(direction) {
       if (direction === 'prev' && this.currentPage > 1) {
         this.currentPage--;
@@ -33,6 +42,7 @@ export default {
         this.currentPage++;
       }
     }
+    
   }
 };
 </script>
@@ -40,10 +50,9 @@ export default {
 <style scoped>
 /* Reset de estilo básico */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif; /* Fonte padrão */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif; /* Fonte padrão */
 }
-
 </style>

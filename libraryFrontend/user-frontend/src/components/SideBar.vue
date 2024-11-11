@@ -1,55 +1,57 @@
 <template>
-  <div v-show="isSidebarOpen" class="sidebar">
-    <!-- Botão para fechar a Sidebar -->
-    <button class="close-btn" @click="closeSidebar">×</button>
+  <transition name="fade">
+    <div v-show="isSidebarOpen" class="sidebar" :class="{ open: isSidebarOpen }">
+      <!-- Botão para fechar a Sidebar -->
+      <button class="close-btn" @click="closeSidebar">×</button>
 
-    <!-- Imagem no topo da sidebar -->
-    <div class="sidebar-image">
-      <!-- Aqui estamos utilizando a variável logo -->
-      <img :src="logo" alt="Imagem da Sidebar" class="sidebar-img">
+      <!-- Imagem no topo da sidebar -->
+      <div class="sidebar-image">
+        <img :src="logo" alt="Imagem da Sidebar" class="sidebar-img">
+      </div>
+
+      <!-- Lista de Links -->
+      <ul>
+        <li><a href="index.html">Início</a></li>
+
+        <!-- Menu Minha Biblioteca com Dropdown -->
+        <li @click="toggleDropdown">
+          <a href="javascript:void(0)">
+            <i class="fas fa-book"></i> Minha Biblioteca
+            <img :class="['seta-icone', { rotacionado: isDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
+          </a>
+          <ul v-show="isDropdownOpen" class="dropdown-menu">
+            <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
+            <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
+            <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
+          </ul>
+        </li>
+
+        <!-- Menu Perfil com Dropdown -->
+        <li @click="toggleProfileDropdown">
+          <a href="javascript:void(0)">
+            Perfil
+            <img :class="['seta-icone', { rotacionado: isProfileDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
+          </a>
+          <ul v-show="isProfileDropdownOpen" class="dropdown-menu">
+            <li><a href="/Site - MangeBook/PerfilUsuario.html">Informações de Perfil</a></li>
+            <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
+            <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
+          </ul>
+        </li>
+
+        <!-- Opção Sobre -->
+        <li><a href="Sobre.html">Sobre</a></li>
+
+        <!-- Botão de Sair -->
+        <li><a href="javascript:void(0)" @click="logout" class="logout-btn">Sair</a></li>
+      </ul>
     </div>
-
-    <!-- Lista de Links -->
-    <ul>
-      <li><a href="index.html">Início</a></li>
-
-      <!-- Menu Minha Biblioteca com Dropdown -->
-      <li @click="toggleDropdown">
-        <a href="javascript:void(0)">
-          <i class="fas fa-book"></i> Minha Biblioteca
-          <img :class="['seta-icone', { rotacionado: isDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
-        </a>
-        <ul v-show="isDropdownOpen" class="dropdown-menu">
-          <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
-          <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
-          <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
-        </ul>
-      </li>
-
-      <!-- Menu Perfil com Dropdown -->
-      <li @click="toggleProfileDropdown">
-        <a href="javascript:void(0)">
-          Perfil
-          <img :class="['seta-icone', { rotacionado: isProfileDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
-        </a>
-        <ul v-show="isProfileDropdownOpen" class="dropdown-menu">
-          <li><a href="/Site - MangeBook/PerfilUsuario.html">Informações de Perfil</a></li>
-          <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
-          <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
-        </ul>
-      </li>
-
-      <!-- Opção Sobre -->
-      <li><a href="Sobre.html">Sobre</a></li>
-
-      <!-- Botão de Sair -->
-      <li><a href="/logout.html" class="logout-btn">Sair</a></li>
-    </ul>
-  </div>
+  </transition>
 </template>
 
+
 <script>
-import logo from '@/assets/LogoMangeBook.png';  // Importando a imagem corretamente
+import logo from '@/assets/LogoMangeBook.png';  // Importando a imagem da logo
 
 export default {
   props: {
@@ -65,7 +67,6 @@ export default {
     };
   },
   computed: {
-    // Usando computed para garantir que logo seja corretamente utilizado
     logo() {
       return logo;
     }
@@ -79,46 +80,60 @@ export default {
     },
     toggleProfileDropdown() {
       this.isProfileDropdownOpen = !this.isProfileDropdownOpen; // Alterna a visibilidade do dropdown de "Perfil"
-    }
+    },
+    logout() {
+  // Remove o token e informações do usuário do localStorage
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  
+  // Redireciona para a tela de login
+  this.$router.push({ name: 'Login' }); // Verifique se a rota 'login' está configurada no Vue Router
+}
+
   }
 };
 </script>
 
 
-
 <style scoped>
 /* Estilo para a imagem no topo da sidebar */
 .sidebar-image {
-  display: flex; /* Usando flexbox para garantir centralização */
-  justify-content: center; /* Centraliza a imagem */
-  margin-bottom: 20px; /* Espaço abaixo da imagem */
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .sidebar-img {
-  width: 100%; /* Ajusta a largura da imagem para ocupar toda a largura da sidebar */
-  max-width: 220px; /* Largura máxima para a imagem */
-  height: auto; /* Mantém a proporção da imagem */
-  border-radius: 10px; /* Bordas arredondadas para um acabamento suave */
-  margin-top: 5px; /* Espaço acima da imagem */
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 5px;
 }
 
-/* Sidebar */
 .sidebar {
+  left: 0;
   position: fixed;
-  left: 0px;
+  left: -250px; /* Inicialmente fora da tela */
   top: 0;
   width: 250px;
   height: 100%;
   background-color: #00334e;
   color: white;
-  padding-top: 80px; /* Ajuste para espaçar as opções mais para baixo */
-  transition: 0.3s;
-  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4); /* Aumentei o tamanho e intensidade da sombra */
+  padding-top: 80px;
+  transition: left 0.3s ease-out, opacity 0.3s ease-out; /* Transição suave de entrada/saída */
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.4);
+  opacity: 0; /* Inicialmente invisível */
+}
+
+.sidebar.open {
+  left: 0; /* Quando a Sidebar estiver aberta, ela será posicionada corretamente */
+  opacity: 1; /* Torna visível quando aberta */
 }
 
 /* Remover pontos de lista */
 .sidebar ul {
-  list-style-type: none; /* Remove os pontos da lista */
+  list-style-type: none;
   padding: 0;
   margin: 0;
 }
@@ -129,9 +144,9 @@ export default {
   text-decoration: none;
   font-size: 18px;
   padding: 10px;
-  display: flex; /* Usando flexbox para o alinhamento */
-  align-items: center; /* Alinha verticalmente o texto e o ícone */
-  gap: 0px; /* Espaçamento entre o texto e o ícone da seta */
+  display: flex;
+  align-items: center;
+  gap: 0px;
   transition: background-color 0.3s ease;
 }
 
@@ -143,17 +158,17 @@ export default {
 
 /* Ícone da seta */
 .seta-icone {
-  width: 16px; /* Largura fixa para o ícone da seta */
-  height: 16px; /* Altura fixa para o ícone da seta */
-  transition: transform 0.3s ease; /* Transição suave para a rotação */
-  margin-left: auto; /* Empurra a seta para o lado direito */
-  margin-right: 15px; /* Aumenta o espaço entre o texto e a seta */
-  filter: invert(1); /* Deixa o ícone da seta na cor branca */
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+  margin-left: auto;
+  margin-right: 15px;
+  filter: invert(1);
 }
 
 /* Rotacionando a seta quando o dropdown é visível */
 .rotacionado {
-  transform: rotate(180deg); /* Rotação de 180 graus da seta */
+  transform: rotate(180deg);
 }
 
 /* Fechar botão da sidebar */
@@ -168,22 +183,16 @@ export default {
   cursor: pointer;
 }
 
-/* Adicionando espaçamento entre as opções da sidebar (exceto dropdown) */
+/* Adicionando espaçamento entre as opções da sidebar */
 .sidebar ul li {
-  margin-bottom: 15px; /* Espaçamento entre os itens da lista */
+  margin-bottom: 15px;
 }
 
-/* Removendo o espaçamento para itens do dropdown */
-.sidebar .dropdown-menu li {
-  margin-bottom: 0; /* Sem espaçamento entre os itens do dropdown */
-}
-
-/* Dropdown dentro da sidebar */
 .dropdown-menu {
-  display: block; /* Oculto por padrão */
+  display: block;
   list-style-type: none;
-  padding-left: 20px; /* Espaçamento para alinhamento */
-  background-color: #00577b; /* Cor de fundo padrão do dropdown */
+  padding-left: 20px;
+  background-color: #00577b;
 }
 
 .dropdown-menu li a {
@@ -200,38 +209,20 @@ export default {
   border-radius: 5px;
 }
 
-/* Estilos para o ícone da seta */
-.seta-icone {
-  width: 16px; /* Ajuste conforme necessário */
-  transition: transform 0.3s ease; /* Transição suave para a rotação */
-  margin-left: auto; /* Empurra a seta para o lado direito */
-  margin-right: 15px; /* Aumenta o espaço entre o texto e a seta */
-  filter: invert(1); /* Deixa a imagem branca */
-}
-
-/* Rotacionado para o dropdown */
-.rotacionado {
-  transform: rotate(180deg); /* Rotação da seta quando o dropdown é visível */
-}
-
-/* Estilo para o botão de sair (igual as opções da navbar) */
 .logout-btn {
-  color: white; /* Cor do texto (branco) */
-  text-decoration: none; /* Remove o sublinhado */
-  font-size: 18px; /* Tamanho da fonte */
-  padding: 10px; /* Espaçamento interno */
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 10px;
   display: block;
-  background-color: #00334e; /* Cor de fundo igual ao da navbar */
-  border-radius: 5px; /* Bordas arredondadas */
-  transition: background-color 0.3s ease, transform 0.2s; /* Transições suaves */
-  margin-top: auto; /* Garante que o botão fique no final da lista */
+  background-color: #00334e;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s;
+  margin-top: auto;
 }
 
-/* Efeito hover para o botão de sair */
 .logout-btn:hover {
-  background-color: #00577b; /* Cor do fundo ao passar o mouse */
-  transform: scale(1.05); /* Aumenta um pouco o tamanho
-  tamanho do botão */
-  border-radius: 5px;
+  background-color: #00577b;
+  transform: scale(1.05);
 }
 </style>
