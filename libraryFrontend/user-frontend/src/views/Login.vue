@@ -84,7 +84,6 @@ export default {
 </script>
 
 <style scoped>
-<style scoped>
 /* Estilos do formulário de login */
 * {
   margin: 0;
