@@ -16,14 +16,21 @@
 
     <div>
       <button class="notification-icon">
-        <img src="icone" alt="Notificações" class="notification-img" />
+        <img :src="icone" alt="Notificações" class="notification-img">
       </button>
     </div>
   </header>
 </template>
 
 <script>
+import icone from '@/assets/IconeNotificação.png'; 
+
 export default {
+  data() {
+    return {
+      icone,
+    };
+  },
   methods: {
     toggleSidebar() {
       this.$emit('toggle-sidebar'); // Emite evento para alternar a visibilidade da sidebar
@@ -31,6 +38,7 @@ export default {
   },
 };
 </script>
+
 
 <style>
 /* Reset de estilo básico */
