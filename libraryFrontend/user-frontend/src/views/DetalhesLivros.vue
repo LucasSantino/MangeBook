@@ -349,6 +349,7 @@ select {
     cursor: pointer;
     
     
+    
 }
 
 .enviar-comentario:hover {
