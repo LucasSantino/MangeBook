@@ -11,7 +11,8 @@
 
       <!-- Lista de Links -->
       <ul>
-        <li><a href="index.html">Início</a></li>
+        <!-- Atualizando o link para "Início" para usar Vue Router -->
+        <li><a @click.prevent="goToHome">Início</a></li>
 
         <!-- Menu Minha Biblioteca com Dropdown -->
         <li @click="toggleDropdown">
@@ -49,9 +50,8 @@
   </transition>
 </template>
 
-
 <script>
-import logo from '@/assets/LogoMangeBook.png';  // Importando a imagem da logo
+import logo from '@/assets/LogoMangeBook.png'; // Importando a imagem da logo
 
 export default {
   props: {
@@ -81,18 +81,21 @@ export default {
     toggleProfileDropdown() {
       this.isProfileDropdownOpen = !this.isProfileDropdownOpen; // Alterna a visibilidade do dropdown de "Perfil"
     },
+    goToHome() {
+      this.$router.push({ name: 'Index' }); // Redireciona para a página 'index' usando Vue Router
+    },
     logout() {
-  // Remove o token e informações do usuário do localStorage
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  
-  // Redireciona para a tela de login
-  this.$router.push({ name: 'Login' }); // Verifique se a rota 'login' está configurada no Vue Router
-}
-
+      // Remove o token e informações do usuário do localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Redireciona para a tela de login
+      this.$router.push({ name: 'Login' }); // Redireciona para a rota 'login'
+    }
   }
 };
 </script>
+
 
 
 <style scoped>

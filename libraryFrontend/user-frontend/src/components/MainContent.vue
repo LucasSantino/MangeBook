@@ -38,8 +38,9 @@
     <section class="featured-books">
       <h3 class="featured-title">Livros em Destaque</h3>
       <div class="book-list">
-        <div v-for="(book, index) in filteredBooks" :key="index" class="book-card">
-          <a :href="book.detailsLink">
+        <div v-for="(book, index) in paginatedBooks" :key="index" class="book-card">
+          <!-- Navegação ao clicar no título ou imagem do livro -->
+          <a @click.prevent="goToBookDetails(index)">
             <img :src="book.image" :alt="book.title" class="book-image" />
             <h5>{{ book.title }}</h5>
             <h6>Autor: {{ book.author }}</h6>
@@ -214,7 +215,7 @@ export default {
         }
       ],
       currentPage: 1,
-      booksPerPage: 6
+      booksPerPage: 12
     };
   },
   computed: {
@@ -243,10 +244,14 @@ export default {
       } else if (direction === 'next' && this.currentPage < this.totalPages) {
         this.currentPage++;
       }
+    },
+    goToBookDetails(bookId) {
+      this.$router.push({ name: 'DetalhesLivros', params: { bookId } });
     }
   }
 };
 </script>
+
 
 <style scoped>
 
