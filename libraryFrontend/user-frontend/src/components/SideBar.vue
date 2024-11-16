@@ -34,7 +34,7 @@
             <img :class="['seta-icone', { rotacionado: isProfileDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
           </a>
           <ul v-show="isProfileDropdownOpen" class="dropdown-menu">
-            <li><a href="/Site - MangeBook/PerfilUsuario.html">Informações de Perfil</a></li>
+            <li><router-link to="/perfil-usuario">Informações de Perfil</router-link></li>
             <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
             <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
           </ul>
