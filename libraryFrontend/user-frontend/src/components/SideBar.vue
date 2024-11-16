@@ -21,7 +21,7 @@
             <img :class="['seta-icone', { rotacionado: isDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
           </a>
           <ul v-show="isDropdownOpen" class="dropdown-menu">
-            <li><a href="/Site - MangeBook/MeusLivros.html">Meus Livros</a></li>
+            <li><router-link to="/meus-livros">Meus Livros</router-link></li>
             <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
             <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
           </ul>
