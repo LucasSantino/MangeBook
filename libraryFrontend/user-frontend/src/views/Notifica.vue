@@ -104,7 +104,7 @@
     margin-top: 20px;
   }
   
-  /* Resto dos estilos permanece o mesmo */
+
   .main {
     margin-top: 70px;
     padding: 10px;
@@ -118,7 +118,7 @@
     padding: 20px;
     text-align: center;
     margin: 20px auto;
-    margin-top: 40px;
+    margin-top: 120px;
     width: 100%;
     max-width: 940px;
   }
@@ -134,6 +134,7 @@
     display: flex;
     justify-content: center;
     padding: 20px;
+    margin-bottom: 40px;
   }
   
   .tabela-container {
@@ -220,11 +221,13 @@
     background-color: #0056b3;
   }
   
-  .pagination span {
-    margin: 0 15px;
-    color: #333;
-  }
-  
+  .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 80px; /* Aumentando a margem inferior */
+}
   .footer {
     background-color: #00334e;
     color: white;
