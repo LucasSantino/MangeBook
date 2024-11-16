@@ -6,6 +6,7 @@ import MeusLivros from '@/views/MeusLivros.vue'; // Pagina Meus Livros
 import Favoritos from '@/views/Favoritos.vue';
 import ListaDesejos from '@/views/ListaDesejos.vue'; // Importação única
 import PerfilUsuario from '@/views/PerfilUsuario.vue';
+import Historico from '@/views/Historico.vue';
 
 const routes = [
   {
@@ -44,6 +45,14 @@ const routes = [
     name: 'PerfilUsuarui',
     component: PerfilUsuario, // Componente da página "Perfil de Usuario"
   },
+  {
+    path: '/historico',
+    name: 'Historico',
+    component: Historico, // Componente da página "Historico"
+  },
+
+
+
 ];
 
 const router = createRouter({

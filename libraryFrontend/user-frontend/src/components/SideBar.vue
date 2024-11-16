@@ -35,7 +35,7 @@
           </a>
           <ul v-show="isProfileDropdownOpen" class="dropdown-menu">
             <li><router-link to="/perfil-usuario">Informações de Perfil</router-link></li>
-            <li><a href="/Site - MangeBook/Historico.html">Histórico</a></li>
+            <li><router-link to="/historico">Historico</router-link></li>
             <li><a href="/Site - MangeBook/Notificacoes.html">Notificações</a></li>
           </ul>
         </li>
