@@ -7,6 +7,7 @@ import Favoritos from '@/views/Favoritos.vue';
 import ListaDesejos from '@/views/ListaDesejos.vue'; // Importação única
 import PerfilUsuario from '@/views/PerfilUsuario.vue';
 import Historico from '@/views/Historico.vue';
+import Notifica from '@/views/Notifica.vue';
 
 const routes = [
   {
@@ -49,6 +50,11 @@ const routes = [
     path: '/historico',
     name: 'Historico',
     component: Historico, // Componente da página "Historico"
+  },
+  {
+    path: '/notifica',
+    name: 'Notifica',
+    component: Notifica, // Componente da página "Notificaçoes"
   },
 
 
