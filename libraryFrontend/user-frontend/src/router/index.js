@@ -3,6 +3,7 @@ import Login from '@/views/Login.vue'; // Página de Login
 import Index from '@/views/index.vue'; // Página de conteúdo após login
 import DetalhesLivros from '@/views/DetalhesLivros.vue'; // Página de detalhes do livro
 import MeusLivros from '@/views/MeusLivros.vue'; // Pagina Meus Livros
+import Favoritos from '@/views/Favoritos.vue';
 
 const routes = [
   {
@@ -26,7 +27,11 @@ const routes = [
     name: 'MeusLivros',
     component: MeusLivros, // Componente da página "Meus Livros"
   },
-
+  {
+    path: '/favoritos',
+    name: 'Favoritos',
+    component: Favoritos, // Componente da página "Favoritos"
+  },
 
 ];
 

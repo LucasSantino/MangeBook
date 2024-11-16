@@ -22,7 +22,7 @@
           </a>
           <ul v-show="isDropdownOpen" class="dropdown-menu">
             <li><router-link to="/meus-livros">Meus Livros</router-link></li>
-            <li><a href="/Site - MangeBook/Favoritos.html">Favoritos</a></li>
+            <li><router-link to="/favoritos">Favoritos</router-link></li>
             <li><a href="/Site - MangeBook/ListaDesejos.html">Lista de Desejos</a></li>
           </ul>
         </li>
