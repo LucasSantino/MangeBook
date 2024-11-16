@@ -4,6 +4,7 @@ import Index from '@/views/index.vue'; // Página de conteúdo após login
 import DetalhesLivros from '@/views/DetalhesLivros.vue'; // Página de detalhes do livro
 import MeusLivros from '@/views/MeusLivros.vue'; // Pagina Meus Livros
 import Favoritos from '@/views/Favoritos.vue';
+import ListaDesejos from '@/views/ListaDesejos.vue'; // Importação única
 
 const routes = [
   {
@@ -32,7 +33,11 @@ const routes = [
     name: 'Favoritos',
     component: Favoritos, // Componente da página "Favoritos"
   },
-
+  {
+    path: '/lista-desejos',
+    name: 'ListaDesejos',
+    component: ListaDesejos, // Componente da página "Lista de Desejos"
+  },
 ];
 
 const router = createRouter({
