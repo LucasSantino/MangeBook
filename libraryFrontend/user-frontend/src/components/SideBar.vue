@@ -41,7 +41,7 @@
         </li>
 
         <!-- Opção Sobre -->
-        <li><a href="Sobre.html">Sobre</a></li>
+        <li><router-link to="/sobre">Sobre</router-link></li>
 
         <!-- Botão de Sair -->
         <li><a href="javascript:void(0)" @click="logout" class="logout-btn">Sair</a></li>
