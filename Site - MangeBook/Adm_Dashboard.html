@@ -38,25 +38,21 @@
         <!-- Sidebar -->
         <div id="sidebar" class="sidebar">
             <button class="close-btn" onclick="toggleSidebar()">×</button>
-             <!-- Imagem no topo da sidebar -->
-        <div class="sidebar-image">
-            <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
+            <!-- Imagem no topo da sidebar -->
+            <div class="sidebar-image">
+                <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
             </div>
             <ul>
-                <li>
-                    <a href="#" onclick="toggleStatisticsDropdown()">
-                      Estatísticas
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-statistics" class="seta-icone" alt="Seta para baixo">
-                    </a>
-                    <ul id="dropdown-menu-statistics" class="dropdown-menu" style="display: none;">
-                        <li><a href="/Site - MangeBook/Adm_Dashboard.html">Dashboard</a></li>
-                        <li><a href="relatorios.html">Relatórios</a></li>
-                    </ul>
-                </li>
+                <!-- Link Acervo -->
+                <li><a href="index.html">Acervo</a></li> <!-- Novo link -->
+                
+                <!-- Link Dashboard -->
+                <li><a href="/Site - MangeBook/Adm_Dashboard.html">Dashboard</a></li> <!-- Link para Dashboard -->
+                
                 <li>
                     <a href="#" onclick="toggleBooksDropdown()">
-                      <i class="fas fa-book"></i> Gerenciamento de Livros
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-books" class="seta-icone" alt="Seta para baixo">
+                        <i class="fas fa-book"></i> Gerenciamento de Livros
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-books" class="seta-icone" alt="Seta para baixo">
                     </a>
                     <ul id="dropdown-menu-books" class="dropdown-menu" style="display: none;">
                         <li><a href="/Site - MangeBook/Adm_LivrosCadastros.html">Cadastro de Livros</a></li>
@@ -65,20 +61,19 @@
                 </li>
                 <li>
                     <a href="#" onclick="toggleUsersDropdown()">
-                      <i class="fas fa-users"></i> Gerenciamento de Usuários
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-users" class="seta-icone" alt="Seta para baixo">
+                        <i class="fas fa-users"></i> Gerenciamento de Usuários
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-users" class="seta-icone" alt="Seta para baixo">
                     </a>
                     <ul id="dropdown-menu-users" class="dropdown-menu" style="display: none;">
                         <li><a href="/Site - MangeBook/Adm_UsuariosCasdastro.html">Cadastro de Usuários</a></li>
                         <li><a href="/Site - MangeBook/Adm_UsuariosCadastrados.html">Usuários Cadastrados</a></li>
                     </ul>
                 </li>
-                <li><a href="configuracoes.html">Configurações</a></li>
                 <li><a href="sobre.html">Sobre</a></li>
-            <!-- Botão de Sair -->
-        <li><a href="/logout.html" class="logout-btn">Sair</a></li>
-        </ul>
-    </div>
+                <!-- Botão de Sair -->
+                <li><a href="/logout.html" class="logout-btn">Sair</a></li>
+            </ul>
+        </div>
         
         <!-- Main Content -->
         <main>
