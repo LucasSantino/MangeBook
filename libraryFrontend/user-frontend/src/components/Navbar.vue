@@ -2,7 +2,7 @@
   <header class="navbar">
     <button class="menu-btn" @click="toggleSidebar">☰</button>
     <h1 class="logo">
-      <a href="index.html" style="color: white; text-decoration: none;">MangeBook</a>
+      <router-link to="/index" style="color: white; text-decoration: none;">MangeBook</router-link>
     </h1>
 
     <div class="search-container">
