@@ -189,6 +189,17 @@ main {
     background-color: #e2e6ea; /* Cor de hover para opções */
 }
 
+/* Estilos para os botões de status */
+.status-btn.ativo {
+    background-color: #28a745; /* Verde para Ativo */
+    color: white;
+}
+
+.status-btn.bloqueado {
+    background-color: #dc3545; /* Vermelho para Bloqueado */
+    color: white;
+}
+
 /* Estilo da navegação de páginas */
 .pagination-container {
     display: flex; /* Flexbox para layout */

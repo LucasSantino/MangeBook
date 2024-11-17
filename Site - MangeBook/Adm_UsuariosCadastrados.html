@@ -119,11 +119,10 @@
                     <td>0</td>
                     <td>
                         <div class="acao-container">
-                            <!-- Botão Status -->
                             <button class="btn-status" onclick="toggleStatus(this, 1)">Status</button>
                             <div id="status-options-1" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(1, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(1, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(1, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(1, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>
@@ -134,7 +133,7 @@
                     <td>2</td>
                     <td>Maria Oliveira</td>
                     <td>maria@exemplo.com</td>
-                    <td id="status-2">Inativo</td>
+                    <td id="status-2">Bloqueado</td>
                     <td>1</td>
                     <td>0</td>
                     <td>2</td>
@@ -142,8 +141,8 @@
                         <div class="acao-container">
                             <button class="btn-status" onclick="toggleStatus(this, 2)">Status</button>
                             <div id="status-options-2" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(2, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(2, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(2, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(2, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>
@@ -162,8 +161,8 @@
                         <div class="acao-container">
                             <button class="btn-status" onclick="toggleStatus(this, 3)">Status</button>
                             <div id="status-options-3" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(3, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(3, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(3, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(3, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>
@@ -182,8 +181,8 @@
                         <div class="acao-container">
                             <button class="btn-status" onclick="toggleStatus(this, 4)">Status</button>
                             <div id="status-options-4" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(4, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(4, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(4, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(4, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>
@@ -194,7 +193,7 @@
                     <td>5</td>
                     <td>Bruno Almeida</td>
                     <td>bruno@exemplo.com</td>
-                    <td id="status-5">Inativo</td>
+                    <td id="status-5">Bloqueado</td>
                     <td>0</td>
                     <td>3</td>
                     <td>4</td>
@@ -202,8 +201,8 @@
                         <div class="acao-container">
                             <button class="btn-status" onclick="toggleStatus(this, 5)">Status</button>
                             <div id="status-options-5" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(5, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(5, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(5, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(5, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>
@@ -222,8 +221,8 @@
                         <div class="acao-container">
                             <button class="btn-status" onclick="toggleStatus(this, 6)">Status</button>
                             <div id="status-options-6" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(6, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(6, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(6, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(6, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>
@@ -234,7 +233,7 @@
                     <td>7</td>
                     <td>Rafael Lima</td>
                     <td>rafael@exemplo.com</td>
-                    <td id="status-7">Inativo</td>
+                    <td id="status-7">Bloqueado</td>
                     <td>1</td>
                     <td>1</td>
                     <td>0</td>
@@ -242,8 +241,8 @@
                         <div class="acao-container">
                             <button class="btn-status" onclick="toggleStatus(this, 7)">Status</button>
                             <div id="status-options-7" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(7, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(7, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(7, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(7, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>
@@ -262,8 +261,8 @@
                         <div class="acao-container">
                             <button class="btn-status" onclick="toggleStatus(this, 8)">Status</button>
                             <div id="status-options-8" class="status-options" style="display: none;">
-                                <button class="status-btn" onclick="setStatus(8, 'Ativo')">Ativo</button>
-                                <button class="status-btn" onclick="setStatus(8, 'Inativo')">Inativo</button>
+                                <button class="status-btn ativo" onclick="setStatus(8, 'Ativo')">Ativo</button>
+                                <button class="status-btn bloqueado" onclick="setStatus(8, 'Bloqueado')">Bloqueado</button>
                             </div>
                             <button class="btn-enviar-mensagem">Enviar Mensagem</button>
                             <button class="btn-excluir">Excluir</button>

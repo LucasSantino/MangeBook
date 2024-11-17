@@ -23,8 +23,8 @@ function setStatus(userId, status) {
     // Alterar a cor do botão de status com base no novo status
     if (status === 'Ativo') {
         statusButton.style.backgroundColor = '#28a745';  // Verde para Ativo
-    } else {
-        statusButton.style.backgroundColor = '#dc3545';  // Vermelho para Inativo
+    } else if (status === 'Bloqueado') {
+        statusButton.style.backgroundColor = '#dc3545';  // Vermelho para Bloqueado
     }
 
     // Fechar o menu de opções
