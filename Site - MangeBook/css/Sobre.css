@@ -1,150 +1,92 @@
-/* Estilos gerais para as páginas de conteúdo */
-.page-content {
-    margin: 40px auto;
-    padding: 20px;
-    max-width: 1200px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+/* Reset de estilo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif; /* Fonte padrão */
 }
 
-/* Títulos principais */
-.page-content h2 {
-    font-size: 2.5em;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+/* Container principal (main) */
+main {
+    width: 90%; /* Utiliza 90% da largura da tela para espaçamentos laterais */
+    max-width: 1000px; /* Largura reduzida para 1000px */
+    margin: 50px auto; /* Centraliza o conteúdo com margem superior e inferior */
+    padding: 20px; /* Espaçamento interno */
+    box-sizing: border-box; /* Garante que o padding não afete a largura */
 }
 
-/* Estilo para os subtítulos (parágrafos com conteúdo numerado) */
-.page-content p {
-    font-size: 1.1em;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 15px;
-}
-
-/* Negrito em parágrafos para destacar seções ou tópicos */
-.page-content p strong {
-    font-weight: bold;
-    color: #2b3a42;
-}
-
-/* Tabelas, se necessário */
-.page-content table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    border: 1px solid #ddd;
-}
-
-.page-content table th, .page-content table td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-.page-content table th {
-    background-color: #f2f2f2;
-    color: #333;
-    font-size: 1.2em;
-}
-
-.page-content table td {
+/* Seção de Boas-vindas */
+.welcome-container {
     background-color: #fff;
-    color: #555;
-    font-size: 1.1em;
-}
-
-/* Links internos (para navegação entre seções) */
-.page-content a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.page-content a:hover {
-    text-decoration: underline;
-}
-
-/* Estilos para as listas de tópicos */
-.page-content ul, .page-content ol {
-    padding-left: 20px;
-    font-size: 1.1em;
-    margin-bottom: 15px;
-}
-
-.page-content ul li, .page-content ol li {
-    margin-bottom: 10px;
-}
-
-/* Modificação de fundo e bordas para botões */
-.page-content button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-}
-
-.page-content button:hover {
-    background-color: #0056b3;
-}
-
-/* Alinhamento centralizado para os botões */
-.page-content .btn-container {
+    padding: 20px;
     text-align: center;
+    margin: 30px auto 30px auto; /* Margem superior de 30px */
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Box-shadow levemente reduzido */
+    width: 100%; /* Garante que ocupe 100% da largura disponível */
+    max-width: 1000px; /* Mesma largura máxima que o main */
+    box-sizing: border-box; /* Garante que padding não afete a largura */
+}
+
+/* Título e parágrafo da seção de boas-vindas */
+.welcome-title {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #00334e;
+}
+
+.welcome-container p {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Seção de Conteúdo */
+.main-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Aumenta a sombra superior */
+    margin-top: 50px; /* Reduz o espaçamento superior */
+    width: 100%; /* Garante que ocupe 100% da largura disponível */
+    max-width: 1000px; /* Mesma largura máxima que o main e o welcome-container */
+    box-sizing: border-box; /* Garante que padding não afete a largura */
+}
+
+
+/* Containers de conteúdo */
+.content-container {
+    max-width: 800px; /* Largura reduzida para 800px */
+    margin: 0 auto 30px auto; /* Centraliza e dá espaçamento inferior */
+    width: 100%; /* Garante que ocupe 100% da largura disponível */
+}
+
+/* Títulos e parágrafos dos containers de conteúdo */
+.content-container h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #00334e;
+    margin-top: 50px; /* Adiciona o espaçamento superior para os títulos */
+}
+
+.content-container p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    text-align: justify; /* Justifica o texto dos parágrafos */
+}
+
+/* Listas dentro das seções */
+.content-container ul {
+    text-align: justify; /* Justifica o texto das listas */
     margin-top: 20px;
+    line-height: 1.8;
 }
 
-/* Seção de Política de Privacidade com fundo diferente */
-#politica-privacidade {
-    background-color: #f4f7fb;
-}
-
-/* Seção de Termos de Serviço com fundo mais escuro */
-#termos-servico {
-    background-color: #e8f2f8;
-}
-
-/* Seção de Regras de Empréstimo com uma cor de fundo ligeiramente diferente */
-#regras-emprestimo {
-    background-color: #f2f7f4;
-}
-
-/* Margem inferior extra para espaçar mais entre as seções */
-.page-content section {
-    margin-bottom: 40px;
-}
-
-/* Ajuste para dispositivos móveis */
-@media (max-width: 768px) {
-    .page-content {
-        padding: 15px;
-        margin: 20px;
-    }
-
-    .page-content h2 {
-        font-size: 2em;
-    }
-
-    .page-content p {
-        font-size: 1em;
-    }
-
-    .page-content table {
-        font-size: 0.9em;
-    }
-
-    .page-content ul, .page-content ol {
-        padding-left: 15px;
-    }
-
-    .page-content button {
-        width: 100%;
-        padding: 12px;
-        font-size: 1em;
-    }
+/* Rodapé */
+.footer {
+    background-color: #00334e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
 }
