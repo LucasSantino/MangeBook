@@ -118,6 +118,23 @@ main {
     background-color: #218838; /* Verde mais escuro */
 }
 
+/* Novo botão "Enviar Mensagem" */
+.btn-enviar-mensagem {
+    padding: 6px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    background-color:  #00334e; /* Azul para Enviar Mensagem */
+    color: white;
+    margin: 3px 0; /* Espaçamento entre os botões */
+}
+
+.btn-enviar-mensagem:hover {
+    background-color: #0056b3; /* Azul mais escuro */
+}
+
+/* Estilo do botão Excluir */
 .btn-excluir {
     padding: 6px; /* Diminuído */
     cursor: pointer;
@@ -133,15 +150,54 @@ main {
     background-color: #c82333; /* Vermelho mais escuro */
 }
 
+/* Estilo do botão Status */
+.btn-status {
+    padding: 6px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    background-color: #17a2b8; /* Azul para Status */
+    color: white;
+    margin: 3px 0; /* Espaçamento entre os botões */
+}
+
+.btn-status:hover {
+    background-color: #138496; /* Azul mais escuro */
+}
+
+/* Estilo das opções de Status */
+.status-options {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.status-btn {
+    padding: 6px;
+    cursor: pointer;
+    border: none;
+    background-color: #f8f9fa;
+    color: #333;
+    width: 100%;
+    text-align: left;
+}
+
+.status-btn:hover {
+    background-color: #e2e6ea; /* Cor de hover para opções */
+}
+
 /* Estilo da navegação de páginas */
-.pagination {
+.pagination-container {
     display: flex; /* Flexbox para layout */
     justify-content: center; /* Centraliza os botões */
     align-items: center; /* Alinha verticalmente */
     margin-top: 20px; /* Espaçamento superior */
 }
 
-.btn-navegacao {
+.pagination-btn {
     padding: 10px 20px; /* Espaçamento interno dos botões */
     margin: 0 5px; /* Margem entre os botões */
     cursor: pointer; /* Muda o cursor ao passar por cima */
@@ -152,12 +208,12 @@ main {
     transition: background-color 0.3s; /* Efeito de transição */
 }
 
-.btn-navegacao:hover {
+.pagination-btn:hover {
     background-color: #0056b3; /* Tom mais escuro ao passar o mouse */
 }
 
 /* Estilo do texto da página */
-.pagination span {
+.page-info {
     margin: 0 15px; /* Margem lateral para o texto */
     color: #333; /* Cor do texto */
 }
@@ -186,5 +242,9 @@ main {
 
     .welcome-container {
         padding: 10px; /* Reduz o padding do container em telas menores */
+    }
+
+    .pagination-btn {
+        padding: 8px 16px; /* Ajuste nos botões de paginação em telas pequenas */
     }
 }
