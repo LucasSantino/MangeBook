@@ -4,15 +4,18 @@ function createCharts() {
     const ctxReservas = document.getElementById('historicoReservas').getContext('2d');
     const ctxLivrosComparativo = document.getElementById('livrosComparativo').getContext('2d');
 
-    // Gráfico de Livros Emprestados (Doughnut)
+    // Novas cores escuras incluindo o verde
+    const updatedColors = ['#00334e', '#8E44AD', '#C0392B', '#28A745'];
+
+    // Gráfico de Livros Emprestados (Doughnut) com porcentagem
     const livrosEmprestadosChart = new Chart(ctxLivrosEmprestados, {
         type: 'doughnut',
         data: {
-            labels: ['Livros Emprestados', 'Livros Reservados', 'Livros Atrasados'],
+            labels: ['Livros Emprestados', 'Livros Reservados', 'Livros Atrasados', 'Livros Devolvidos'],
             datasets: [{
                 label: 'Livros Emprestados',
-                data: [10, 20, 15],
-                backgroundColor: ['#36A2EB', '#FFCD56', '#FF5733'],
+                data: [10, 20, 15, 25], // Adicionei o valor para "Livros Devolvidos"
+                backgroundColor: updatedColors,
                 hoverOffset: 4,
             }]
         },
@@ -26,7 +29,10 @@ function createCharts() {
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                            const total = tooltipItem.dataset.data.reduce((a, b) => a + b, 0);
+                            const value = tooltipItem.raw;
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            return `${tooltipItem.label}: ${value} (${percentage}%)`;
                         }
                     }
                 }
@@ -34,16 +40,16 @@ function createCharts() {
         }
     });
 
-    // Gráfico de Reservas Mensais (Line)
+    // Gráfico de Reservas Mensais (Line) com todos os meses
     const reservasChart = new Chart(ctxReservas, {
         type: 'line',
         data: {
-            labels: ['Jan', 'Fev', 'Mar'],
+            labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
             datasets: [{
                 label: 'Reservas Mensais',
-                data: [30, 50, 25],
+                data: [30, 50, 25, 40, 55, 45, 60, 70, 50, 80, 65, 75], // Adicionei dados para todos os meses
                 fill: false,
-                borderColor: 'rgba(255, 99, 132, 1)',
+                borderColor: updatedColors[0],
                 tension: 0.1,
                 borderWidth: 2,
             }]
@@ -72,7 +78,7 @@ function createCharts() {
         }
     });
 
-    // Gráfico Comparativo de Livros (Bar)
+    // Gráfico Comparativo de Livros (Bar) com "Livros Devolvidos"
     const livrosComparativoChart = new Chart(ctxLivrosComparativo, {
         type: 'bar',
         data: {
@@ -81,17 +87,22 @@ function createCharts() {
                 {
                     label: 'Livros Emprestados',
                     data: [10, 20, 15, 30, 25, 40, 50, 60, 55, 70, 65, 80],
-                    backgroundColor: '#36A2EB',
+                    backgroundColor: updatedColors[0],
                 },
                 {
                     label: 'Livros Reservados',
                     data: [15, 25, 30, 20, 35, 45, 55, 50, 60, 65, 70, 75],
-                    backgroundColor: '#FFCD56',
+                    backgroundColor: updatedColors[1],
                 },
                 {
                     label: 'Livros Atrasados',
                     data: [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70],
-                    backgroundColor: '#FF5733',
+                    backgroundColor: updatedColors[2],
+                },
+                {
+                    label: 'Livros Devolvidos',
+                    data: [20, 30, 25, 40, 45, 50, 55, 60, 65, 70, 75, 80],
+                    backgroundColor: updatedColors[3], // Verde para "Livros Devolvidos"
                 }
             ]
         },
@@ -105,7 +116,7 @@ function createCharts() {
                 tooltip: {
                     callbacks: {
                         label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw;
+                            return tooltipItem.dataset.label + ': ' + tooltipItem.raw;
                         }
                     }
                 }
