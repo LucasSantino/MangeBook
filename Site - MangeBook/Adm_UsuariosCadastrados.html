@@ -83,6 +83,7 @@
     <div class="welcome-container">
         <h2 class="welcome-title">Lista de Usuários</h2>
         <p>Seja Bem-vindo à sua Biblioteca. Todos os Usuários cadastrados aparecem na lista abaixo.</p>
+        
         <!-- Barra de Pesquisa -->
         <div class="search-container2">
             <input type="text" class="search-bar2" placeholder="Pesquisar...">
@@ -94,6 +95,7 @@
         </div>
     </div>
 
+    <!-- Tabela de Usuários -->
     <div class="usuarios-container">
         <table class="usuarios-tabela">
             <thead>
@@ -109,6 +111,7 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- Exemplo de Linha de Usuário -->
                 <tr>
                     <td>1</td>
                     <td>João da Silva</td>
@@ -124,8 +127,8 @@
                                 <button class="status-btn ativo" onclick="setStatus(1, 'Ativo')">Ativo</button>
                                 <button class="status-btn bloqueado" onclick="setStatus(1, 'Bloqueado')">Bloqueado</button>
                             </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
+                            <button class="btn-enviar-mensagem" onclick="enviarMensagemPopup(1)">Enviar Mensagem</button>
+                            <button class="btn-excluir" onclick="excluirPopup(1)">Excluir</button>
                         </div>
                     </td>
                 </tr>
@@ -144,8 +147,8 @@
                                 <button class="status-btn ativo" onclick="setStatus(2, 'Ativo')">Ativo</button>
                                 <button class="status-btn bloqueado" onclick="setStatus(2, 'Bloqueado')">Bloqueado</button>
                             </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
+                            <button class="btn-enviar-mensagem" onclick="enviarMensagemPopup(2)">Enviar Mensagem</button>
+                            <button class="btn-excluir" onclick="excluirPopup(2)">Excluir</button>
                         </div>
                     </td>
                 </tr>
@@ -164,8 +167,8 @@
                                 <button class="status-btn ativo" onclick="setStatus(3, 'Ativo')">Ativo</button>
                                 <button class="status-btn bloqueado" onclick="setStatus(3, 'Bloqueado')">Bloqueado</button>
                             </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
+                            <button class="btn-enviar-mensagem" onclick="enviarMensagemPopup(3)">Enviar Mensagem</button>
+                            <button class="btn-excluir" onclick="excluirPopup(3)">Excluir</button>
                         </div>
                     </td>
                 </tr>
@@ -184,8 +187,8 @@
                                 <button class="status-btn ativo" onclick="setStatus(4, 'Ativo')">Ativo</button>
                                 <button class="status-btn bloqueado" onclick="setStatus(4, 'Bloqueado')">Bloqueado</button>
                             </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
+                            <button class="btn-enviar-mensagem" onclick="enviarMensagemPopup(4)">Enviar Mensagem</button>
+                            <button class="btn-excluir" onclick="excluirPopup(4)">Excluir</button>
                         </div>
                     </td>
                 </tr>
@@ -204,8 +207,8 @@
                                 <button class="status-btn ativo" onclick="setStatus(5, 'Ativo')">Ativo</button>
                                 <button class="status-btn bloqueado" onclick="setStatus(5, 'Bloqueado')">Bloqueado</button>
                             </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
+                            <button class="btn-enviar-mensagem" onclick="enviarMensagemPopup(5)">Enviar Mensagem</button>
+                            <button class="btn-excluir" onclick="excluirPopup(5)">Excluir</button>
                         </div>
                     </td>
                 </tr>
@@ -224,8 +227,8 @@
                                 <button class="status-btn ativo" onclick="setStatus(6, 'Ativo')">Ativo</button>
                                 <button class="status-btn bloqueado" onclick="setStatus(6, 'Bloqueado')">Bloqueado</button>
                             </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
+                            <button class="btn-enviar-mensagem" onclick="enviarMensagemPopup(6)">Enviar Mensagem</button>
+                            <button class="btn-excluir" onclick="excluirPopup(6)">Excluir</button>
                         </div>
                     </td>
                 </tr>
@@ -244,33 +247,30 @@
                                 <button class="status-btn ativo" onclick="setStatus(7, 'Ativo')">Ativo</button>
                                 <button class="status-btn bloqueado" onclick="setStatus(7, 'Bloqueado')">Bloqueado</button>
                             </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>Juliana Martins</td>
-                    <td>juliana@exemplo.com</td>
-                    <td id="status-8">Ativo</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>0</td>
-                    <td>
-                        <div class="acao-container">
-                            <button class="btn-status" onclick="toggleStatus(this, 8)">Status</button>
-                            <div id="status-options-8" class="status-options" style="display: none;">
-                                <button class="status-btn ativo" onclick="setStatus(8, 'Ativo')">Ativo</button>
-                                <button class="status-btn bloqueado" onclick="setStatus(8, 'Bloqueado')">Bloqueado</button>
-                            </div>
-                            <button class="btn-enviar-mensagem">Enviar Mensagem</button>
-                            <button class="btn-excluir">Excluir</button>
+                            <button class="btn-enviar-mensagem" onclick="enviarMensagemPopup(7)">Enviar Mensagem</button>
+                            <button class="btn-excluir" onclick="excluirPopup(7)">Excluir</button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div id="popup-enviar-mensagem" class="popup-container" style="display: none;">
+            <h3>Enviar Mensagem</h3>
+            <textarea id="mensagem-texto" placeholder="Digite sua mensagem..." rows="5" cols="30"></textarea>
+            <button onclick="enviarMensagem()">Enviar</button>
+            <button onclick="fecharPopup('popup-enviar-mensagem')">Fechar</button>
+        </div>
+    
+        <!-- Popup de Confirmação de Exclusão -->
+        <div id="popup-excluir" class="popup-container" style="display: none;">
+            <h3>Excluir Usuário</h3>
+            <p>Tem certeza de que deseja excluir este usuário?</p>
+            <button class="confirm" onclick="excluirUsuario()">Confirmar</button>
+            <button class="cancel" onclick="fecharPopup('popup-excluir')">Cancelar</button>
+        </div>
+    
+        <!-- Overlay para Popups -->
+        <div id="popup-overlay" style="display: none;" onclick="fecharPopup()"></div>
         <!-- Botões de Paginação -->
         <div class="pagination-container">
             <button class="pagination-btn" onclick="previousPage()">Anterior</button>
@@ -279,6 +279,7 @@
         </div>
     </div>
 </main>
+
 
     <!-- Rodapé -->
     <footer class="footer">

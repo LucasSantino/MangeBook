@@ -157,7 +157,7 @@ main {
     border: none;
     border-radius: 4px;
     transition: background-color 0.3s;
-    background-color: #17a2b8; /* Azul para Status */
+    background-color: #00334e; /* Azul para Status */
     color: white;
     margin: 3px 0; /* Espaçamento entre os botões */
 }
@@ -199,6 +199,71 @@ main {
     background-color: #dc3545; /* Vermelho para Bloqueado */
     color: white;
 }
+/* Estilo do Popup */
+.popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+}
+
+/* Overlay para Popups */
+#popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+/* Estilo para o botão de Enviar Mensagem */
+#popup-enviar-mensagem button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin: 5px 0;
+}
+
+#popup-enviar-mensagem button:hover {
+    background-color: #45a049;
+}
+
+/* Estilo para o botão de Excluir */
+#popup-excluir button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin: 5px 0;
+}
+
+#popup-excluir button:hover {
+    background-color: #e53935;
+}
+
+/* Caixa de Texto do Popup de Enviar Mensagem */
+#mensagem-texto {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Adicionar mais estilos conforme necessário para o layout da tabela e outros componentes */
+
 
 /* Estilo da navegação de páginas */
 .pagination-container {
