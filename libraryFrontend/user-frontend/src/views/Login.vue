@@ -61,7 +61,7 @@ export default {
         }));
 
         // Redireciona para a página inicial (Index.vue)
-        this.$router.push('/index');  // Redireciona para a página de Index
+        this.$router.push('/adm_dashboard');  // Redireciona para a página de Index
         alert('Login bem-sucedido como Administrador!');
       } else if (this.userType === 'user' && this.username === validUsernameUser && this.password === validPasswordUser) {
         // Salva os dados no localStorage (token e informações do usuário)

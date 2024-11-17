@@ -9,6 +9,7 @@ import PerfilUsuario from '@/views/PerfilUsuario.vue';
 import Historico from '@/views/Historico.vue';
 import Notifica from '@/views/Notifica.vue';
 import Sobre from '@/views/Sobre.vue';
+import adm_Dashboard from '@/views/adm_Dashboard.vue'; // Importando a página do painel administrativo
 
 const routes = [
   {
@@ -62,8 +63,11 @@ const routes = [
     name: 'Sobre',
     component: Sobre, // Componente da página "Notificaçoes"
   },
-
-
+  {
+    path: '/adm_dashboard', // Nova rota para o painel administrativo
+    name: 'adm_Dashboard', // Nome da rota para facilitar a navegação
+    component: adm_Dashboard, // Componente da página do painel administrativo
+  },
 ];
 
 const router = createRouter({
