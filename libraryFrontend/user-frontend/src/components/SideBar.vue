@@ -6,7 +6,10 @@
 
       <!-- Imagem no topo da sidebar -->
       <div class="sidebar-image">
-        <img :src="logo" alt="Imagem da Sidebar" class="sidebar-img">
+        <!-- Envolvendo a imagem com router-link -->
+        <router-link to="/index">
+          <img :src="logo" alt="Imagem da Sidebar" class="sidebar-img">
+        </router-link>
       </div>
 
       <!-- Lista de Links -->
