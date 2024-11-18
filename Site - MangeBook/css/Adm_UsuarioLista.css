@@ -4,14 +4,7 @@ body {
     font-family: Arial, sans-serif; /* Fonte padrão */
 }
 
-/* Estilo da navbar */
-.navbar {
-    background-color: #00334e;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-}
+
 
 /* Container principal */
 main {
@@ -30,6 +23,14 @@ main {
     text-align: center;
     margin: 40px auto; /* Margem automática para centralizar */
     max-width: 940px; /* Largura máxima do container */
+}
+
+/* Seção de boas-vindas */
+.welcome-title {
+    font-size: 28px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    margin-bottom: 10px; /* Espaçamento abaixo */
+    color: #00334e; /* Cor do texto */
 }
 
 /* Estilo para a barra de pesquisa 2 */

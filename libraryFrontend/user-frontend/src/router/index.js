@@ -12,6 +12,7 @@ import Sobre from '@/views/Sobre.vue';
 import adm_Dashboard from '@/views/adm_Dashboard.vue'; // Importando a página do painel administrativo
 import adm_CadastroLivro from '@/views/adm_CadastroLivro.vue';
 import adm_LivrosLista from '@/views/adm_LivrosLista.vue';
+import adm_UsersLista from '@/views/adm_UsersLista.vue'
 
 const routes = [
   {
@@ -80,6 +81,12 @@ const routes = [
     name: 'adm_LivrosLista', // Nome da rota para facilitar a navegação
     component: adm_LivrosLista, // Componente da página do painel administrativo
   },
+  {
+    path: '/adm_userslista', // Nova rota para o painel administrativo
+    name: 'adm_UsersLista', // Nome da rota para facilitar a navegação
+    component: adm_UsersLista, // Componente da página do painel administrativo
+  },
+
 ];
 
 const router = createRouter({

@@ -40,7 +40,7 @@
             </a>
             <ul v-show="isUsersDropdownOpen" class="dropdown-menu">
               <li><router-link to="/Site - MangeBook/Adm_UsuariosCasdastro.html">Cadastro de Usuários</router-link></li>
-              <li><router-link to="/Site - MangeBook/Adm_UsuariosCadastrados.html">Usuários Cadastrados</router-link></li>
+              <li><router-link to="/adm_userslista">Usuários Cadastrados</router-link></li>
             </ul>
           </li>
   
