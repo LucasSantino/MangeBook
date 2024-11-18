@@ -11,6 +11,7 @@ import Notifica from '@/views/Notifica.vue';
 import Sobre from '@/views/Sobre.vue';
 import adm_Dashboard from '@/views/adm_Dashboard.vue'; // Importando a página do painel administrativo
 import adm_CadastroLivro from '@/views/adm_CadastroLivro.vue';
+import adm_LivrosLista from '@/views/adm_LivrosLista.vue';
 
 const routes = [
   {
@@ -73,6 +74,11 @@ const routes = [
     path: '/adm_cadastrolivro', // Nova rota para o painel administrativo
     name: 'adm_CadastroLivro', // Nome da rota para facilitar a navegação
     component: adm_CadastroLivro, // Componente da página do painel administrativo
+  },
+  {
+    path: '/adm_livroslista', // Nova rota para o painel administrativo
+    name: 'adm_LivrosLista', // Nome da rota para facilitar a navegação
+    component: adm_LivrosLista, // Componente da página do painel administrativo
   },
 ];
 

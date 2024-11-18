@@ -28,7 +28,7 @@
             </a>
             <ul v-show="isBooksDropdownOpen" class="dropdown-menu">
               <li><router-link to="/adm_cadastrolivro">Cadastro de Livros</router-link></li>
-              <li><router-link to="/Site - MangeBook/Adm_LivrosLista.html">Livros Cadastrados</router-link></li>
+              <li><router-link to="/adm_livroslista">Livros Cadastrados</router-link></li>
             </ul>
           </li>
   

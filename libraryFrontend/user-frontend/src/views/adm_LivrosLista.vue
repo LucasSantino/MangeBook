@@ -1,0 +1,337 @@
+<template>
+    <div id="app">
+      <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
+      <NavBar @toggle-sidebar="toggleSidebar" />
+  
+      <!-- Sidebar Administrativa para administradores -->
+      <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+  
+      <!-- Conteúdo Principal -->
+      <main>
+        <div class="welcome-container">
+          <h2 class="welcome-title">Lista de Livros</h2>
+          <p>Seja Bem-vindo à sua Biblioteca. Todos os Livros cadastrados aparecerão na lista abaixo.</p>
+  
+          <!-- Barra de Pesquisa -->
+          <div class="search-container2">
+            <input type="text" class="search-bar2" placeholder="Pesquisar livros cadastrados..." v-model="searchQuery" />
+            <button class="search-icon2" @click="pesquisar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+  
+        <!-- Tabela de Livros -->
+        <div class="livros-container">
+          <div class="tabela-container">
+            <table class="livros-tabela">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Título</th>
+                  <th>Autor</th>
+                  <th>Descrição</th>
+                  <th>Ano de Publicação</th>
+                  <th>Gênero</th>
+                  <th>ISBN</th>
+                  <th>Nº de Cópias</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="livro in livrosFiltrados" :key="livro.id">
+                  <td>{{ livro.id }}</td>
+                  <td>{{ livro.titulo }}</td>
+                  <td>{{ livro.autor }}</td>
+                  <td>{{ livro.descricao }}</td>
+                  <td>{{ livro.anoPublicacao }}</td>
+                  <td>{{ livro.genero }}</td>
+                  <td>{{ livro.isbn }}</td>
+                  <td>{{ livro.numCopias }}</td>
+                  <td>
+                    <div class="btn-container">
+                      <button class="btn-editar" @click="editarLivro(livro.id)">Editar Livro</button>
+                      <button class="btn-remover" @click="removerLivro(livro.id)">Remover</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+  
+            <!-- Navegação de Páginas -->
+            <div class="pagination">
+              <button class="btn-navegacao" aria-label="Página anterior" @click="navegar('anterior')">Anterior</button>
+              <span>Página {{ paginaAtual }} de {{ totalPaginas }}</span>
+              <button class="btn-navegacao" aria-label="Próxima página" @click="navegar('proxima')">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </template>
+  
+  <script>
+  import NavBar from '@/components/NavBar.vue';
+  import adm_SideBar from '@/components/adm_SideBar.vue';
+  
+  export default {
+    components: {
+      NavBar,
+      adm_SideBar,
+    },
+    data() {
+      return {
+        isSidebarOpen: false,
+        searchQuery: '', // variável para armazenar a busca
+        livros: [
+          { id: 1, titulo: 'Harry Potter e a Pedra Filosofal', autor: 'JK Rowling', descricao: 'Primeiro livro da série Harry Potter.', anoPublicacao: 1997, genero: 'Fantasia', isbn: '978-3-16-148410-0', numCopias: 5 },
+          { id: 2, titulo: 'Harry Potter e a Câmara Secreta', autor: 'JK Rowling', descricao: 'Segunda parte da série Harry Potter.', anoPublicacao: 1998, genero: 'Fantasia', isbn: '978-3-16-148410-1', numCopias: 3 },
+          { id: 3, titulo: 'Percy Jackson e o Ladrão de Raios', autor: 'Rick Riordan', descricao: 'Aventura de Percy no mundo dos deuses gregos.', anoPublicacao: 2005, genero: 'Aventura', isbn: '978-3-16-148410-2', numCopias: 4 },
+          { id: 4, titulo: 'A Culpa é das Estrelas', autor: 'John Green', descricao: 'Uma história de amor entre jovens com câncer.', anoPublicacao: 2012, genero: 'Romance', isbn: '978-0-313-32531-5', numCopias: 2 },
+          { id: 5, titulo: 'O Hobbit', autor: 'J.R.R. Tolkien', descricao: 'A jornada de Bilbo Bolseiro em busca de um tesouro.', anoPublicacao: 1937, genero: 'Fantasia', isbn: '978-0-261-10221-8', numCopias: 6 },
+          { id: 6, titulo: '1984', autor: 'George Orwell', descricao: 'Uma distopia sobre totalitarismo e vigilância.', anoPublicacao: 1949, genero: 'Ficção Científica', isbn: '978-0-452-28423-4', numCopias: 8 },
+          { id: 7, titulo: 'O Senhor dos Anéis: A Sociedade do Anel', autor: 'J.R.R. Tolkien', descricao: 'O início da jornada de Frodo e seus amigos.', anoPublicacao: 1954, genero: 'Fantasia', isbn: '978-0-618-26649-9', numCopias: 7 },
+          { id: 8, titulo: 'O Pequeno Príncipe', autor: 'Antoine de Saint-Exupéry', descricao: 'Uma fábula sobre a inocência e a amizade.', anoPublicacao: 1943, genero: 'Fábula', isbn: '978-0-15-601219-5', numCopias: 10 },
+          { id: 9, titulo: 'Dom Casmurro', autor: 'Machado de Assis', descricao: 'A história de Bentinho e seu ciúme por Capitu.', anoPublicacao: 1899, genero: 'Literatura Brasileira', isbn: '978-85-359-0277-6', numCopias: 4 },
+          { id: 10, titulo: 'O Alquimista', autor: 'Paulo Coelho', descricao: 'A jornada de Santiago em busca de seu tesouro pessoal.', anoPublicacao: 1988, genero: 'Literatura Brasileira', isbn: '978-85-327-1632-0', numCopias: 3 },
+        ],
+        paginaAtual: 1,
+        totalPaginas: 10,
+      };
+    },
+    computed: {
+      livrosFiltrados() {
+        return this.livros.filter(livro => {
+          return livro.titulo.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                 livro.autor.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                 livro.descricao.toLowerCase().includes(this.searchQuery.toLowerCase());
+        });
+      }
+    },
+    methods: {
+      toggleSidebar() {
+        this.isSidebarOpen = !this.isSidebarOpen;
+      },
+      editarLivro(id) {
+        console.log('Editar Livro:', id);
+        // Aqui você pode implementar a lógica de edição do livro
+      },
+      removerLivro(id) {
+        console.log('Remover Livro:', id);
+        // Aqui você pode implementar a lógica de remoção do livro
+      },
+      navegar(direcao) {
+        if (direcao === 'anterior' && this.paginaAtual > 1) {
+          this.paginaAtual--;
+        } else if (direcao === 'proxima' && this.paginaAtual < this.totalPaginas) {
+          this.paginaAtual++;
+        }
+      },
+      pesquisar() {
+        // Lógica de pesquisa pode ser aplicada aqui (se necessário)
+      }
+    },
+  };
+  </script>
+  
+  <style scoped>
+  /* Estilo do corpo */
+body {
+    background-color: #f0f0f0; /* Cor de fundo */
+    font-family: Arial, sans-serif; /* Fonte padrão */
+}
+
+
+/* Container principal */
+main {
+    width: 100%; /* Aumente a porcentagem conforme necessário */
+    max-width: 1200px; /* Limite a largura máxima */
+    margin: 50px auto; /* Aumenta a margem superior */
+    padding: 20px; /* Espaçamento interno */
+}
+
+/* Estilo do container de boas-vindas */
+.welcome-container {
+    background-color: #ffffff; /* Cor de fundo do container */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para o efeito de elevação */
+    padding: 20px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto dentro do container */
+    margin: 40px auto; /* Margem automática para centralizar */
+    max-width: 940px; /* Largura máxima do container */
+}
+
+/* Seção de boas-vindas */
+.welcome-title {
+    font-size: 28px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    margin-bottom: 10px; /* Espaçamento abaixo */
+    color: #00334e; /* Cor do texto */
+}
+
+/* Estilo para a barra de pesquisa 2 */
+.search-container2 {
+    display: flex; /* Usando Flexbox para alinhar itens */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin: 20px 0; /* Margem superior e inferior */
+}
+
+/* Estilo da barra de pesquisa 2 */
+.search-bar2 {
+    width: 300px; /* Largura fixa ou percentual */
+    padding: 6px; /* Diminuído */
+    border: 1px solid #ddd; /* Borda da barra de pesquisa */
+    border-radius: 10px; /* Bordas arredondadas */
+    font-size: 14px; /* Diminuído */
+}
+
+/* Estilo do botão de pesquisa 2 */
+.search-icon2 {
+    background-color: #00334e; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    padding: 6px; /* Diminuído */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    margin-left: 10px; /* Margem à esquerda do botão */
+}
+
+/* Efeito de hover no botão de pesquisa 2 */
+.search-icon2:hover {
+    background-color: #0056b3; /* Cor mais escura ao passar o mouse */
+}
+
+/* Estilo do container de livros */
+.livros-container {
+    margin-top: 20px; /* Espaçamento superior */
+    overflow-x: auto; /* Permite rolagem horizontal se necessário */
+}
+
+/* Tabela de Livros */
+.livros-tabela {
+    width: 100%; /* Faz a tabela ocupar toda a largura do container */
+    max-width: 940px; /* Ajuste para a largura máxima do welcome-container */
+    border-collapse: collapse; /* Para que as bordas das células se fundam */
+    background-color: white; /* Cor de fundo da tabela */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra da tabela */
+    margin: 20px auto; /* Centraliza a tabela */
+    margin-top: 5px; /* Reduzido para 5px */
+}
+
+.livros-tabela th, .livros-tabela td {
+    padding: 8px; /* Diminuído para td */
+    text-align: center; /* Alinhamento do texto centralizado */
+    border: 1px solid #ddd; /* Borda das células */
+    font-size: 12px; /* Tamanho da fonte reduzido */
+}
+
+.livros-tabela th {
+    height: 40px; /* Altura aumentada para th */
+    background-color: #00334e; /* Cor de fundo do cabeçalho */
+    color: white; /* Cor do texto do cabeçalho */
+    font-weight: bold; /* Negrito */
+}
+
+/* Efeito de hover nas linhas da tabela */
+.livros-tabela tr:hover {
+    background-color: #f1f1f1; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilo dos botões */
+.btn-container {
+    display: flex; /* Ativa o Flexbox */
+    flex-direction: column; /* Coloca os botões em coluna */
+    gap: 10px; /* Espaçamento entre os botões */
+    align-items: center; /* Centraliza os botões */
+}
+
+.btn-editar, .btn-remover {
+    flex: 1; /* Faz os botões ocuparem a mesma largura */
+    padding: 6px; /* Diminuído */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    transition: background-color 0.3s; /* Efeito de transição ao passar o mouse */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    min-width: 100px; /* Largura mínima para os botões */
+}
+
+/* Estilos específicos dos botões */
+.btn-editar {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+.btn-editar:hover {
+    background-color: #218838; /* Verde mais escuro ao passar o mouse */
+}
+
+.btn-remover {
+    background-color: #dc3545; /* Vermelho */
+    color: white;
+}
+
+.btn-remover:hover {
+    background-color: #c82333; /* Vermelho mais escuro ao passar o mouse */
+}
+
+/* Estilo da navegação de páginas */
+.pagination {
+    display: flex; /* Flexbox para layout */
+    justify-content: center; /* Centraliza os botões */
+    align-items: center; /* Alinha verticalmente */
+    margin-top: 20px; /* Espaçamento superior */
+}
+
+.btn-navegacao {
+    padding: 10px 20px; /* Espaçamento interno dos botões */
+    margin: 0 5px; /* Margem entre os botões */
+    cursor: pointer; /* Muda o cursor ao passar por cima */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Bordas arredondadas */
+    background-color: #00334e; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    transition: background-color 0.3s; /* Efeito de transição */
+}
+
+.btn-navegacao:hover {
+    background-color: #0056b3; /* Tom mais escuro ao passar o mouse */
+}
+
+/* Estilo do texto da página */
+.pagination span {
+    margin: 0 15px; /* Margem lateral para o texto */
+    color: #333; /* Cor do texto */
+}
+
+/* Rodapé */
+.footer {
+    background-color: #00334e;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    margin: 0;
+}
+
+/* Estilo Responsivo */
+@media (max-width: 768px) {
+    .livros-tabela th, .livros-tabela td {
+        padding: 2px; /* Ajustado para menor padding em telas menores */
+        font-size: 10px; /* Diminuído em telas menores */
+    }
+
+    .search-bar2 {
+        width: 100%;
+        max-width: 300px; /* Largura máxima da barra de pesquisa */
+    }
+
+    .welcome-container {
+        padding: 10px; /* Reduz o padding do container em telas menores */
+    }
+}
+
+  </style>
+  
