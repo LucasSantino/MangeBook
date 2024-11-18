@@ -18,7 +18,7 @@
           <li><router-link to="/index">Acervo</router-link></li>
   
           <!-- Link Dashboard -->
-          <li><router-link to="/Site - MangeBook/Adm_Dashboard.html">Estatísticas</router-link></li>
+          <li><router-link to="/adm_dashboard">Estatísticas</router-link></li>
   
           <!-- Menu Gerenciamento de Livros com Dropdown -->
           <li @click="toggleBooksDropdown">
@@ -27,7 +27,7 @@
               <img :class="['seta-icone', { rotacionado: isBooksDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
             </a>
             <ul v-show="isBooksDropdownOpen" class="dropdown-menu">
-              <li><router-link to="/Site - MangeBook/Adm_LivrosCadastros.html">Cadastro de Livros</router-link></li>
+              <li><router-link to="/adm_cadastrolivro">Cadastro de Livros</router-link></li>
               <li><router-link to="/Site - MangeBook/Adm_LivrosLista.html">Livros Cadastrados</router-link></li>
             </ul>
           </li>
