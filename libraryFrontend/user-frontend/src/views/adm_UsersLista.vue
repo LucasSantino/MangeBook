@@ -1,95 +1,101 @@
 <template>
-    <div id="app">
-      <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
-      <NavBar @toggle-sidebar="toggleSidebar" />
-  
-      <!-- Sidebar Administrativa para administradores -->
-      <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
-  
-      <!-- Conteúdo Principal -->
-      <main>
-        <div class="welcome-container">
-          <h2 class="welcome-title">Lista de Usuários</h2>
-          <p>Seja Bem-vindo à sua Biblioteca. Todos os Usuários cadastrados aparecem na lista abaixo.</p>
-  
-          <!-- Barra de Pesquisa -->
-          <div class="search-container2">
-            <input v-model="searchQuery" type="text" class="search-bar2" placeholder="Pesquisar...">
-            <button class="search-icon2" @click="pesquisar">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg>
-            </button>
-          </div>
+  <div id="app">
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
+    <NavBar @toggle-sidebar="toggleSidebar" />
+
+    <!-- Sidebar Administrativa para administradores -->
+    <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+
+    <!-- Conteúdo Principal -->
+    <main>
+      <div class="welcome-container">
+        <h2 class="welcome-title">Lista de Usuários</h2>
+        <p>Seja Bem-vindo à sua Biblioteca. Todos os Usuários cadastrados aparecem na lista abaixo.</p>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-container2">
+          <input v-model="searchQuery" type="text" class="search-bar2" placeholder="Pesquisar...">
+          <button class="search-icon2" @click="pesquisar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+          </button>
         </div>
-  
-        <!-- Tabela de Usuários -->
-        <div class="usuarios-container">
-          <table class="usuarios-tabela">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Livros Emprestados</th>
-                <th>Livros Reservados</th>
-                <th>Livros Atrasados</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="usuario in usuariosFiltrados" :key="usuario.id">
-                <td>{{ usuario.id }}</td>
-                <td>{{ usuario.nome }}</td>
-                <td>{{ usuario.email }}</td>
-                <td :id="'status-' + usuario.id">{{ usuario.status }}</td>
-                <td>{{ usuario.livrosEmprestados }}</td>
-                <td>{{ usuario.livrosReservados }}</td>
-                <td>{{ usuario.livrosAtrasados }}</td>
-                <td>
-                  <div class="acao-container">
-                    <button class="btn-status" @click="toggleStatus(usuario)">Status</button>
-                    <div :id="'status-options-' + usuario.id" class="status-options" v-show="usuario.showOptions">
-                      <button class="status-btn ativo" @click="setStatus(usuario, 'Ativo')">Ativo</button>
-                      <button class="status-btn bloqueado" @click="setStatus(usuario, 'Bloqueado')">Bloqueado</button>
-                    </div>
-                    <button class="btn-enviar-mensagem" @click="enviarMensagemPopup">Enviar Mensagem</button>
-                    <button class="btn-excluir" @click="excluirPopup(usuario)">Excluir</button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-  
-        <!-- Popup de Enviar Mensagem -->
-        <div v-if="showMessagePopup" class="popup-container">
-          <h3>Enviar Mensagem</h3>
-          <textarea v-model="mensagemTexto" placeholder="Digite sua mensagem..." rows="5" cols="30"></textarea>
-          <button @click="enviarMensagem">Enviar</button>
-          <button @click="fecharPopup">Fechar</button>
-        </div>
-  
-        <!-- Popup de Confirmação de Exclusão -->
-        <div v-if="showExcluirPopup" class="popup-container">
-          <h3>Excluir Usuário</h3>
-          <p>Tem certeza de que deseja excluir este usuário?</p>
-          <button class="confirm" @click="excluirUsuario">Confirmar</button>
-          <button class="cancel" @click="fecharPopup">Cancelar</button>
-        </div>
-  
-        <!-- Overlay para Popups -->
-        <div v-if="showPopupOverlay" class="popup-overlay" @click="fecharPopup"></div>
-  
-        <!-- Botões de Paginação -->
-        <div class="pagination-container">
-          <button class="pagination-btn" @click="navegar('anterior')">Anterior</button>
-          <span class="page-info">Página {{ paginaAtual }} de {{ totalPaginas }}</span>
-          <button class="pagination-btn" @click="navegar('proxima')">Próximo</button>
-        </div>
-      </main>
-    </div>
+      </div>
+
+      <!-- Tabela de Usuários -->
+      <div class="usuarios-container">
+        <table class="usuarios-tabela">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Livros Emprestados</th>
+              <th>Livros Reservados</th>
+              <th>Livros Atrasados</th>
+              <th>Status</th>
+              <th>Tipo</th> <!-- Coluna para mostrar o tipo -->
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="usuario in usuariosFiltrados" :key="usuario.id">
+              <td>{{ usuario.id }}</td>
+              <td>{{ usuario.nome }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.livrosEmprestados }}</td>
+              <td>{{ usuario.livrosReservados }}</td>
+              <td>{{ usuario.livrosAtrasados }}</td>
+              <td>
+                {{ usuario.status }}
+              </td>
+              <td>
+                <!-- Exibe o tipo de usuário (Usuário ou Administrador) -->
+                {{ usuario.tipo }}
+              </td>
+              <td>
+                <div class="acao-container">
+                  <select v-model="usuario.status" @change="setStatus(usuario)">
+                    <option value="Ativo">Ativo</option>
+                    <option value="Bloqueado">Bloqueado</option>
+                  </select>
+                  <button class="btn-enviar-mensagem" @click="enviarMensagemPopup(usuario)">Enviar Mensagem</button>
+                  <button class="btn-excluir" @click="excluirPopup(usuario)">Excluir</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Popup de Enviar Mensagem -->
+      <div v-if="showMessagePopup" class="popup-container">
+        <h3>Enviar Mensagem</h3>
+        <textarea v-model="mensagemTexto" placeholder="Digite sua mensagem..." rows="5" cols="30"></textarea>
+        <button @click="enviarMensagem">Enviar</button>
+        <button @click="fecharPopup">Fechar</button>
+      </div>
+
+      <!-- Popup de Confirmação de Exclusão -->
+      <div v-if="showExcluirPopup" class="popup-container">
+        <h3>Excluir Usuário</h3>
+        <p>Tem certeza de que deseja excluir este usuário?</p>
+        <button class="confirm" @click="excluirUsuario">Confirmar</button>
+        <button class="cancel" @click="fecharPopup">Cancelar</button>
+      </div>
+
+      <!-- Overlay para Popups -->
+      <div v-if="showPopupOverlay" class="popup-overlay" @click="fecharPopup"></div>
+
+      <!-- Botões de Paginação -->
+      <div class="pagination-container">
+        <button class="pagination-btn" @click="navegar('anterior')">Anterior</button>
+        <span class="page-info">Página {{ paginaAtual }} de {{ totalPaginas }}</span>
+        <button class="pagination-btn" @click="navegar('proxima')">Próximo</button>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
@@ -106,20 +112,15 @@ export default {
       isSidebarOpen: false, // Controle do estado da sidebar
       searchQuery: '',
       usuarios: [
-        { id: 1, nome: 'João da Silva', email: 'joao@exemplo.com', status: 'Ativo', livrosEmprestados: 3, livrosReservados: 1, livrosAtrasados: 0 },
-        { id: 2, nome: 'Maria Oliveira', email: 'maria@exemplo.com', status: 'Bloqueado', livrosEmprestados: 1, livrosReservados: 0, livrosAtrasados: 2 },
-        { id: 3, nome: 'Lucas Pereira', email: 'lucas@exemplo.com', status: 'Ativo', livrosEmprestados: 2, livrosReservados: 1, livrosAtrasados: 1 },
-        { id: 4, nome: 'Fernanda Costa', email: 'fernanda@exemplo.com', status: 'Ativo', livrosEmprestados: 5, livrosReservados: 2, livrosAtrasados: 0 },
-        { id: 5, nome: 'Bruno Almeida', email: 'bruno@exemplo.com', status: 'Bloqueado', livrosEmprestados: 0, livrosReservados: 3, livrosAtrasados: 4 },
-        { id: 6, nome: 'Aline Santos', email: 'aline@exemplo.com', status: 'Ativo', livrosEmprestados: 4, livrosReservados: 0, livrosAtrasados: 1 },
-        { id: 7, nome: 'Rafael Lima', email: 'rafael@exemplo.com', status: 'Bloqueado', livrosEmprestados: 1, livrosReservados: 1, livrosAtrasados: 0 },
+        { id: 1, nome: 'João da Silva', email: 'joao@exemplo.com', status: 'Ativo', tipo: 'Usuário', livrosEmprestados: 3, livrosReservados: 1, livrosAtrasados: 0 },
+        { id: 2, nome: 'Maria Oliveira', email: 'maria@exemplo.com', status: 'Bloqueado', tipo: 'Administrador', livrosEmprestados: 1, livrosReservados: 0, livrosAtrasados: 2 },
+        { id: 3, nome: 'Lucas Pereira', email: 'lucas@exemplo.com', status: 'Ativo', tipo: 'Usuário', livrosEmprestados: 2, livrosReservados: 1, livrosAtrasados: 1 },
+        { id: 4, nome: 'Fernanda Costa', email: 'fernanda@exemplo.com', status: 'Ativo', tipo: 'Administrador', livrosEmprestados: 5, livrosReservados: 2, livrosAtrasados: 0 },
+        { id: 5, nome: 'Bruno Almeida', email: 'bruno@exemplo.com', status: 'Bloqueado', tipo: 'Usuário', livrosEmprestados: 0, livrosReservados: 3, livrosAtrasados: 4 },
+        { id: 6, nome: 'Aline Santos', email: 'aline@exemplo.com', status: 'Ativo', tipo: 'Usuário', livrosEmprestados: 4, livrosReservados: 0, livrosAtrasados: 1 },
+        { id: 7, nome: 'Rafael Lima', email: 'rafael@exemplo.com', status: 'Bloqueado', tipo: 'Administrador', livrosEmprestados: 1, livrosReservados: 1, livrosAtrasados: 0 },
       ],
       paginaAtual: 1,
-      showMessagePopup: false,
-      mensagemTexto: '',
-      showExcluirPopup: false,
-      usuarioExcluir: null,
-      showPopupOverlay: false,
     };
   },
   computed: {
@@ -137,21 +138,9 @@ export default {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen; // Alterna entre aberto e fechado
     },
-    toggleStatus(usuario) {
-      usuario.showOptions = !usuario.showOptions;
-    },
-    setStatus(usuario, status) {
-      usuario.status = status;
-      usuario.showOptions = false;
-    },
-    enviarMensagemPopup() {
-      this.showMessagePopup = true;
-      this.showPopupOverlay = true;
-    },
-    excluirPopup(usuario) {
-      this.showExcluirPopup = true;
-      this.showPopupOverlay = true;
-      this.usuarioExcluir = usuario;
+    setStatus(usuario) {
+      // Atualiza o status do usuário ao alterar a seleção
+      console.log(`Status de ${usuario.nome} alterado para ${usuario.status}`);
     },
     excluirUsuario() {
       const index = this.usuarios.findIndex(usuario => usuario.id === this.usuarioExcluir.id);
@@ -161,14 +150,6 @@ export default {
           this.paginaAtual = this.totalPaginas;
         }
       }
-      this.fecharPopup();
-    },
-    fecharPopup() {
-      this.showMessagePopup = false;
-      this.showExcluirPopup = false;
-      this.showPopupOverlay = false;
-      this.mensagemTexto = '';
-      this.usuarioExcluir = null;
     },
     navegar(direcao) {
       if (direcao === 'anterior' && this.paginaAtual > 1) {
@@ -179,20 +160,18 @@ export default {
     },
     pesquisar() {
       // Função de pesquisa
+      console.log('Pesquisando...');
     },
   },
 };
 </script>
 
-  
-  <style scoped>
+<style scoped>
 /* Estilo do corpo */
 body {
     background-color: #f0f0f0; /* Cor de fundo */
     font-family: Arial, sans-serif; /* Fonte padrão */
 }
-
-
 
 /* Container principal */
 main {
@@ -289,6 +268,10 @@ main {
 .acao-container {
     display: flex;
     flex-direction: column;
+}
+
+select {
+    text-align: center;
 }
 
 /* Estilo dos botões */
@@ -388,71 +371,6 @@ main {
     background-color: #dc3545; /* Vermelho para Bloqueado */
     color: white;
 }
-/* Estilo do Popup */
-.popup-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: none;
-    z-index: 1000;
-}
-
-/* Overlay para Popups */
-#popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none;
-}
-
-/* Estilo para o botão de Enviar Mensagem */
-#popup-enviar-mensagem button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    margin: 5px 0;
-}
-
-#popup-enviar-mensagem button:hover {
-    background-color: #45a049;
-}
-
-/* Estilo para o botão de Excluir */
-#popup-excluir button {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    margin: 5px 0;
-}
-
-#popup-excluir button:hover {
-    background-color: #e53935;
-}
-
-/* Caixa de Texto do Popup de Enviar Mensagem */
-#mensagem-texto {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-/* Adicionar mais estilos conforme necessário para o layout da tabela e outros componentes */
-
 
 /* Estilo da navegação de páginas */
 .pagination-container {
@@ -480,40 +398,39 @@ main {
 /* Estilo do texto da página */
 .page-info {
     margin: 0 15px; /* Margem lateral para o texto */
-    color: #333; /* Cor do texto */
+    color: #00334e; /* Cor do texto */
 }
 
-/* Rodapé */
-.footer {
-    background-color: #00334e;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    width: 100%;
-    margin: 0;
-}
-
-/* Estilo Responsivo */
+/* Media query para telas pequenas */
 @media (max-width: 768px) {
-    .usuarios-tabela th, .usuarios-tabela td {
-        padding: 2px; /* Ajustado para menor padding em telas menores */
-        font-size: 10px; /* Diminuído em telas menores */
+    .search-container2 {
+        flex-direction: column;
     }
 
     .search-bar2 {
-        width: 100%;
-        max-width: 300px;
+        width: 100%; /* Ajusta a largura para 100% em telas menores */
+        margin-bottom: 10px; /* Espaço abaixo da barra de pesquisa */
+    }
+
+    .usuarios-tabela th, .usuarios-tabela td {
+        padding: 4px; /* Ajuste do padding */
+        font-size: 10px; /* Fonte menor em telas pequenas */
     }
 
     .welcome-container {
-        padding: 10px; /* Reduz o padding do container em telas menores */
+        margin-top: 20px; /* Reduz a margem superior */
+        width: 100%; /* Largura 100% para o container */
     }
 
-    .pagination-btn {
-        padding: 8px 16px; /* Ajuste nos botões de paginação em telas pequenas */
+    .usuarios-tabela {
+        font-size: 10px; /* Menor tamanho de fonte para tabelas */
+    }
+
+    .pagination-container {
+        flex-direction: column; /* Empilha os botões de paginação */
     }
 }
 
+</style>
 
-  </style>
   
