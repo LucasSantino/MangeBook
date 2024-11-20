@@ -10,7 +10,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    margin: 20px auto; /* Você pode ajustar esse valor */
+    margin: 20px auto; /* Aumentado o espaçamento superior e inferior em relação à navbar e sidebar */
     width: 95%; /* Diminua para 95% ou outro valor conforme necessário */
     max-width: 1200px;
 }
@@ -19,16 +19,14 @@ main {
     display: flex;
     justify-content: space-between; /* Para espaçar os containers de perfil e informações */
     align-items: flex-start; /* Para alinhar os containers no topo */
-    margin-top: 150px; /* Aumentando a distância acima do container pai */
-    margin-bottom: 150px; /* Espaçamento abaixo do container pai, se desejado */
+    margin-top: 180px; /* Aumentando a distância acima do container pai */
+    margin-bottom: 180px; /* Espaçamento abaixo do container pai */
     background-color: #f8f9fa; /* Cor de fundo mais escura */
     border-radius: 15px; /* Bordas mais arredondadas */
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
     min-height: 400px; /* Aumentando a altura mínima do container */
-    padding: 60px; /* Adicione preenchimento, se necessário */
-    
+    padding: 60px; /* Adicionando preenchimento */
 }
-
 
 /* Estilo do container da imagem de perfil */
 .perfil-container {
@@ -49,10 +47,10 @@ main {
 }
 
 .perfil-container button {
-    width: 150px;  /* Defina a largura desejada */
-    height: 40px;  /* Defina a altura desejada */
+    width: 150px;  /* Largura dos botões */
+    height: 40px;  /* Altura dos botões */
     margin: 5px 0; /* Espaçamento vertical entre os botões */
-    padding: 0;     /* Remova o padding para manter o tamanho fixo */
+    padding: 0;     /* Remover padding para manter o tamanho fixo */
     background-color: #00334e;
     color: white;
     border: none;
@@ -74,8 +72,14 @@ main {
     margin-bottom: 10px;
 }
 
+/* Título da seção "Informações de Perfil" */
+.informacoes-container h2 {
+    color: #00334e; /* Mudando a cor do título para combinar com o botão */
+    font-size: 1.5rem; /* Ajustando o tamanho da fonte do título */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+}
 
-
+/* Estilo da tabela de informações */
 .informacoes-tabela {
     width: 100%;
     border-collapse: collapse;
@@ -103,4 +107,32 @@ main {
     text-align: left;
     color: #666;
     width: 65%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .perfil-wrapper {
+        flex-direction: column; /* Alinha os itens verticalmente em telas menores */
+        margin-top: 100px; /* Ajuste a margem superior para dispositivos móveis */
+        margin-bottom: 50px; /* Ajuste a margem inferior para dispositivos móveis */
+        padding: 30px; /* Reduza o padding para otimizar o espaço */
+    }
+
+    .perfil-container {
+        margin-right: 0; /* Remove a margem direita em dispositivos móveis */
+        margin-bottom: 20px; /* Adiciona um espaçamento abaixo do perfil */
+    }
+
+    .informacoes-container {
+        margin-left: 0; /* Remove a margem esquerda em dispositivos móveis */
+    }
+
+    .foto-perfil {
+        width: 120px; /* Reduz o tamanho da imagem no celular */
+        height: 120px; /* Reduz o tamanho da imagem no celular */
+    }
+
+    .perfil-container button {
+        width: 100%; /* Tornando os botões do perfil responsivos */
+    }
 }
