@@ -14,10 +14,12 @@
 
         <!-- Barra de Pesquisa -->
         <div class="search-container2">
-          <input v-model="searchQuery" type="text" class="search-bar2" placeholder="Pesquisar...">
+          <input v-model="searchQuery" type="text" class="search-bar2" placeholder="Pesquisar..." />
           <button class="search-icon2" @click="pesquisar">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+              />
             </svg>
           </button>
         </div>
@@ -47,20 +49,14 @@
               <td>{{ usuario.livrosEmprestados }}</td>
               <td>{{ usuario.livrosReservados }}</td>
               <td>{{ usuario.livrosAtrasados }}</td>
-              <td>
-                {{ usuario.status }}
-              </td>
-              <td>
-                <!-- Exibe o tipo de usuário (Usuário ou Administrador) -->
-                {{ usuario.tipo }}
-              </td>
+              <td>{{ usuario.status }}</td>
+              <td>{{ usuario.tipo }}</td>
               <td>
                 <div class="acao-container">
                   <select v-model="usuario.status" @change="setStatus(usuario)">
                     <option value="Ativo">Ativo</option>
                     <option value="Bloqueado">Bloqueado</option>
                   </select>
-                  <button class="btn-enviar-mensagem" @click="enviarMensagemPopup(usuario)">Enviar Mensagem</button>
                   <button class="btn-excluir" @click="excluirPopup(usuario)">Excluir</button>
                 </div>
               </td>
@@ -69,24 +65,19 @@
         </table>
       </div>
 
-      <!-- Popup de Enviar Mensagem -->
-      <div v-if="showMessagePopup" class="popup-container">
-        <h3>Enviar Mensagem</h3>
-        <textarea v-model="mensagemTexto" placeholder="Digite sua mensagem..." rows="5" cols="30"></textarea>
-        <button @click="enviarMensagem">Enviar</button>
-        <button @click="fecharPopup">Fechar</button>
-      </div>
-
       <!-- Popup de Confirmação de Exclusão -->
-      <div v-if="showExcluirPopup" class="popup-container">
-        <h3>Excluir Usuário</h3>
-        <p>Tem certeza de que deseja excluir este usuário?</p>
-        <button class="confirm" @click="excluirUsuario">Confirmar</button>
-        <button class="cancel" @click="fecharPopup">Cancelar</button>
-      </div>
+<div v-if="showExcluirPopup" class="popup-container">
+  <h2 class="popup-title">Excluir Usuário</h2>
+  <p class="popup-message">Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.</p>
+  <div class="popup-buttons">
+    <button class="popup-button confirm" @click="excluirUsuario">Confirmar</button>
+    <button class="popup-button cancel" @click="fecharPopup">Cancelar</button>
+  </div>
+</div>
 
-      <!-- Overlay para Popups -->
-      <div v-if="showPopupOverlay" class="popup-overlay" @click="fecharPopup"></div>
+<!-- Overlay para o Popup -->
+<div v-if="showPopupOverlay" class="popup-overlay" @click="fecharPopup"></div>
+
 
       <!-- Botões de Paginação -->
       <div class="pagination-container">
@@ -121,6 +112,9 @@ export default {
         { id: 7, nome: 'Rafael Lima', email: 'rafael@exemplo.com', status: 'Bloqueado', tipo: 'Administrador', livrosEmprestados: 1, livrosReservados: 1, livrosAtrasados: 0 },
       ],
       paginaAtual: 1,
+      showExcluirPopup: false,
+      showPopupOverlay: false,
+      usuarioExcluir: null,
     };
   },
   computed: {
@@ -136,11 +130,15 @@ export default {
   },
   methods: {
     toggleSidebar() {
-      this.isSidebarOpen = !this.isSidebarOpen; // Alterna entre aberto e fechado
+      this.isSidebarOpen = !this.isSidebarOpen;
     },
     setStatus(usuario) {
-      // Atualiza o status do usuário ao alterar a seleção
       console.log(`Status de ${usuario.nome} alterado para ${usuario.status}`);
+    },
+    excluirPopup(usuario) {
+      this.usuarioExcluir = usuario;
+      this.showExcluirPopup = true;
+      this.showPopupOverlay = true;
     },
     excluirUsuario() {
       const index = this.usuarios.findIndex(usuario => usuario.id === this.usuarioExcluir.id);
@@ -150,6 +148,11 @@ export default {
           this.paginaAtual = this.totalPaginas;
         }
       }
+      this.fecharPopup();
+    },
+    fecharPopup() {
+      this.showExcluirPopup = false;
+      this.showPopupOverlay = false;
     },
     navegar(direcao) {
       if (direcao === 'anterior' && this.paginaAtual > 1) {
@@ -159,7 +162,6 @@ export default {
       }
     },
     pesquisar() {
-      // Função de pesquisa
       console.log('Pesquisando...');
     },
   },
@@ -357,20 +359,84 @@ select {
     text-align: left;
 }
 
-.status-btn:hover {
-    background-color: #e2e6ea; /* Cor de hover para opções */
+/* Popup de exclusão */
+.popup-container {
+    position: fixed; /* Fixa o popup na tela */
+    top: 10%; /* Ajusta a posição no topo */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Centraliza */
+    background-color: #ffffff; /* Fundo branco para combinar com a página */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    z-index: 1000; /* Garantia de sobreposição */
+    width: 90%; /* Largura responsiva */
+    max-width: 400px; /* Limita a largura máxima */
+    text-align: center; /* Centraliza o conteúdo do popup */
+    font-family: Arial, sans-serif; /* Fonte do layout principal */
+    color: #00334e; /* Cor do texto combinando com o tema */
 }
 
-/* Estilos para os botões de status */
-.status-btn.ativo {
-    background-color: #28a745; /* Verde para Ativo */
-    color: white;
+/* Título do popup */
+.popup-title {
+    font-size: 18px; /* Tamanho do texto */
+    font-weight: bold; /* Texto em negrito */
+    margin-bottom: 10px; /* Espaço inferior */
+    color: #00334e; /* Cor do título */
 }
 
-.status-btn.bloqueado {
-    background-color: #dc3545; /* Vermelho para Bloqueado */
-    color: white;
+/* Texto do corpo do popup */
+.popup-message {
+    font-size: 14px; /* Texto do corpo menor */
+    margin-bottom: 20px; /* Espaçamento inferior */
+    color: #666; /* Cor neutra */
 }
+
+/* Botões do popup */
+.popup-buttons {
+    display: flex; /* Botões lado a lado */
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px; /* Espaçamento entre os botões */
+}
+
+.popup-button {
+    padding: 10px 20px; /* Dimensões do botão */
+    border: none; /* Remove borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    cursor: pointer; /* Mostra cursor de clique */
+    transition: background-color 0.3s; /* Suaviza a transição */
+    font-size: 14px; /* Texto dos botões */
+    color: white; /* Texto branco */
+}
+
+.popup-button.confirm {
+    background-color: #28a745; /* Cor verde para confirmar */
+}
+
+.popup-button.confirm:hover {
+    background-color: #218838; /* Verde mais escuro no hover */
+}
+
+.popup-button.cancel {
+    background-color: #dc3545; /* Cor vermelha para cancelar */
+}
+
+.popup-button.cancel:hover {
+    background-color: #c82333; /* Vermelho mais escuro no hover */
+}
+
+/* Overlay do popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    z-index: 999; /* Certifica-se de que está abaixo do popup */
+}
+
+
 
 /* Estilo da navegação de páginas */
 .pagination-container {
