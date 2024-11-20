@@ -14,6 +14,7 @@ import adm_CadastroLivro from '@/views/adm_CadastroLivro.vue';
 import adm_LivrosLista from '@/views/adm_LivrosLista.vue';
 import adm_UsersLista from '@/views/adm_UsersLista.vue'
 import adm_CadastroUsers from '@/views/adm_CadastroUsers.vue';
+import adm_PerfilUser from '@/views/adm_PerfilUser.vue';
 
 const routes = [
   {
@@ -91,6 +92,11 @@ const routes = [
     path: '/adm_cadastrousers', // Nova rota para o painel administrativo
     name: 'adm_CadastroUsers', // Nome da rota para facilitar a navegação
     component: adm_CadastroUsers, // Componente da página do painel administrativo
+  },
+  {
+    path: '/adm_perfiluser', // Nova rota para o painel administrativo
+    name: 'adm_PerfilUsers', // Nome da rota para facilitar a navegação
+    component: adm_PerfilUser, // Componente da página do painel administrativo
   },
 
 ];
