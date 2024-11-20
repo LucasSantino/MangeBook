@@ -39,7 +39,7 @@
               <img :class="['seta-icone', { rotacionado: isUsersDropdownOpen }]" src="https://cdn-icons-png.flaticon.com/512/271/271210.png" alt="Ícone seta">
             </a>
             <ul v-show="isUsersDropdownOpen" class="dropdown-menu">
-              <li><router-link to="/Site - MangeBook/Adm_UsuariosCasdastro.html">Cadastro de Usuários</router-link></li>
+              <li><router-link to="/adm_cadastrousers">Cadastro de Usuários</router-link></li>
               <li><router-link to="/adm_userslista">Usuários Cadastrados</router-link></li>
             </ul>
           </li>
