@@ -1,4 +1,4 @@
-/* Ajuste de espaçamento superior e inferior em relação à navbar e sidebar */
+/* Estilos gerais */
 body {
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -9,7 +9,7 @@ body {
 /* Container de registro de usuário (ajustado para cadastro de usuários) */
 .book-registration-container {
     max-width: 900px;
-    margin: 40px auto; /* Aumentado o espaçamento superior e inferior */
+    margin: 60px auto; /* Aumentado o espaçamento superior e inferior */
     background: #fff;
     padding: 20px;
     border-radius: 8px;
