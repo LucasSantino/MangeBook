@@ -7,46 +7,45 @@
     <link rel="stylesheet" href="/Site - MangeBook/css/EstiloPrincipal.css">
     <link rel="stylesheet" href="/Site - MangeBook/css/Adm_Livroscadastro.css">
     <script defer src="/Site - MangeBook/Js/NavSidebar.js"></script>
-    <script defer src="/Site - MangeBook/Js/Adm_LivroCasdastro.js"></script>
 </head>
 <body>
     <div class="container">
         <!-- Navbar -->
         <header class="navbar">
-          <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-          <h1 class="logo">
-            <a href="index.html" style="color: white; text-decoration: none;">MangeBook</a>
-          </h1>
+            <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+            <h1 class="logo">
+                <a href="index.html" style="color: white; text-decoration: none;">MangeBook</a>
+            </h1>
     
-          <!-- Barra de pesquisa com ícone SVG -->
-          <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Pesquisar livros...">
-            <button class="search-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg>
-            </button>
-          </div>
-          <div>
-            <!-- Ícone de notificação -->
-      <button class="notification-icon">
-        <img src="/Site - MangeBook/imagens/IconeNotificação.png" alt="Notificações" class="notification-img">
-      </button>
-          </div>
+            <!-- Barra de pesquisa com ícone SVG -->
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Pesquisar livros...">
+                <button class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <!-- Ícone de notificação -->
+                <button class="notification-icon">
+                    <img src="/Site - MangeBook/imagens/IconeNotificação.png" alt="Notificações" class="notification-img">
+                </button>
+            </div>
         </header>
 
-         <!-- Sidebar -->
-         <div id="sidebar" class="sidebar">
+        <!-- Sidebar -->
+        <div id="sidebar" class="sidebar">
             <button class="close-btn" onclick="toggleSidebar()">×</button>
-             <!-- Imagem no topo da sidebar -->
-        <div class="sidebar-image">
-            <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
+            <!-- Imagem no topo da sidebar -->
+            <div class="sidebar-image">
+                <img src="/Site - MangeBook/imagens/MangeBookLogo.png" alt="Imagem da Sidebar" class="sidebar-img">
             </div>
             <ul>
                 <li>
                     <a href="#" onclick="toggleStatisticsDropdown()">
-                      Estatísticas
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-statistics" class="seta-icone" alt="Seta para baixo">
+                        Estatísticas
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-statistics" class="seta-icone" alt="Seta para baixo">
                     </a>
                     <ul id="dropdown-menu-statistics" class="dropdown-menu" style="display: none;">
                         <li><a href="/Site - MangeBook/Adm_Dashboard.html">Dashboard</a></li>
@@ -55,8 +54,8 @@
                 </li>
                 <li>
                     <a href="#" onclick="toggleBooksDropdown()">
-                      <i class="fas fa-book"></i> Gerenciamento de Livros
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-books" class="seta-icone" alt="Seta para baixo">
+                        <i class="fas fa-book"></i> Gerenciamento de Livros
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-books" class="seta-icone" alt="Seta para baixo">
                     </a>
                     <ul id="dropdown-menu-books" class="dropdown-menu" style="display: none;">
                         <li><a href="/Site - MangeBook/Adm_LivrosCadastros.html">Cadastro de Livros</a></li>
@@ -65,8 +64,8 @@
                 </li>
                 <li>
                     <a href="#" onclick="toggleUsersDropdown()">
-                      <i class="fas fa-users"></i> Gerenciamento de Usuários
-                      <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-users" class="seta-icone" alt="Seta para baixo">
+                        <i class="fas fa-users"></i> Gerenciamento de Usuários
+                        <img src="https://cdn-icons-png.flaticon.com/512/271/271210.png" id="seta-icon-users" class="seta-icone" alt="Seta para baixo">
                     </a>
                     <ul id="dropdown-menu-users" class="dropdown-menu" style="display: none;">
                         <li><a href="/Site - MangeBook/Adm_UsuariosCasdastro.html">Cadastro de Usuários</a></li>
@@ -75,109 +74,76 @@
                 </li>
                 <li><a href="configuracoes.html">Configurações</a></li>
                 <li><a href="sobre.html">Sobre</a></li>
-            <!-- Botão de Sair -->
-        <li><a href="/logout.html" class="logout-btn">Sair</a></li>
-        </ul>
-    </div>
+                <!-- Botão de Sair -->
+                <li><a href="/logout.html" class="logout-btn">Sair</a></li>
+            </ul>
+        </div>
 
         <main class="main-content">
-            <h2>Cadastro de Livros</h2>
-            <form class="book-form">
-                <div class="form-group">
-                    <label for="thumbnail">Miniatura do Livro</label>
-                    <input type="file" id="thumbnail" name="thumbnail" accept="image/*" onchange="previewImage(event)">
-                    <img id="thumbnail-preview" class="thumbnail-preview" alt="Pré-visualização da miniatura" style="display: none;">
-                </div>
-                <div class="form-group">
-                    <label for="livroId">ID do Livro:</label>
-                    <input type="text" id="livroId" placeholder="Insira o ID do livro" />
-                </div>                
-                <div class="form-group">
-                    <label for="titulo">Título</label>
-                    <input type="text" id="titulo" name="titulo" required>
-                </div>
-                <div class="form-group">
-                    <label for="autor">Autor</label>
-                    <input type="text" id="autor" name="autor" required>
-                </div>
-                <div class="form-group">
-                    <label for="anoPublicacao">Ano de Publicação</label>
-                    <input type="number" id="anoPublicacao" name="anoPublicacao" required>
-                </div>
-                <div class="form-group">
-                    <label for="genero">Gênero</label>
-                    <input type="text" id="genero" name="genero" required>
-                </div>
-                <div class="form-group">
-                    <label for="isbn">ISBN</label>
-                    <input type="text" id="isbn" name="isbn" required>
-                </div>
-                <div class="form-group">
-                    <label for="numCopias">Número de Cópias Disponíveis</label>
-                    <input type="number" id="numCopias" name="numCopias" required>
-                </div>
-                <div class="form-group">
-                    <label for="descricao">Descrição</label>
-                    <textarea id="descricao" name="descricao" rows="4" required></textarea>
-                    <div id="charCount" class="text-length-indicator">630 caracteres</div>
-                </div>
-                
-                <div class="form-group">
-                    <button type="submit">Cadastrar Livro</button>
-                </div>
-            </form>
-        
-            <!-- Seção de Pré-visualização do Livro -->
-            <div class="detalhes-container" id="preview-container" style="display: none;">
-                <img id="preview-thumbnail" src="" alt="Capa do Livro" class="book-thumbnail"> <!-- Miniatura da foto do livro -->
-                
-                <div class="detalhes-livro">
-                    <table>
-                        <tr>
-                            <th>ID-Livro:</th>
-                            <td id="preview-titulo">Id do Livro</td>
-                        </tr>
-                        <tr>
-                            <th>Título do Livro:</th>
-                            <td id="preview-titulo">Nome do Livro</td>
-                        </tr>
-                        <tr>
-                            <th>Autor</th>
-                            <td id="preview-autor">Nome do Autor</td>
-                        </tr>
-                        <tr>
-                            <th>Ano de Publicação</th>
-                            <td id="preview-ano">2024</td>
-                        </tr>
-                        <tr>
-                            <th>Gênero</th>
-                            <td id="preview-genero">Ficção Científica</td>
-                        </tr>
-                        <tr>
-                            <th>ISBN</th>
-                            <td id="preview-isbn">978-3-16-148410-0</td>
-                        </tr>
-                        <tr>
-                            <th>Número de Cópias Disponíveis</th>
-                            <td id="preview-copias">5</td>
-                        </tr>
-                        <tr>
-                            <th>Descrição</th>
-                            <td id="preview-descricao">Descrição do livro...</td>
-                        </tr>
-                    </table>
-                </div>
+            <!-- Novo Formulário de Cadastro de Livro -->
+            <div class="book-registration-container">
+                <h1 class="title">Cadastro de Livro</h1>
+                <form>
+                    <div class="form-grid">
+                        <div class="form-left">
+                            <img id="bookThumbnail" src="https://via.placeholder.com/200x300" alt="Capa do Livro">
+                            <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(event)">
+                        </div>
+                        <div class="form-right">
+                            <div class="form-group">
+                                <label for="bookId">ID do Livro</label>
+                                <input type="text" id="bookId" name="bookId" placeholder="Insira o ID do livro" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bookTitle">Título do Livro</label>
+                                <input type="text" id="bookTitle" name="bookTitle" placeholder="Insira o título do livro" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bookAuthor">Autor</label>
+                                <input type="text" id="bookAuthor" name="bookAuthor" placeholder="Nome do autor" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="publicationYear">Ano de Publicação</label>
+                                <input type="number" id="publicationYear" name="publicationYear" placeholder="Exemplo: 2024" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bookGenre">Gênero</label>
+                                <input type="text" id="bookGenre" name="bookGenre" placeholder="Gênero do livro" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="isbn">ISBN</label>
+                                <input type="text" id="isbn" name="isbn" placeholder="Exemplo: 978-3-16-148410-0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="copiesAvailable">Número de Cópias Disponíveis</label>
+                                <input type="number" id="copiesAvailable" name="copiesAvailable" placeholder="Quantidade de cópias" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="bookDescription">Descrição</label>
+                                <textarea id="bookDescription" name="bookDescription" rows="5" placeholder="Descreva o livro, seus personagens e história" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Cadastrar Livro</button>
+                </form>
             </div>
         </main>
-        
-        
-
-        <!-- Rodapé -->
-        <footer class="footer">
-          <p>&copy; 2024 MangeBook. Todos os direitos reservados.</p>
-          <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Serviço</a></p>
-          <p>Entre em contato: <a href="mailto:contato@mangebook.com">contato@mangebook.com</a></p>
-        </footer>
+         <!-- Rodapé -->
+         <footer class="footer">
+            <p>&copy; 2024 MangeBook. Todos os direitos reservados.</p>
+            <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Serviço</a></p>
+            <p>Entre em contato: <a href="mailto:contato@mangebook.com">contato@mangebook.com</a></p>
+          </footer>
     </div>
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.getElementById('bookThumbnail');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>
