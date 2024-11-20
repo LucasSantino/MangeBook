@@ -4,14 +4,6 @@
     <form class="login-form" @submit.prevent="handleSubmit">
       <h2>Bem-vindo ao sistema MangeBook</h2>
       <div class="form-group">
-        <label for="user-type">Tipo de Usuário:</label>
-        <select id="user-type" name="user-type" required v-model="userType">
-          <option value="" disabled selected>Selecione um tipo de usuário</option>
-          <option value="admin">Administrador</option>
-          <option value="user">Usuário Comum</option>
-        </select>
-      </div>
-      <div class="form-group">
         <label for="username">Usuário:</label>
         <input type="text" id="username" placeholder="Digite seu usuário" required v-model="username">
       </div>
@@ -37,7 +29,6 @@ export default {
   },
   data() {
     return {
-      userType: '', // Tipo de usuário
       username: '', // Nome de usuário
       password: '', // Senha
     };
@@ -52,31 +43,31 @@ export default {
       const validPasswordUser = 'senha123'; // Senha do usuário comum
 
       // Lógica para autenticação
-      if (this.userType === 'admin' && this.username === validUsernameAdmin && this.password === validPasswordAdmin) {
+      if (this.username === validUsernameAdmin && this.password === validPasswordAdmin) {
         // Salva os dados no localStorage (token e informações do usuário)
         localStorage.setItem('token', 'admin-token');
         localStorage.setItem('user', JSON.stringify({
           username: this.username,
-          userType: this.userType,
+          userType: 'admin', // Definindo tipo como admin
         }));
 
-        // Redireciona para a página inicial (Index.vue)
-        this.$router.push('/adm_dashboard');  // Redireciona para a página de Index
+        // Redireciona para a página de administrador
+        this.$router.push('/adm_dashboard');  
         alert('Login bem-sucedido como Administrador!');
-      } else if (this.userType === 'user' && this.username === validUsernameUser && this.password === validPasswordUser) {
+      } else if (this.username === validUsernameUser && this.password === validPasswordUser) {
         // Salva os dados no localStorage (token e informações do usuário)
         localStorage.setItem('token', 'user-token');
         localStorage.setItem('user', JSON.stringify({
           username: this.username,
-          userType: this.userType,
+          userType: 'user', // Definindo tipo como user
         }));
 
-        // Redireciona para a página inicial (Index.vue)
-        this.$router.push('/index');  // Redireciona para a página de Index
+        // Redireciona para a página de usuário
+        this.$router.push('/index');  
         alert('Login bem-sucedido como Usuário Comum!');
       } else {
         // Exibe um alerta caso as credenciais estejam incorretas
-        alert('Usuário, senha ou tipo de usuário incorretos!');
+        alert('Usuário ou senha incorretos!');
       }
     }
   }
@@ -130,8 +121,7 @@ body {
 }
 
 input[type="text"],
-input[type="password"],
-select {
+input[type="password"] {
   width: 100%;
   padding: 10px;
   border: 1px solid #00334e;
@@ -166,6 +156,4 @@ select {
 .forgot-password a:hover {
   text-decoration: underline;
 }
-
 </style>
-
