@@ -15,10 +15,10 @@
     </div>
 
     <div>
-      <button class="notification-icon">
-        <img :src="icone" alt="Notificações" class="notification-img">
-      </button>
-    </div>
+    <button class="notification-icon" @click="irParaNotificacoes">
+      <img :src="icone" alt="Notificações" class="notification-img">
+    </button>
+  </div>
   </header>
 </template>
 
@@ -34,6 +34,9 @@ export default {
   methods: {
     toggleSidebar() {
       this.$emit('toggle-sidebar'); // Emite evento para alternar a visibilidade da sidebar
+    },
+    irParaNotificacoes() {
+      this.$router.push('/notifica'); // Redireciona para a página '/notifica'
     },
   },
 };
