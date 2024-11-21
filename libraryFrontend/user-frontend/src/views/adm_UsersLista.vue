@@ -42,26 +42,33 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="usuario in usuariosFiltrados" :key="usuario.id">
-              <td>{{ usuario.id }}</td>
-              <td>{{ usuario.nome }}</td>
-              <td>{{ usuario.email }}</td>
-              <td>{{ usuario.livrosEmprestados }}</td>
-              <td>{{ usuario.livrosReservados }}</td>
-              <td>{{ usuario.livrosAtrasados }}</td>
-              <td>{{ usuario.status }}</td>
-              <td>{{ usuario.tipo }}</td>
-              <td>
-                <div class="acao-container">
-                  <select v-model="usuario.status" @change="setStatus(usuario)">
-                    <option value="Ativo">Ativo</option>
-                    <option value="Bloqueado">Bloqueado</option>
-                  </select>
-                  <button class="btn-excluir" @click="excluirPopup(usuario)">Excluir</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
+          <tr
+            v-for="usuario in usuariosFiltrados"
+            :key="usuario.id"
+            @click="navegarParaPerfil(usuario)"
+            style="cursor: pointer"
+          >
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.nome }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.livrosEmprestados }}</td>
+            <td>{{ usuario.livrosReservados }}</td>
+            <td>{{ usuario.livrosAtrasados }}</td>
+            <td>{{ usuario.status }}</td>
+            <td>{{ usuario.tipo }}</td>
+            <td>
+              <div class="acao-container">
+                <!-- Impede propagação ao clicar no seletor de status -->
+                <select v-model="usuario.status" @click.stop @change="setStatus(usuario)">
+                  <option value="Ativo">Ativo</option>
+                  <option value="Bloqueado">Bloqueado</option>
+                </select>
+                <!-- Impede propagação ao clicar no botão "Excluir" -->
+                <button class="btn-excluir" @click.stop="excluirPopup(usuario)">Excluir</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
         </table>
       </div>
 
@@ -134,6 +141,10 @@ export default {
     },
     setStatus(usuario) {
       console.log(`Status de ${usuario.nome} alterado para ${usuario.status}`);
+    },
+    navegarParaPerfil(usuario) {
+    this.$router.push({ path: '/adm_perfiluser', query: { id: usuario.id } });
+    
     },
     excluirPopup(usuario) {
       this.usuarioExcluir = usuario;
