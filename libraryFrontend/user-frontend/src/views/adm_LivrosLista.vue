@@ -41,23 +41,29 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="livro in livrosFiltrados" :key="livro.id">
-                  <td>{{ livro.id }}</td>
-                  <td>{{ livro.titulo }}</td>
-                  <td>{{ livro.autor }}</td>
-                  <td>{{ livro.descricao }}</td>
-                  <td>{{ livro.anoPublicacao }}</td>
-                  <td>{{ livro.genero }}</td>
-                  <td>{{ livro.isbn }}</td>
-                  <td>{{ livro.numCopias }}</td>
-                  <td>
-                    <div class="btn-container">
-                      <button class="btn-editar" @click="editarLivro(livro.id)">Editar Livro</button>
-                      <button class="btn-remover" @click="removerLivro(livro.id)">Remover</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <tr
+                v-for="livro in livrosFiltrados"
+                :key="livro.id"
+                @click="navegarParaDetalhes(livro.id)"
+                style="cursor: pointer"
+              >
+                <td>{{ livro.id }}</td>
+                <td>{{ livro.titulo }}</td>
+                <td>{{ livro.autor }}</td>
+                <td>{{ livro.descricao }}</td>
+                <td>{{ livro.anoPublicacao }}</td>
+                <td>{{ livro.genero }}</td>
+                <td>{{ livro.isbn }}</td>
+                <td>{{ livro.numCopias }}</td>
+                <td>
+                  <div class="btn-container">
+                    <!-- Impede que o clique no botão propague para o <tr> -->
+                    <button class="btn-editar" @click.stop="editarLivro(livro.id)">Editar Livro</button>
+                    <button class="btn-remover" @click.stop="removerLivro(livro.id)">Remover</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
             </table>
   
             <!-- Navegação de Páginas -->
@@ -121,6 +127,9 @@
       removerLivro(id) {
         console.log('Remover Livro:', id);
         // Aqui você pode implementar a lógica de remoção do livro
+      },
+      navegarParaDetalhes(bookId) {
+        this.$router.push(`/detalhes-livros/${bookId}`);
       },
       navegar(direcao) {
         if (direcao === 'anterior' && this.paginaAtual > 1) {
