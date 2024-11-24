@@ -15,6 +15,7 @@ import adm_LivrosLista from '@/views/adm_LivrosLista.vue';
 import adm_UsersLista from '@/views/adm_UsersLista.vue'
 import adm_CadastroUsers from '@/views/adm_CadastroUsers.vue';
 import adm_PerfilUser from '@/views/adm_PerfilUser.vue';
+import adm_EditLivro from '@/views/adm_EditLivro.vue';
 
 const routes = [
   {
@@ -82,6 +83,12 @@ const routes = [
     path: '/adm_livroslista', // Nova rota para o painel administrativo
     name: 'adm_LivrosLista', // Nome da rota para facilitar a navegação
     component: adm_LivrosLista, // Componente da página do painel administrativo
+  },
+  {
+    path: '/adm_editlivro/:id',
+    name: 'adm_EditLivro',
+    component: adm_EditLivro,
+    props: true, // Passa o ID como uma prop para o componente
   },
   {
     path: '/adm_userslista', // Nova rota para o painel administrativo

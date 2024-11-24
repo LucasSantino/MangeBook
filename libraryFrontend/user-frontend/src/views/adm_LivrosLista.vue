@@ -1,46 +1,46 @@
 <template>
-    <div id="app">
-      <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
-      <NavBar @toggle-sidebar="toggleSidebar" />
-  
-      <!-- Sidebar Administrativa para administradores -->
-      <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
-  
-      <!-- Conteúdo Principal -->
-      <main>
-        <div class="welcome-container">
-          <h2 class="welcome-title">Lista de Livros</h2>
-          <p>Seja Bem-vindo à sua Biblioteca. Todos os Livros cadastrados aparecerão na lista abaixo.</p>
-  
-          <!-- Barra de Pesquisa -->
-          <div class="search-container2">
-            <input type="text" class="search-bar2" placeholder="Pesquisar livros cadastrados..." v-model="searchQuery" />
-            <button class="search-icon2" @click="pesquisar">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg>
-            </button>
-          </div>
+  <div id="app">
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
+    <NavBar @toggle-sidebar="toggleSidebar" />
+
+    <!-- Sidebar Administrativa para administradores -->
+    <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+
+    <!-- Conteúdo Principal -->
+    <main>
+      <div class="welcome-container">
+        <h2 class="welcome-title">Lista de Livros</h2>
+        <p>Seja Bem-vindo à sua Biblioteca. Todos os Livros cadastrados aparecerão na lista abaixo.</p>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-container2">
+          <input type="text" class="search-bar2" placeholder="Pesquisar livros cadastrados..." v-model="searchQuery" />
+          <button class="search-icon2" @click="pesquisar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+          </button>
         </div>
-  
-        <!-- Tabela de Livros -->
-        <div class="livros-container">
-          <div class="tabela-container">
-            <table class="livros-tabela">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Título</th>
-                  <th>Autor</th>
-                  <th>Descrição</th>
-                  <th>Ano de Publicação</th>
-                  <th>Gênero</th>
-                  <th>ISBN</th>
-                  <th>Nº de Cópias</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
+      </div>
+
+      <!-- Tabela de Livros -->
+      <div class="livros-container">
+        <div class="tabela-container">
+          <table class="livros-tabela">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Descrição</th>
+                <th>Ano de Publicação</th>
+                <th>Gênero</th>
+                <th>ISBN</th>
+                <th>Nº de Cópias</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
               <tr
                 v-for="livro in livrosFiltrados"
                 :key="livro.id"
@@ -64,34 +64,34 @@
                 </td>
               </tr>
             </tbody>
-            </table>
-  
-            <!-- Navegação de Páginas -->
-            <div class="pagination">
-              <button class="btn-navegacao" aria-label="Página anterior" @click="navegar('anterior')">Anterior</button>
-              <span>Página {{ paginaAtual }} de {{ totalPaginas }}</span>
-              <button class="btn-navegacao" aria-label="Próxima página" @click="navegar('proxima')">Próximo</button>
-            </div>
+          </table>
+
+          <!-- Navegação de Páginas -->
+          <div class="pagination">
+            <button class="btn-navegacao" aria-label="Página anterior" @click="navegar('anterior')">Anterior</button>
+            <span>Página {{ paginaAtual }} de {{ totalPaginas }}</span>
+            <button class="btn-navegacao" aria-label="Próxima página" @click="navegar('proxima')">Próximo</button>
           </div>
         </div>
-      </main>
-    </div>
-  </template>
-  
-  <script>
-  import NavBar from '@/components/NavBar.vue';
-  import adm_SideBar from '@/components/adm_SideBar.vue';
-  
-  export default {
-    components: {
-      NavBar,
-      adm_SideBar,
-    },
-    data() {
-      return {
-        isSidebarOpen: false,
-        searchQuery: '', // variável para armazenar a busca
-        livros: [
+      </div>
+    </main>
+  </div>
+</template>
+
+<script>
+import NavBar from '@/components/NavBar.vue';
+import adm_SideBar from '@/components/adm_SideBar.vue';
+
+export default {
+  components: {
+    NavBar,
+    adm_SideBar,
+  },
+  data() {
+    return {
+      isSidebarOpen: false,
+      searchQuery: '', // variável para armazenar a busca
+      livros: [
           { id: 1, titulo: 'Harry Potter e a Pedra Filosofal', autor: 'JK Rowling', descricao: 'Primeiro livro da série Harry Potter.', anoPublicacao: 1997, genero: 'Fantasia', isbn: '978-3-16-148410-0', numCopias: 5 },
           { id: 2, titulo: 'Harry Potter e a Câmara Secreta', autor: 'JK Rowling', descricao: 'Segunda parte da série Harry Potter.', anoPublicacao: 1998, genero: 'Fantasia', isbn: '978-3-16-148410-1', numCopias: 3 },
           { id: 3, titulo: 'Percy Jackson e o Ladrão de Raios', autor: 'Rick Riordan', descricao: 'Aventura de Percy no mundo dos deuses gregos.', anoPublicacao: 2005, genero: 'Aventura', isbn: '978-3-16-148410-2', numCopias: 4 },
@@ -103,47 +103,47 @@
           { id: 9, titulo: 'Dom Casmurro', autor: 'Machado de Assis', descricao: 'A história de Bentinho e seu ciúme por Capitu.', anoPublicacao: 1899, genero: 'Literatura Brasileira', isbn: '978-85-359-0277-6', numCopias: 4 },
           { id: 10, titulo: 'O Alquimista', autor: 'Paulo Coelho', descricao: 'A jornada de Santiago em busca de seu tesouro pessoal.', anoPublicacao: 1988, genero: 'Literatura Brasileira', isbn: '978-85-327-1632-0', numCopias: 3 },
         ],
-        paginaAtual: 1,
-        totalPaginas: 10,
-      };
+      paginaAtual: 1,
+      totalPaginas: 10,
+    };
+  },
+  computed: {
+    livrosFiltrados() {
+      return this.livros.filter(livro => {
+        return livro.titulo.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+               livro.autor.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+               livro.descricao.toLowerCase().includes(this.searchQuery.toLowerCase());
+      });
+    }
+  },
+  methods: {
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen;
     },
-    computed: {
-      livrosFiltrados() {
-        return this.livros.filter(livro => {
-          return livro.titulo.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                 livro.autor.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                 livro.descricao.toLowerCase().includes(this.searchQuery.toLowerCase());
-        });
+    editarLivro(id) {
+      // Redireciona para a página de edição do livro
+      this.$router.push(`/adm_editlivro/${id}`);
+    },
+    removerLivro(id) {
+      console.log('Remover Livro:', id);
+      // Aqui você pode implementar a lógica de remoção do livro
+    },
+    navegarParaDetalhes(bookId) {
+      this.$router.push(`/detalhes-livros/${bookId}`);
+    },
+    navegar(direcao) {
+      if (direcao === 'anterior' && this.paginaAtual > 1) {
+        this.paginaAtual--;
+      } else if (direcao === 'proxima' && this.paginaAtual < this.totalPaginas) {
+        this.paginaAtual++;
       }
     },
-    methods: {
-      toggleSidebar() {
-        this.isSidebarOpen = !this.isSidebarOpen;
-      },
-      editarLivro(id) {
-        console.log('Editar Livro:', id);
-        // Aqui você pode implementar a lógica de edição do livro
-      },
-      removerLivro(id) {
-        console.log('Remover Livro:', id);
-        // Aqui você pode implementar a lógica de remoção do livro
-      },
-      navegarParaDetalhes(bookId) {
-        this.$router.push(`/detalhes-livros/${bookId}`);
-      },
-      navegar(direcao) {
-        if (direcao === 'anterior' && this.paginaAtual > 1) {
-          this.paginaAtual--;
-        } else if (direcao === 'proxima' && this.paginaAtual < this.totalPaginas) {
-          this.paginaAtual++;
-        }
-      },
-      pesquisar() {
-        // Lógica de pesquisa pode ser aplicada aqui (se necessário)
-      }
-    },
-  };
-  </script>
+    pesquisar() {
+      // Lógica de pesquisa pode ser aplicada aqui (se necessário)
+    }
+  },
+};
+</script>
   
   <style scoped>
   /* Estilo do corpo */
