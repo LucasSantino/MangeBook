@@ -1,105 +1,105 @@
 <template>
-    <div class="container">
-      <NavBar @toggle-sidebar="toggleSidebar" />
-      <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
-  
-      <main>
-        <!-- Container das informações do usuário -->
-        <div class="perfil-wrapper">
-          <!-- Container da imagem de perfil -->
-          <div class="perfil-container">
-            <img src="/Site - MangeBook/imagens/perfil.png" alt="Imagem de Perfil" class="foto-perfil">
-            
-            <!-- Campo de Status -->
-            <select v-model="status" class="status-select">
-              <option value="Ativo">Ativo</option>
-              <option value="Bloqueado">Bloqueado</option>
-            </select>
-          </div>
-  
-          <div class="informacoes-container">
-            <h2>Informações do Usuário</h2>
-            <table class="informacoes-tabela">
-              <tr>
-                <td>ID do Usuário:</td>
-                <td>123456</td>
-              </tr>
-              <tr>
-                <td>Tipo de Usuário:</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Nome Completo:</td>
-                <td>Nome do Usuário</td>
-              </tr>
-              <tr>
-                <td>Email:</td>
-                <td>email@exemplo.com</td>
-              </tr>
-              <tr>
-                <td>Data de Nascimento:</td>
-                <td>01/01/2000</td>
-              </tr>
-              <tr>
-                <td>CPF:</td>
-                <td>123.456.789-00</td>
-              </tr>
-              <tr>
-                <td>Endereço:</td>
-                <td>Rua Exemplo, 123</td>
-              </tr>
-              <tr>
-                <td>Senha:</td>
-                <td>********</td>
-              </tr>
-              <tr>
-                <td>Status:</td>
-                <td>{{ status }}</td> <!-- Exibe o status selecionado -->
-              </tr>
-            </table>
-  
-            <!-- Campo de notificação -->
-            <div class="notificacao-container">
-              <h3>Notificar Usuário</h3>
-              <textarea v-model="notificacao" placeholder="Digite a notificação aqui..." rows="4"></textarea>
-              <button @click="enviarNotificacao">Enviar Notificação</button>
-            </div>
+  <div class="container">
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
+    <NavBar @toggle-sidebar="toggleSidebar" />
+
+    <!-- Sidebar Administrativa para administradores -->
+    <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+
+    <main>
+      <!-- Container das informações do usuário -->
+      <div class="perfil-wrapper">
+        <!-- Container da imagem de perfil -->
+        <div class="perfil-container">
+          <img src="/Site - MangeBook/imagens/perfil.png" alt="Imagem de Perfil" class="foto-perfil">
+          
+          <!-- Campo de Status -->
+          <select v-model="status" class="status-select">
+            <option value="Ativo">Ativo</option>
+            <option value="Bloqueado">Bloqueado</option>
+          </select>
+        </div>
+
+        <div class="informacoes-container">
+          <h2>Informações do Usuário</h2>
+          <table class="informacoes-tabela">
+            <tr>
+              <td>ID do Usuário:</td>
+              <td>123456</td>
+            </tr>
+            <tr>
+              <td>Tipo de Usuário:</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Nome Completo:</td>
+              <td>Nome do Usuário</td>
+            </tr>
+            <tr>
+              <td>Email:</td>
+              <td>email@exemplo.com</td>
+            </tr>
+            <tr>
+              <td>Data de Nascimento:</td>
+              <td>01/01/2000</td>
+            </tr>
+            <tr>
+              <td>CPF:</td>
+              <td>123.456.789-00</td>
+            </tr>
+            <tr>
+              <td>Endereço:</td>
+              <td>Rua Exemplo, 123</td>
+            </tr>
+            <tr>
+              <td>Senha:</td>
+              <td>********</td>
+            </tr>
+            <tr>
+              <td>Status:</td>
+              <td>{{ status }}</td> <!-- Exibe o status selecionado -->
+            </tr>
+          </table>
+
+          <!-- Campo de notificação -->
+          <div class="notificacao-container">
+            <h3>Notificar Usuário</h3>
+            <textarea v-model="notificacao" placeholder="Digite a notificação aqui..." rows="4"></textarea>
+            <button @click="enviarNotificacao">Enviar Notificação</button>
           </div>
         </div>
-      </main>
-    </div>
-  </template>
-  
-  
-  <script>
-  import NavBar from '@/components/NavBar.vue';
-  import SideBar from '@/components/SideBar.vue';
-  
-  export default {
-    components: {
-      NavBar,
-      SideBar,
+      </div>
+    </main>
+  </div>
+</template>
+
+<script>
+import NavBar from '@/components/NavBar.vue';
+import adm_SideBar from '@/components/adm_SideBar.vue'; // Importando corretamente a adm_SideBar
+
+export default {
+  components: {
+    NavBar,
+    adm_SideBar, // Usando a adm_SideBar no componente
+  },
+  data() {
+    return {
+      isSidebarOpen: false, // Controle do estado da sidebar
+      notificacao: '',
+      status: 'Ativo', // Valor inicial do select
+    };
+  },
+  methods: {
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen; // Alterna o estado da sidebar
     },
-    data() {
-      return {
-        sidebarOpen: false,
-        notificacao: '',
-        status: 'Ativo', // Valor inicial do select
-      };
+    enviarNotificacao() {
+      alert("Notificação enviada com sucesso!");
+      this.notificacao = ''; // Limpa o campo de notificação após o envio
     },
-    methods: {
-      toggleSidebar() {
-        this.sidebarOpen = !this.sidebarOpen;
-      },
-      enviarNotificacao() {
-        alert("Notificação enviada com sucesso!");
-        this.notificacao = ''; // Limpa o campo de notificação após o envio
-      },
-    },
-  };
-  </script>
-  
-  
+  },
+};
+</script>
   <style scoped>
   /* Reset de estilo básico */
   * {
