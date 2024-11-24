@@ -13,8 +13,14 @@
       </div>
       <!-- Botão para enviar o formulário -->
       <button type="submit" class="login-button">Entrar</button>
+      
       <p class="forgot-password">
         <a href="RecuperaSenha.html">Esqueceu sua senha?</a>
+      </p>
+
+      <!-- Novo link "Cadastre-se" abaixo do botão de login -->
+      <p class="signup-option">
+        Não tem uma conta? <router-link to="/login_cadastrousers">Cadastre-se</router-link>
       </p>
     </form>
   </div>
@@ -154,6 +160,20 @@ input[type="password"] {
 }
 
 .forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.signup-option {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.signup-option a {
+  color: #00334e;
+  text-decoration: none;
+}
+
+.signup-option a:hover {
   text-decoration: underline;
 }
 </style>

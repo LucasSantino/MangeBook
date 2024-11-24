@@ -9,8 +9,8 @@
         <!-- Container da imagem de perfil -->
         <div class="perfil-container">
           <img src="/Site - MangeBook/imagens/perfil.png" alt="Imagem de Perfil" class="foto-perfil">
-          <!-- Apenas o botão de Editar Perfil -->
-          <button>Editar Perfil</button>
+          <!-- Botão de Editar Perfil com navegação -->
+          <button @click="editProfile">Editar Perfil</button>
         </div>
 
         <div class="informacoes-container">
@@ -68,6 +68,10 @@ export default {
   methods: {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
+    },
+    // Método para navegar até a página de editar perfil
+    editProfile() {
+      this.$router.push({ name: 'EditPerfil' }); // Usa o $router para redirecionar
     },
   },
 };
@@ -179,5 +183,3 @@ main {
   width: 65%;
 }
 </style>
-
-

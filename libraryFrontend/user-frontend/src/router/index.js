@@ -16,12 +16,19 @@ import adm_UsersLista from '@/views/adm_UsersLista.vue'
 import adm_CadastroUsers from '@/views/adm_CadastroUsers.vue';
 import adm_PerfilUser from '@/views/adm_PerfilUser.vue';
 import adm_EditLivro from '@/views/adm_EditLivro.vue';
+import Login_CadastroUsers from '@/views/Login_CadastroUsers.vue';
+import EditPerfil from '@/views/EditPerfil.vue';
 
 const routes = [
   {
     path: '/',
     name: 'Login', // Esta é a rota inicial
     component: Login, // A página de Login será carregada primeiro
+  },
+  {
+    path: '/login_cadastrousers',
+    name: 'Login_CadastroUsers', // Esta é a rota inicial
+    component: Login_CadastroUsers, // A página de Login será carregada primeiro
   },
   {
     path: '/index',
@@ -53,6 +60,11 @@ const routes = [
     path: '/perfil-usuario',
     name: 'PerfilUsuarui',
     component: PerfilUsuario, // Componente da página "Perfil de Usuario"
+  },
+  {
+    path: '/editperfil',
+    name: 'EditPerfil',
+    component: EditPerfil, // Componente da página "Perfil de Usuario"
   },
   {
     path: '/historico',
