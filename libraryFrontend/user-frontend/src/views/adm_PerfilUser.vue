@@ -315,7 +315,7 @@ main {
   font-size: 1.75rem;
   color: #00334e;
   margin-bottom: 20px;
-  margin-top: 20px; /* Ajuste do espaçamento superior */
+  margin-top: 40px; /* Ajuste do espaçamento superior */
   text-align: center; /* Centralizar o título */
 }
 
@@ -380,6 +380,7 @@ main {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  width: 100%;
 }
 
 .notificacao-container button:hover {
