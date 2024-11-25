@@ -1,4 +1,4 @@
-require('dotenv').config(); // Carrega variáveis de ambiente do arquivo .env
+/*require('dotenv').config(); // Carrega variáveis de ambiente do arquivo .env
 
 const express = require('express'); // Importa o Express, um framework para criar APIs
 const mongoose = require('mongoose'); // Importa o Mongoose para conectar e interagir com o MongoDB
@@ -28,3 +28,4 @@ mongoose.connect(process.env.MONGO_URI, {
 const PORT = process.env.PORT || 5000; // Define a porta do servidor, usando variável de ambiente ou padrão 5000
 
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`)); // Inicia o servidor e exibe mensagem no console
+*/
