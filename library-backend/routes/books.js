@@ -15,14 +15,24 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage: storage }); // Criando o middleware de upload com a configuração
+const upload = multer({ 
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        // Filtrar apenas arquivos de imagem
+        if (!file.mimetype.startsWith('image/')) {
+            return cb(new Error('Apenas arquivos de imagem são permitidos!'), false);
+        }
+        cb(null, true);
+    },
+    limits: { fileSize: 5 * 1024 * 1024 } // Limite de tamanho: 5MB
+}); 
 
-// *** CRIAÇÃO (POST) ***
+//// *** CRIAÇÃO (POST) ***////
 router.post('/', upload.single('bookThumbnail'), async (req, res) => {
-    const { bookTitle, bookAuthor, publicationYear, bookGenre, isbn, copiesAvailable, dbookDescription } = req.body; // Extraímos os dados da requisição
+    const { bookTitle, bookAuthor, publicationYear, bookGenre, isbn, copiesAvailable, dbookDescription } = req.body;
 
-    // Se a imagem foi enviada, podemos incluir o caminho dela no objeto
-    const bookThumbnail = req.file ? req.file.path : null;  // Salva o caminho do arquivo
+    // Se a imagem foi enviada, incluímos o caminho dela no objeto
+    const bookThumbnail = req.file ? req.file.path : null;
 
     try {
         const newBook = new Book({ 
@@ -48,18 +58,46 @@ router.get('/', async (req, res) => {
         const books = await Book.find(); // Buscamos todos os livros
         res.status(200).json(books); // Retornamos a lista de livros 
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao buscar livros', error }); // Retornamos erro, se houver
+        res.status(500).json({ message: 'Erro ao buscar livros', error });
     }
 });
 
 // *** ATUALIZAÇÃO (PUT) ***
-router.put('/:id', async (req, res) => {
-    const { title, author, year } = req.body; // Extraímos os novos dados
+router.put('/:id', upload.single('bookThumbnail'), async (req, res) => {
+    // Extraímos os dados enviados no corpo da requisição
+    const { bookTitle, bookAuthor, publicationYear, bookGenre, isbn, copiesAvailable, dbookDescription } = req.body;
+
+    // Verificamos se uma nova imagem foi enviada
+    const bookThumbnail = req.file ? req.file.path : null;
+
+    // Tentamos atualizar o livro no banco de dados pelo ID
     try {
-        const updatedBook = await Book.findByIdAndUpdate(req.params.id, { title, author, year }, { new: true }); // Atualizamos o livro pelo ID
-        res.status(200).json(updatedBook); // Retornamos o livro atualizado
+        // Atualiza o livro com os dados fornecidos
+        const updatedBook = await Book.findByIdAndUpdate(
+            req.params.id, // Procuramos pelo ID do livro
+            {
+                bookTitle,       // Atualiza o título
+                bookAuthor,      // Atualiza o autor
+                publicationYear, // Atualiza o ano de publicação
+                bookGenre,       // Atualiza o gênero
+                isbn,            // Atualiza o ISBN
+                copiesAvailable, // Atualiza a quantidade de cópias disponíveis
+                dbookDescription, // Atualiza a descrição
+                bookThumbnail    // Atualiza o caminho da imagem (se houver)
+            },
+            { new: true } // A opção { new: true } garante que o documento retornado seja o atualizado
+        );
+
+        // Caso o livro não seja encontrado, retornamos um erro
+        if (!updatedBook) {
+            return res.status(404).json({ message: 'Livro não encontrado' });
+        }
+
+        // Retornamos o livro atualizado
+        res.status(200).json(updatedBook);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao atualizar livro', error }); // Retornamos erro, se houver
+        // Caso haja algum erro, retornamos uma resposta de erro 500
+        res.status(500).json({ message: 'Erro ao atualizar livro', error });
     }
 });
 
@@ -67,64 +105,22 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         await Book.findByIdAndDelete(req.params.id); // Deletamos o livro pelo ID
-        res.status(200).json({ message: 'Livro deletado com sucesso' }); // Retornamos mensagem de sucesso
+        res.status(200).json({ message: 'Livro deletado com sucesso' });
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao deletar livro', error }); // Retornamos erro, se houver
+        res.status(500).json({ message: 'Erro ao deletar livro', error });
+    }
+});
+
+// Tratamento de erros do Multer
+router.use((err, req, res, next) => {
+    if (err instanceof multer.MulterError) {
+        res.status(400).json({ error: `Erro de upload: ${err.message}` });
+    } else if (err) {
+        res.status(500).json({ error: err.message });
+    } else {
+        next();
     }
 });
 
 // Exportamos o roteador para ser usado no server.js
 module.exports = router;
-
-
-/*
-const express = require('express'); // Importamos o Express
-const Book = require('../models/Book'); // Importamos o modelo Book
-const router = express.Router(); // Criamos o roteador
-
-// *** CRIAÇÃO (POST) ***
-router.post('/', async (req, res) => {
-    const { title, author, year, genre, isbn, copies, description, } = req.body; // Extraimos os dados da requisição
-    try {
-        const newBook = new Book({  title, author, year, genre, isbn, copies, description }); // Criamos e salvamos o livro
-        await newBook.save();
-        res.status(201).json(newBook); // Retornamos o livro criado
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao criar livro', error });
-    }
-});
-
-// *** LEITURA (GET) ***
-router.get('/', async (req, res) => {
-    try {
-        const books = await Book.find(); // Buscamos todos os livros
-        res.status(200).json(books); // Retornamos a lista de livros 
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao buscar livros', error }); // Retornamos erro, se houver
-    }
-});
-
-// *** ATUALIZAÇÃO (PUT) ***
-router.put('/:id', async (req, res) => {
-    const { title, author, year } = req.body; // Extraimos os novos dados
-    try {
-        const updatedBook = await Book.findByIdAndUpdate(req.params.id, { title, author, year }, { new: true }); // Atualizamos o livro pelo ID
-        res.status(200).json(updatedBook); // Retornamos o livro atualizado
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao atualizar livro', error }); // Retornamos erro, se houver
-    }
-});
-
-// ***  EXCLUSÃO (DELETE) ***
-router.delete('/:id', async (req, res) => {
-    try {
-        await Book.findByIdAndDelete(req.params.id); // Deletamos o livro pelo ID
-        res.status(200).json({ message: 'Livro deletado com sucesso' }); // Retornamos mensagem de sucesso
-    } catch (error) {
-        res.status(500).json({ message: 'Erro ao deletar livro', error }); // Retornamos erro, se houver
-    }
-});
-
-// Exportamos o roteador para ser usado no server.js
-module.exports = router;
-*/
