@@ -2,33 +2,56 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-require("dotenv").config();
+require('dotenv').config();
 
 // Função para registrar novos usuários
+// Função para registrar novos usuários
 exports.register = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, birthDate, gender, cpf, address, email, userThumbnail } = req.body;
 
     try {
-        // Verifica se o usuário já existe
+        // Verifica se o usuário, e-mail ou CPF já existem
         const existingUser = await User.findOne({ username });
+        const existingEmail = await User.findOne({ email });
+        const existingCpf = await User.findOne({ cpf });
+
         if (existingUser) {
-            return res.status(400).json({ error: 'Usuário já existe' });
+            return res.status(400).json({ error: 'Nome de usuário já está em uso' });
+        }
+
+        if (existingEmail) {
+            return res.status(400).json({ error: 'E-mail já está em uso' });
+        }
+
+        if (existingCpf) {
+            return res.status(400).json({ error: 'CPF já está cadastrado' });
         }
 
         // Criptografa a senha antes de salvar no banco
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Cria um novo usuário
-        const newUser = new User({ username, password: hashedPassword });
+        const newUser = new User({
+            username,
+            birthDate,
+            gender,
+            cpf,
+            address,
+            email,
+            password: hashedPassword,
+            userThumbnail
+        });
+
         await newUser.save();
         res.status(201).json({ message: 'Usuário registrado com sucesso' });
     } catch (error) {
-        console.error(error); // Loga o erro
+        console.error(error);
         res.status(500).json({ error: 'Erro ao registrar usuário' });
     }
 };
 
-// Função para fazer login de usuários
+
+// Função para fazer login de usuários com username e senha
 exports.login = async (req, res) => {
     const { username, password } = req.body;
 
@@ -50,6 +73,7 @@ exports.login = async (req, res) => {
         // Cria o token JWT para autenticação
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
+        // Retorna o token de autenticação
         res.json({ token });
     } catch (error) {
         console.error(error);

@@ -1,3 +1,4 @@
+/*
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -51,10 +52,11 @@ app.post('/upload', upload.single('bookThumbnail'), (req, res) => {
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
 });
+*/
 
 ////////////////////////////////////////////////////////////////////////////////////
-/* codigo com autentificação de usuario.
-require('dotenv').config(); // Carrega variáveis de ambiente do arquivo .env
+ //codigo com autentificação de usuario.
+ require('dotenv').config(); // Carrega variáveis de ambiente do arquivo .env
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -94,15 +96,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // **Rota de Cadastro de Usuário**
-app.post('/api/auth/register', async (req, res) => {
-    const { username, password } = req.body;
+app.post('/api/auth/register', upload.single('userThumbnail'), async (req, res) => {
+    const { username, password, birthDate, gender, cpf, address, email } = req.body;
+    const userThumbnail = req.file ? req.file.path : null;
 
     try {
-        // Verifica se o usuário já existe
+        // Verifica se o nome de usuário, e-mail ou CPF já existem
         const existingUser = await User.findOne({ username });
-        if (existingUser) {
-            return res.status(400).json({ error: 'Usuário já existe' });
-        }
+        const existingEmail = await User.findOne({ email });
+        const existingCpf = await User.findOne({ cpf });
+
+        if (existingUser) return res.status(400).json({ error: 'Nome de usuário já está em uso' });
+        if (existingEmail) return res.status(400).json({ error: 'E-mail já está em uso' });
+        if (existingCpf) return res.status(400).json({ error: 'CPF já está cadastrado' });
 
         // Criptografa a senha
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -111,6 +117,12 @@ app.post('/api/auth/register', async (req, res) => {
         const newUser = new User({
             username,
             password: hashedPassword,
+            birthDate,
+            gender,
+            cpf,
+            address,
+            email,
+            userThumbnail
         });
 
         // Salva o usuário no banco
@@ -122,7 +134,7 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
-// **Rota de Login de Usuário**
+// Rota de Login de Usuário
 app.post('/api/auth/login', async (req, res) => {
     const { username, password } = req.body;
 
@@ -144,26 +156,41 @@ app.post('/api/auth/login', async (req, res) => {
             expiresIn: '1h',
         });
 
-        res.status(200).json({ token });
+        return res.status(200).json({ token });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Erro ao fazer login' });
+        return res.status(500).json({ error: 'Erro ao fazer login' });
     }
 });
 
-// **Middleware de Autenticação JWT**
+// Middleware de Autenticação JWT
 const authenticate = (req, res, next) => {
     const token = req.header('Authorization');
     if (!token) return res.status(401).json({ error: 'Acesso negado' });
 
+    // Remove o prefixo 'Bearer ' do token (caso esteja sendo usado)
+    const bearerToken = token.split(' ')[1];
+    if (!bearerToken) return res.status(400).json({ error: 'Token malformado' });
+
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;
+        // Verifica o token
+        const decoded = jwt.verify(bearerToken, process.env.JWT_SECRET);
+        req.user = decoded;  // Armazena o id do usuário no objeto de requisição
         next();
     } catch (err) {
         res.status(400).json({ error: 'Token inválido' });
     }
 };
+
+// Rota para listar todos os usuários
+app.get('/api/users', authenticate, async (req, res) => {
+    try {
+        const users = await User.find();  // Encontra todos os usuários no banco
+        res.status(200).json(users);  // Retorna os usuários encontrados
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao listar usuários' });
+    }
+});
 
 // **Rotas de livros**
 
@@ -217,7 +244,7 @@ app.delete('/api/books/:id', authenticate, async (req, res) => {
     }
 });
 
-// **Rota para upload de imagem** (protege com autenticação, se necessário)
+// **Rota para upload de imagem**
 app.post('/upload', authenticate, upload.single('bookThumbnail'), (req, res) => {
     if (!req.file) {
         return res.status(400).send('Nenhum arquivo foi enviado.');
@@ -233,4 +260,5 @@ const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
-*/
+
+ 

@@ -12,6 +12,8 @@ module.exports = router;
 
 
 
+
+
 /*const express = require('express'); // Importa o Express
 const router = express.Router(); // Cria um roteador do Express
 const authController = require('../controllers/authController')
