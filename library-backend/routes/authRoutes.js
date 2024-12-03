@@ -1,18 +1,27 @@
 const express = require('express'); // Importa o express
-const router = express.Router(); // Cria um roteador do express
-const authController = require('../controllers/authControllers'); // Corrigir a importação para usar o nome correto
+const router = express.Router(); //  roteador do express
+const authController = require('../controllers/authControllers'); 
 
 
 // Rota para registrar novos usuários
-router.post('/register', authController.register); // Usando o controlador correto
+router.post('/register', authController.register); 
 
-// Rota para login de usuários
-router.post('/login', authController.login); // Usando o controlador correto
+// Rota para fazer login de usuários
+router.post('/login', authController.login); 
+
+// Rota para atualizar as informacões do usuario
+router.put('/:userId', authController.updateUser);
 
 // Rota para listar todos os usuários
-router.get('/users', authController.getAllUsers); // Usando o controlador correto
+router.get('/users', authController.getAllUsers);
 
-router.put('/:userId', authController.updateUser);
+// Rota para buscar por nome ou ID de usuario
+router.get('/search', authController.getUserByNameOrId);
+
+
+// Rota para deletar as informaçoes do usuario
+router.delete('/:userId', authController.deleteUser);
+
 
 
 
