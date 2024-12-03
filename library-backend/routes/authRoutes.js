@@ -1,14 +1,23 @@
-const express = require('express');
-const router = express.Router();
-const authController = require('../controllers/authController');
+const express = require('express'); // Importa o express
+const router = express.Router(); // Cria um roteador do express
+const authController = require('../controllers/authControllers'); // Corrigir a importação para usar o nome correto
+
 
 // Rota para registrar novos usuários
-router.post('/register', authController.register);
+router.post('/register', authController.register); // Usando o controlador correto
 
 // Rota para login de usuários
-router.post('/login', authController.login);
+router.post('/login', authController.login); // Usando o controlador correto
 
-module.exports = router;
+// Rota para listar todos os usuários
+router.get('/users', authController.getAllUsers); // Usando o controlador correto
+
+router.put('/:userId', authController.updateUser);
+
+
+
+module.exports = router; // Exporta o roteador para uso no app.js
+
 
 
 

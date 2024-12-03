@@ -25,18 +25,6 @@ userSchema.methods.comparePassword = async function (password) {
     }
 };
 
-// Hook para criptografar a senha antes de salvar
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next(); // Se a senha não foi modificada, continua o fluxo
-
-    try {
-        const salt = await bcrypt.genSalt(10); // Criptografa a senha com um fator de custo de 10
-        this.password = await bcrypt.hash(this.password, salt); // Criptografa a senha antes de salvar
-        next();
-    } catch (error) {
-        return next(error); // Passa o erro ao middleware de erro
-    }
-});
 
 // Exporta o modelo do usuário
 module.exports = mongoose.model('User', userSchema);
