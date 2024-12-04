@@ -4,8 +4,8 @@
     <form class="login-form" @submit.prevent="handleSubmit">
       <h2>Bem-vindo ao sistema MangeBook</h2>
       <div class="form-group">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" placeholder="Digite seu usuário" required v-model="username">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" placeholder="Digite seu e-mail" required v-model="email">
       </div>
       <div class="form-group">
         <label for="password">Senha:</label>
@@ -23,6 +23,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue';
+import axios from 'axios'; // Importar Axios para fazer requisição HTTP
 
 export default {
   components: {
@@ -30,47 +31,39 @@ export default {
   },
   data() {
     return {
-      username: '', // Nome de usuário
-      password: '', // Senha
+      email: '', // E-mail do usuário
+      password: '', // Senha do usuário
     };
   },
   methods: {
-    handleSubmit() {
-      // Definir as credenciais válidas para administrador e usuário comum
-      const validUsernameAdmin = 'admin'; // Nome de usuário do administrador
-      const validPasswordAdmin = 'senha123'; // Senha do administrador
+    async handleSubmit() {
+  try {
+    // Envia a requisição para o backend com o email e senha
+    const response = await axios.post('http://localhost:3000/api/auth/login', {
+      email: this.email,
+      password: this.password
+    });
 
-      const validUsernameUser = 'user'; // Nome de usuário do usuário comum
-      const validPasswordUser = 'senha123'; // Senha do usuário comum
+    // Verifica se a resposta contém um token (sucesso no login)
+    if (response.status === 200 && response.data.token) {
+      // Salva o token e as informações do usuário no localStorage
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user));
 
-      // Lógica para autenticação
-      if (this.username === validUsernameAdmin && this.password === validPasswordAdmin) {
-        // Salva os dados no localStorage (token e informações do usuário)
-        localStorage.setItem('token', 'admin-token');
-        localStorage.setItem('user', JSON.stringify({
-          username: this.username,
-          userType: 'admin', // Definindo tipo como admin
-        }));
-
-        // Redireciona para a página de administrador
+      // Redireciona para a página do usuário (baseado no role)
+      if (response.data.user.role === 'admin') {
         this.$router.push('/adm_dashboard');  
         alert('Login bem-sucedido como Administrador!');
-      } else if (this.username === validUsernameUser && this.password === validPasswordUser) {
-        // Salva os dados no localStorage (token e informações do usuário)
-        localStorage.setItem('token', 'user-token');
-        localStorage.setItem('user', JSON.stringify({
-          username: this.username,
-          userType: 'user', // Definindo tipo como user
-        }));
-
-        // Redireciona para a página de usuário
-        this.$router.push('/index');  
-        alert('Login bem-sucedido como Usuário Comum!');
       } else {
-        // Exibe um alerta caso as credenciais estejam incorretas
-        alert('Usuário ou senha incorretos!');
+        this.$router.push('/index');
+        alert('Login bem-sucedido como Usuário Comum!');
       }
     }
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao realizar o login. Verifique suas credenciais.');
+  }
+}
   }
 };
 </script>
@@ -121,7 +114,7 @@ body {
   margin-bottom: 5px;
 }
 
-input[type="text"],
+input[type="email"],
 input[type="password"] {
   width: 100%;
   padding: 10px;
@@ -172,3 +165,4 @@ input[type="password"] {
   text-decoration: underline;
 }
 </style>
+

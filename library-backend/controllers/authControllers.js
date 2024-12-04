@@ -135,13 +135,14 @@ exports.login = async (req, res) => {
         // Cria um JWT Token com o id e role do usuário, definindo o tempo de expiração para 1h
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Retorna o token como resposta
-        res.status(200).json({ message: "Login realizado", token });
+        // Retorna o token e as informações do usuário como resposta
+        res.status(200).json({ message: "Login realizado", token, user });
     } catch (error) {
         console.error(error); // Loga o erro
         res.status(500).json({ error: 'Erro ao fazer login' });
     }
 };
+
 
 
 
