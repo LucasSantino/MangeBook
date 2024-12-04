@@ -52,6 +52,54 @@ exports.register = async (req, res) => {
 };
 
 
+// Função para registrar novos usuários (apenas administradores podem usar)
+exports.adminRegister = async (req, res) => {
+    const { username, birthDate, gender, cpf, address, email, password, userThumbnail, role } = req.body;
+
+    // Verifica se o campo 'password' está presente e não é vazio
+    if (!password) {
+        return res.status(400).json({ error: 'Senha não fornecida' });
+    }
+
+    try {
+        // Verifica se o usuário já existe
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Usuário já existe' });
+        }
+
+        // Remove espaços em branco extras da senha
+        const trimmedPassword = password.trim();
+
+        // Criptografa a senha antes de salvar no banco
+        const hashedPassword = await bcrypt.hash(trimmedPassword, 10);
+        console.log('Senha criptografada gerada:', hashedPassword); // Loga o hash gerado
+
+        // Cria um novo usuário com o campo password após o campo email
+        const newUser = new User({
+            username,
+            birthDate,
+            gender,
+            cpf,
+            address,
+            email,
+            password: hashedPassword, // Armazena a senha criptografada
+            userThumbnail,
+            role: role || 'user' // Se não for fornecido, o papel será 'user' por padrão
+        });
+
+        // Salva o usuário no banco de dados
+        await newUser.save();
+        console.log('Usuário registrado com sucesso, senha armazenada no banco:', newUser.password); // Verifica o hash armazenado
+
+        // Retorna a mensagem de sucesso
+        res.status(201).json({ message: 'Usuário registrado com sucesso pelo administrador' });
+    } catch (error) {
+        console.error('Erro ao registrar usuário:', error); // Loga o erro
+        res.status(500).json({ error: 'Erro ao registrar usuário' });
+    }
+};
+
 
 
 // Função para fazer login de usuários
@@ -122,6 +170,71 @@ exports.updateUser = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Erro ao atualizar o usuário' });
+    }
+};
+
+
+// Função para ativar/desativar usuários
+exports.toggleUserStatus = async (req, res) => {
+    const { userId } = req.params; // Obtém o ID do usuário a partir dos parâmetros da rota
+
+    try {
+        // Busca o usuário no banco de dados
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        // Alterna o status de ativação
+        user.isActive = !user.isActive;
+
+        // Salva as alterações no banco
+        await user.save();
+
+        // Retorna a resposta ao cliente
+        res.status(200).json({
+            message: `Usuário ${user.isActive ? 'ativado' : 'desativado'} com sucesso.`,
+            user: { id: user._id, username: user.username, isActive: user.isActive }
+        });
+    } catch (error) {
+        console.error('Erro ao alterar o status do usuário:', error);
+        res.status(500).json({ error: 'Erro ao alterar o status do usuário' });
+    }
+};
+
+
+/// Função para alterar o papel do usuário (promover ou rebaixar)
+exports.changeUserRole = async (req, res) => {
+    const { userId } = req.params; // ID do usuário que terá o papel alterado
+    const { role } = req.body; // Novo papel fornecido no corpo da requisição
+
+    try {
+        // Valida se o papel fornecido é válido
+        if (!['admin', 'user'].includes(role)) {
+            return res.status(400).json({ error: 'Papel inválido. Use "admin" ou "user".' });
+        }
+
+        // Busca o usuário pelo ID
+        const user = await User.findById(userId);
+
+        // Verifica se o usuário existe
+        if (!user) {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        // Verifica se o papel já é o mesmo fornecido
+        if (user.role === role) {
+            return res.status(400).json({ error: `O usuário já possui o papel "${role}".` });
+        }
+
+        // Atualiza o papel do usuário
+        user.role = role;
+        await user.save();
+
+        res.status(200).json({ message: `Papel do usuário alterado para "${role}" com sucesso.`, user });
+    } catch (error) {
+        console.error('Erro ao alterar o papel do usuário:', error);
+        res.status(500).json({ error: 'Erro ao alterar o papel do usuário' });
     }
 };
 
