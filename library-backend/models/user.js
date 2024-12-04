@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema(
         address: { type: String, required: [true, 'O endereço é obrigatório'] },
         email: { type: String, required: [true, 'O e-mail é obrigatório'], unique: true, match: [/.+@.+\..+/, 'Por favor, insira um e-mail válido'] },
         password: { type: String, required: [true, 'A senha é obrigatória'] },
-        userThumbnail: { type: String } // URL ou path da imagem do usuário
+        userThumbnail: { type: String }, // URL ou path da imagem do usuário
+        role: { type: String, enum: ['user', 'admin'], default: 'user' } // Campo para definir o perfil
     },
     { timestamps: true } // Adiciona automaticamente os campos createdAt e updatedAt
 );

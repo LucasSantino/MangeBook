@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 // Função para registrar novos usuários
 exports.register = async (req, res) => {
-    const { username, birthDate, gender, cpf, address, email, password, userThumbnail } = req.body;
+    const { username, birthDate, gender, cpf, address, email, password, userThumbnail, role } = req.body;
 
     // Verifica se o campo 'password' está presente e não é vazio
     if (!password) {
@@ -35,7 +35,8 @@ exports.register = async (req, res) => {
             address,
             email,
             password: hashedPassword, // Armazena a senha criptografada
-            userThumbnail
+            userThumbnail,
+            role: role || 'user' // Se não for fornecido, o papel será 'user' por padrão
         });
 
         // Salva o usuário no banco de dados
@@ -57,6 +58,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     const { email, password } = req.body;
 
+    // Verifica se os campos de email e senha foram fornecidos
     if (!email || !password) {
         return res.status(400).json({ error: 'Por favor, forneça ambos os campos: email e senha.' });
     }
@@ -69,18 +71,12 @@ exports.login = async (req, res) => {
             return res.status(400).json({ error: 'Usuário não encontrado' });
         }
 
-        console.log('Usuário encontrado:', user);  // Verificando os dados do usuário
-        console.log('Senha fornecida:', password);  // Verificando a senha fornecida na requisição
+        console.log('Usuário encontrado:', user);  // Loga os dados do usuário
+        console.log('Senha fornecida:', password);  // Loga a senha fornecida
 
-        // Verificando o hash armazenado no banco de dados
-        console.log('Senha armazenada (hash):', user.password);
-
-        // Remover espaços em branco extras antes de comparar
+        // Compara a senha fornecida com a armazenada no banco de dados
         const isMatch = await bcrypt.compare(password.trim(), user.password);
         
-        // Verificando o resultado da comparação
-        console.log('Resultado da comparação de senhas (isMatch):', isMatch);
-
         if (!isMatch) {
             console.log('Senha incorreta');
             return res.status(400).json({ error: 'Senha incorreta' });
@@ -88,16 +84,17 @@ exports.login = async (req, res) => {
 
         console.log('Senha correta');
 
-        // Cria um JWT Token se as credenciais forem corretas
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Cria um JWT Token com o id e role do usuário, definindo o tempo de expiração para 1h
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Retorna o token para o cliente
+        // Retorna o token como resposta
         res.status(200).json({ message: "Login realizado", token });
     } catch (error) {
         console.error(error); // Loga o erro
         res.status(500).json({ error: 'Erro ao fazer login' });
     }
 };
+
 
 
 // Função para atualizar informações do usuário
@@ -172,13 +169,13 @@ exports.getUserByNameOrId = async (req, res) => {
 
 // Função para deletar um usuário
 exports.deleteUser = async (req, res) => {
-    const { userId } = req.params; // Obtém o ID do usuário a ser deletado a partir dos parâmetros da rota
+    const { id } = req.params; // Obtém o ID do usuário a ser deletado a partir dos parâmetros da rota
 
     try {
         // Tenta encontrar e deletar o usuário pelo ID
-        const deletedUser = await User.findByIdAndDelete(userId);
+        const deletedUser = await User.findByIdAndDelete(id);
 
-        // Se o usuário não foi encontrado, retorna um erro
+        // Se o usuário não for encontrado, retorna um erro
         if (!deletedUser) {
             return res.status(404).json({ error: 'Usuário não encontrado' });
         }
@@ -190,6 +187,7 @@ exports.deleteUser = async (req, res) => {
         res.status(500).json({ error: 'Erro ao deletar o usuário' });
     }
 };
+
 
 
 

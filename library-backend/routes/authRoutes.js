@@ -1,5 +1,7 @@
 const express = require('express'); // Importa o express
 const router = express.Router(); //  roteador do express
+const verifyToken = require('../middlewares/verifyToken')
+const isAdmin = require('../middlewares/isAdmin');
 const authController = require('../controllers/authControllers'); 
 
 
@@ -9,18 +11,18 @@ router.post('/register', authController.register);
 // Rota para fazer login de usuários
 router.post('/login', authController.login); 
 
-// Rota para atualizar as informacões do usuario
-router.put('/:userId', authController.updateUser);
+// Rota para atualizar as informações do usuário (só pode atualizar suas próprias informações ou administradores podem atualizar qualquer usuário)
+router.put('/:userId', verifyToken, authController.updateUser); 
 
-// Rota para listar todos os usuários
-router.get('/users', authController.getAllUsers);
+// Rota para listar todos os usuários  (somente administradores podem acessar)
+router.get('/users', verifyToken, isAdmin, authController.getAllUsers); // Rota protegida
 
-// Rota para buscar por nome ou ID de usuario
-router.get('/search', authController.getUserByNameOrId);
+// Rota para buscar por nome ou ID de usuario (somente administradores podem acessar)
+router.get('/search', verifyToken, isAdmin, authController.getUserByNameOrId); // Rota protegida
 
 
-// Rota para deletar as informaçoes do usuario
-router.delete('/:userId', authController.deleteUser);
+// Rota para deletar um usuário (somente administradores podem acessar)
+router.delete('/users/:id', verifyToken, isAdmin, authController.deleteUser); // Rota protegida
 
 
 
