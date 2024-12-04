@@ -3,18 +3,19 @@ const router = express.Router(); //  roteador do express
 const verifyToken = require('../middlewares/verifyToken')
 const isAdmin = require('../middlewares/isAdmin');
 const authController = require('../controllers/authControllers'); 
+const { upload } = require('../Server');
 
 // Rota para fazer login de usuários
 router.post('/login', authController.login); 
 
 // Rota para registrar novos usuários
-router.post('/register', authController.register); 
+router.post('/register', upload.single('userThumbnail'), authController.register);
 
 // Rota para registrar de novos usuários (pelo administrador)
-router.post('/admin/register', verifyToken, isAdmin, authController.adminRegister);
+router.post('/admin/register', verifyToken, isAdmin,upload.single('userThumbnail'), authController.adminRegister);
 
 // Rota para atualizar as informações do usuário (só pode atualizar suas próprias informações ou administradores podem atualizar qualquer usuário)
-router.put('/:userId', verifyToken, authController.updateUser); 
+router.put('/:userId', verifyToken, upload.single('userThumbnail'), authController.updateUser); 
 
 // Rota para ativar/desativar usuários (somente administradores)
 router.patch('/users/:userId/toggle-status', verifyToken, isAdmin, authController.toggleUserStatus);
@@ -34,4 +35,4 @@ router.delete('/users/:id', verifyToken, isAdmin, authController.deleteUser); //
 
 
 
-module.exports = router; // Exporta o roteador para uso no app.js
+module.exports = router; 

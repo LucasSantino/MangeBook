@@ -2,14 +2,19 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-
 // Função para registrar novos usuários
 exports.register = async (req, res) => {
-    const { username, birthDate, gender, cpf, address, email, password, userThumbnail, role } = req.body;
+    const { username, birthDate, gender, cpf, address, email, password, confirmPassword, role } = req.body;
+    const userThumbnail = req.file ? req.file.path : null; // Pega o caminho da imagem se fornecida
 
-    // Verifica se o campo 'password' está presente e não é vazio
-    if (!password) {
-        return res.status(400).json({ error: 'Senha não fornecida' });
+    // Verifica se o campo 'password' e 'confirmPassword' estão presentes e não são vazios
+    if (!password || !confirmPassword) {
+        return res.status(400).json({ error: 'Senha e confirmação de senha são obrigatórios' });
+    }
+
+    // Verifica se as senhas coincidem
+    if (password !== confirmPassword) {
+        return res.status(400).json({ error: 'As senhas não coincidem' });
     }
 
     try {
@@ -26,7 +31,7 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(trimmedPassword, 10);
         console.log('Senha criptografada gerada:', hashedPassword); // Loga o hash gerado
 
-        // Cria um novo usuário com o campo password após o campo email
+        // Cria um novo usuário com os dados
         const newUser = new User({
             username,
             birthDate,
@@ -35,8 +40,8 @@ exports.register = async (req, res) => {
             address,
             email,
             password: hashedPassword, // Armazena a senha criptografada
-            userThumbnail,
-            role: role || 'user' // Se não for fornecido, o papel será 'user' por padrão
+            userThumbnail, // Salva o caminho da imagem
+            role: role || 'user', // Se não for fornecido, o papel será 'user' por padrão
         });
 
         // Salva o usuário no banco de dados
@@ -52,16 +57,25 @@ exports.register = async (req, res) => {
 };
 
 
+
 // Função para registrar novos usuários (apenas administradores podem usar)
 exports.adminRegister = async (req, res) => {
-    const { username, birthDate, gender, cpf, address, email, password, userThumbnail, role } = req.body;
-
-    // Verifica se o campo 'password' está presente e não é vazio
-    if (!password) {
-        return res.status(400).json({ error: 'Senha não fornecida' });
-    }
-
     try {
+        const { username, birthDate, gender, cpf, address, email, password, confirmPassword, role } = req.body;
+
+        // Processa o campo userThumbnail do Form Data (caso presente)
+        const userThumbnail = req.file ? req.file.path : undefined;
+
+        // Verifica se os campos 'password' e 'confirmPassword' estão presentes e não são vazios
+        if (!password || !confirmPassword) {
+            return res.status(400).json({ error: 'Senha e confirmação de senha são obrigatórios' });
+        }
+
+        // Verifica se as senhas coincidem
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: 'As senhas não coincidem' });
+        }
+
         // Verifica se o usuário já existe
         const existingUser = await User.findOne({ email });
         if (existingUser) {
@@ -75,7 +89,7 @@ exports.adminRegister = async (req, res) => {
         const hashedPassword = await bcrypt.hash(trimmedPassword, 10);
         console.log('Senha criptografada gerada:', hashedPassword); // Loga o hash gerado
 
-        // Cria um novo usuário com o campo password após o campo email
+        // Cria um novo usuário com os dados fornecidos
         const newUser = new User({
             username,
             birthDate,
@@ -90,15 +104,16 @@ exports.adminRegister = async (req, res) => {
 
         // Salva o usuário no banco de dados
         await newUser.save();
-        console.log('Usuário registrado com sucesso, senha armazenada no banco:', newUser.password); // Verifica o hash armazenado
+        console.log('Usuário registrado com sucesso:', newUser);
 
         // Retorna a mensagem de sucesso
         res.status(201).json({ message: 'Usuário registrado com sucesso pelo administrador' });
     } catch (error) {
-        console.error('Erro ao registrar usuário:', error); // Loga o erro
+        console.error('Erro ao registrar usuário:', error);
         res.status(500).json({ error: 'Erro ao registrar usuário' });
     }
 };
+
 
 
 

@@ -1,151 +1,172 @@
 <template>
-    <div id="app">
-      <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
-      <NavBar :isEnabled="false" /> <!-- Passa a flag 'false' para desabilitar as funções da navbar -->
-  
+  <div id="app">
+      <NavBar :isEnabled="false" />
+
       <main class="main-content">
-        <!-- Novo Formulário de Cadastro de Usuário -->
-        <div class="book-registration-container">
-          <h1 class="title">Cadastro de Usuário</h1>
-          <form @submit.prevent="submitForm">
-            <div class="form-grid">
-              <div class="form-left">
-                <!-- Foto do usuário (opcional) -->
-                <img :src="userThumbnail" alt="Foto do Usuário" id="userThumbnail">
-                <input type="file" id="imageUpload" accept="image/*" @change="previewImage">
-              </div>
-              <div class="form-right">
-                <div class="form-group">
-                  <label for="fullName">Nome Completo</label>
-                  <input type="text" v-model="fullName" id="fullName" name="fullName" placeholder="Insira o nome completo" required>
-                </div>
-                <div class="form-group">
-                  <label for="birthDate">Data de Nascimento</label>
-                  <input type="date" v-model="birthDate" id="birthDate" name="birthDate" required>
-                </div>
-                <div class="form-group">
-                  <label for="gender">Gênero</label>
-                  <select v-model="gender" id="gender" name="gender" required>
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="outro">Outro</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="cpf">CPF</label>
-                  <input type="text" v-model="cpf" id="cpf" name="cpf" placeholder="Insira o CPF" required>
-                </div>
-                <div class="form-group">
-                  <label for="address">Endereço</label>
-                  <input type="text" v-model="address" id="address" name="address" placeholder="Insira o endereço" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">E-mail</label>
-                  <input type="email" v-model="email" id="email" name="email" placeholder="Insira o e-mail" required>
-                </div>
-                <div class="form-group">
-                  <label for="password">Senha</label>
-                  <input type="password" v-model="password" id="password" name="password" placeholder="Insira a senha" required>
-                </div>
-                <div class="form-group">
-                  <label for="confirmPassword">Confirmar Senha</label>
-                  <input type="password" v-model="confirmPassword" id="confirmPassword" name="confirmPassword" placeholder="Confirme a senha" required>
-                </div>
-                <div v-if="password && confirmPassword && password !== confirmPassword" class="error-message">
-                  <small>As senhas não coincidem.</small>
-                </div>
-              </div>
-            </div>
-            <button type="submit" class="submit-btn" :disabled="!isFormValid">Finalizar Cadastro</button>
-          </form>
-        </div>
-  
-        <!-- Modal de Sucesso -->
-        <div v-if="showModal" class="modal-overlay">
-          <div class="modal-content">
-            <p>Usuário cadastrado com sucesso!</p>
-            <button @click="closeModal">Fechar</button>
+          <div class="book-registration-container">
+              <h1 class="title">Cadastro de Usuário</h1>
+              <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                  <div class="form-grid">
+                      <div class="form-left">
+                          <img :src="userThumbnail" alt="Foto do Usuário" id="userThumbnail">
+                          <input type="file" id="imageUpload" accept="image/*" @change="previewImage">
+                      </div>
+                      <div class="form-right">
+                          <div class="form-group">
+                              <label for="fullName">Nome Completo</label>
+                              <input type="text" v-model="fullName" id="fullName" name="fullName" placeholder="Insira o nome completo" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="birthDate">Data de Nascimento</label>
+                              <input type="date" v-model="birthDate" id="birthDate" name="birthDate" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="gender">Gênero</label>
+                              <select v-model="gender" id="gender" name="gender" required>
+                                  <option value="masculino">Masculino</option>
+                                  <option value="feminino">Feminino</option>
+                                  <option value="outro">Outro</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label for="cpf">CPF</label>
+                              <input type="text" v-model="cpf" id="cpf" name="cpf" placeholder="Insira o CPF" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="address">Endereço</label>
+                              <input type="text" v-model="address" id="address" name="address" placeholder="Insira o endereço" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="email">E-mail</label>
+                              <input type="email" v-model="email" id="email" name="email" placeholder="Insira o e-mail" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="password">Senha</label>
+                              <input type="password" v-model="password" id="password" name="password" placeholder="Insira a senha" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="confirmPassword">Confirmar Senha</label>
+                              <input type="password" v-model="confirmPassword" id="confirmPassword" name="confirmPassword" placeholder="Confirme a senha" required>
+                          </div>
+                          <div v-if="password && confirmPassword && password !== confirmPassword" class="error-message">
+                              <small>As senhas não coincidem.</small>
+                          </div>
+                      </div>
+                  </div>
+                  <button type="submit" class="submit-btn" :disabled="!isFormValid">Finalizar Cadastro</button>
+              </form>
           </div>
-        </div>
+
+          <div v-if="showModal" class="modal-overlay">
+              <div class="modal-content">
+                  <p>Usuário cadastrado com sucesso!</p>
+                  <button @click="closeModal">Fechar</button>
+              </div>
+          </div>
       </main>
-  
-      <!-- Rodapé -->
+
       <Footer />
-    </div>
-  </template>
-  
-  <script>
-  import NavBar from '@/components/NavBar.vue';
-  
-  export default {
-    components: {
-      NavBar,
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+import NavBar from '@/components/NavBar.vue';
+
+export default {
+  components: {
+    NavBar,
+  },
+  data() {
+    return {
+      userThumbnail: "https://via.placeholder.com/200", // Imagem padrão
+      fullName: "",
+      birthDate: "",
+      gender: "masculino",
+      cpf: "",
+      address: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      showModal: false,
+      responseMessage: "",
+    };
+  },
+  computed: {
+    isFormValid() {
+      return (
+        this.fullName &&
+        this.birthDate &&
+        this.cpf &&
+        this.address &&
+        this.email &&
+        this.password &&
+        this.confirmPassword &&
+        this.password === this.confirmPassword // Senhas devem coincidir
+      );
     },
-    data() {
-      return {
-        userThumbnail: "https://via.placeholder.com/200", // Imagem padrão
-        fullName: "",
-        birthDate: "",
-        gender: "masculino",
-        cpf: "",
-        address: "",
-        email: "",
-        password: "",
-        confirmPassword: "", // Campo para confirmar a senha
-        showModal: false, // Controle da exibição do modal
-      };
+  },
+  methods: {
+    previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.userThumbnail = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
     },
-    computed: {
-      isFormValid() {
-        return (
-          this.fullName &&
-          this.birthDate &&
-          this.cpf &&
-          this.address &&
-          this.email &&
-          this.password &&
-          this.confirmPassword &&
-          this.password === this.confirmPassword &&
-          this.userThumbnail !== "https://via.placeholder.com/200"
-        );
+    async submitForm() {
+  if (!this.isFormValid) return; // Verifica se o formulário está válido
+
+  const formData = new FormData();
+  formData.append("username", this.fullName.split(' ')[0]); // Usa o primeiro nome como username
+  formData.append("birthDate", this.birthDate);
+  formData.append("gender", this.gender);
+  formData.append("cpf", this.cpf);
+  formData.append("address", this.address);
+  formData.append("email", this.email);
+  formData.append("password", this.password);
+  formData.append("confirmPassword", this.confirmPassword);
+
+  // Verifica se o arquivo de imagem foi selecionado
+  const imageUpload = this.$refs.imageUpload?.files[0];
+  if (imageUpload) {
+    formData.append("userThumbnail", imageUpload); // Anexa o arquivo de imagem ao FormData
+  }
+
+  try {
+    // Envia a requisição para o backend
+    const response = await axios.post('http://localhost:3000/api/auth/register', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
-    },
-    methods: {
-      previewImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            this.userThumbnail = reader.result;
-          };
-          reader.readAsDataURL(file);
-        }
-      },
-      submitForm() {
-        if (!this.isFormValid) return;
-  
-        console.log("Formulário de Cadastro de Usuário enviado", {
-          fullName: this.fullName,
-          birthDate: this.birthDate,
-          gender: this.gender,
-          cpf: this.cpf,
-          address: this.address,
-          email: this.email,
-          password: this.password,
-        });
-  
-        // Exibir o modal de sucesso
-        this.showModal = true;
-  
-        // Redirecionar para a página /index após o sucesso
-        this.$router.push('/index');
-      },
-      closeModal() {
-        this.showModal = false;
-      },
-    },
-  };
-  </script>
+    });
+
+    // Exibe o valor da resposta no console (usa a variável para evitar o erro do ESLint)
+    console.log("Resposta do servidor:", response);
+
+    // Define uma mensagem de sucesso fixa
+    this.responseMessage = "Cadastro Realizado com sucesso";
+    this.showModal = true;
+
+    // Redireciona para a página de login após o cadastro
+    this.$router.push({ name: 'Login' });
+  } catch (error) {
+    // Exibe a mensagem de erro caso ocorra algum problema
+    this.responseMessage = error.response?.data?.message || 'Erro desconhecido';
+    this.showModal = true; // Exibe o modal de erro
+  }
+}
+
+  },
+};
+</script>
+
+
+
+
   
   <style scoped>
   /* Estilos gerais */
@@ -266,5 +287,7 @@
     color: red;
     font-size: 12px;
   }
+
+
   </style>
   

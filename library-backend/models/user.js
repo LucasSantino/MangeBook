@@ -27,12 +27,5 @@ userSchema.methods.comparePassword = async function (password) {
     }
 };
 
-
 // Exporta o modelo do usuário
 module.exports = mongoose.model('User', userSchema);
-
-
-
-
-
-
