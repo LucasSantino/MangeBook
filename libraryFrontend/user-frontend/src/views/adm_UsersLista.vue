@@ -1,31 +1,22 @@
 <template>
   <div id="app">
-    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
     <NavBar @toggle-sidebar="toggleSidebar" />
-
-    <!-- Sidebar Administrativa para administradores -->
     <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
-
-    <!-- Conteúdo Principal -->
     <main>
       <div class="welcome-container">
         <h2 class="welcome-title">Lista de Usuários</h2>
         <p>Seja Bem-vindo à sua Biblioteca. Todos os Usuários cadastrados aparecem na lista abaixo.</p>
 
-        <!-- Barra de Pesquisa -->
         <div class="search-container2">
           <input v-model="searchQuery" type="text" class="search-bar2" placeholder="Pesquisar..." />
           <button class="search-icon2" @click="pesquisar">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path
-                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-              />
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
             </svg>
           </button>
         </div>
       </div>
 
-      <!-- Tabela de Usuários -->
       <div class="usuarios-container">
         <table class="usuarios-tabela">
           <thead>
@@ -37,56 +28,45 @@
               <th>Livros Reservados</th>
               <th>Livros Atrasados</th>
               <th>Status</th>
-              <th>Tipo</th> <!-- Coluna para mostrar o tipo -->
+              <th>Tipo</th>
               <th>Ações</th>
             </tr>
           </thead>
           <tbody>
-          <tr
-            v-for="usuario in usuariosFiltrados"
-            :key="usuario.id"
-            @click="navegarParaPerfil(usuario)"
-            style="cursor: pointer"
-          >
-            <td>{{ usuario.id }}</td>
-            <td>{{ usuario.nome }}</td>
-            <td>{{ usuario.email }}</td>
-            <td>{{ usuario.livrosEmprestados }}</td>
-            <td>{{ usuario.livrosReservados }}</td>
-            <td>{{ usuario.livrosAtrasados }}</td>
-            <td>{{ usuario.status }}</td>
-            <td>{{ usuario.tipo }}</td>
-            <td>
-              <div class="acao-container">
-                <!-- Impede propagação ao clicar no seletor de status -->
-                <select v-model="usuario.status" @click.stop @change="setStatus(usuario)">
-                  <option value="Ativo">Ativo</option>
-                  <option value="Bloqueado">Bloqueado</option>
-                </select>
-                <!-- Impede propagação ao clicar no botão "Excluir" -->
-                <button class="btn-excluir" @click.stop="excluirPopup(usuario)">Excluir</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
+            <tr v-for="usuario in usuariosPaginados" :key="usuario.id">
+              <td>{{ usuario.id }}</td> <!-- ID exibido diretamente do objeto do usuário -->
+              <td>{{ usuario.username }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.livrosEmprestados || 0 }}</td>
+              <td>{{ usuario.livrosReservados || 0 }}</td>
+              <td>{{ usuario.livrosAtrasados || 0 }}</td>
+              <td>{{ usuario.status }}</td>
+              <td>{{ usuario.role }}</td>
+              <td>
+                <div class="acao-container">
+                  <select v-model="usuario.status" @change="alterarStatus(usuario)">
+                    <option value="Ativo">Ativo</option>
+                    <option value="Bloqueado">Bloqueado</option>
+                  </select>
+                  <button class="btn-excluir" @click="excluirPopup(usuario)">Excluir</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
-      <!-- Popup de Confirmação de Exclusão -->
-<div v-if="showExcluirPopup" class="popup-container">
-  <h2 class="popup-title">Excluir Usuário</h2>
-  <p class="popup-message">Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.</p>
-  <div class="popup-buttons">
-    <button class="popup-button confirm" @click="excluirUsuario">Confirmar</button>
-    <button class="popup-button cancel" @click="fecharPopup">Cancelar</button>
-  </div>
-</div>
+      <div v-if="showExcluirPopup" class="popup-container">
+        <h2 class="popup-title">Excluir Usuário</h2>
+        <p class="popup-message">Tem certeza de que deseja excluir este usuário? Esta ação não pode ser desfeita.</p>
+        <div class="popup-buttons">
+          <button class="popup-button confirm" @click="excluirUsuario">Confirmar</button>
+          <button class="popup-button cancel" @click="fecharPopup">Cancelar</button>
+        </div>
+      </div>
 
-<!-- Overlay para o Popup -->
-<div v-if="showPopupOverlay" class="popup-overlay" @click="fecharPopup"></div>
+      <div v-if="showPopupOverlay" class="popup-overlay" @click="fecharPopup"></div>
 
-
-      <!-- Botões de Paginação -->
       <div class="pagination-container">
         <button class="pagination-btn" @click="navegar('anterior')">Anterior</button>
         <span class="page-info">Página {{ paginaAtual }} de {{ totalPaginas }}</span>
@@ -96,7 +76,12 @@
   </div>
 </template>
 
+
+
+
+
 <script>
+import axios from 'axios';
 import NavBar from '@/components/NavBar.vue';
 import adm_SideBar from '@/components/adm_SideBar.vue';
 
@@ -107,17 +92,9 @@ export default {
   },
   data() {
     return {
-      isSidebarOpen: false, // Controle do estado da sidebar
+      isSidebarOpen: false,
       searchQuery: '',
-      usuarios: [
-        { id: 1, nome: 'João da Silva', email: 'joao@exemplo.com', status: 'Ativo', tipo: 'Usuário', livrosEmprestados: 3, livrosReservados: 1, livrosAtrasados: 0 },
-        { id: 2, nome: 'Maria Oliveira', email: 'maria@exemplo.com', status: 'Bloqueado', tipo: 'Administrador', livrosEmprestados: 1, livrosReservados: 0, livrosAtrasados: 2 },
-        { id: 3, nome: 'Lucas Pereira', email: 'lucas@exemplo.com', status: 'Ativo', tipo: 'Usuário', livrosEmprestados: 2, livrosReservados: 1, livrosAtrasados: 1 },
-        { id: 4, nome: 'Fernanda Costa', email: 'fernanda@exemplo.com', status: 'Ativo', tipo: 'Administrador', livrosEmprestados: 5, livrosReservados: 2, livrosAtrasados: 0 },
-        { id: 5, nome: 'Bruno Almeida', email: 'bruno@exemplo.com', status: 'Bloqueado', tipo: 'Usuário', livrosEmprestados: 0, livrosReservados: 3, livrosAtrasados: 4 },
-        { id: 6, nome: 'Aline Santos', email: 'aline@exemplo.com', status: 'Ativo', tipo: 'Usuário', livrosEmprestados: 4, livrosReservados: 0, livrosAtrasados: 1 },
-        { id: 7, nome: 'Rafael Lima', email: 'rafael@exemplo.com', status: 'Bloqueado', tipo: 'Administrador', livrosEmprestados: 1, livrosReservados: 1, livrosAtrasados: 0 },
-      ],
+      usuarios: [],
       paginaAtual: 1,
       showExcluirPopup: false,
       showPopupOverlay: false,
@@ -126,25 +103,64 @@ export default {
   },
   computed: {
     totalPaginas() {
-      return Math.ceil(this.usuarios.length / 5);
+      return Math.ceil(this.usuariosFiltrados.length / 5);
     },
     usuariosFiltrados() {
       return this.usuarios.filter(usuario => {
-        return usuario.nome.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-               usuario.email.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const nome = usuario.username?.toLowerCase() || '';
+        const email = usuario.email?.toLowerCase() || '';
+        return (
+          nome.includes(this.searchQuery.toLowerCase()) || 
+          email.includes(this.searchQuery.toLowerCase())
+        );
       });
+    },
+    usuariosPaginados() {
+      const start = (this.paginaAtual - 1) * 10;
+      return this.usuariosFiltrados.slice(start, start + 10);
     },
   },
   methods: {
+    carregarUsuarios() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Token de autenticação não encontrado.');
+        return;
+      }
+
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.role !== 'admin') {
+        console.error('Acesso negado. Apenas administradores podem acessar esta funcionalidade.');
+        return;
+      }
+
+      axios
+        .get('http://localhost:3000/api/auth/users', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(response => {
+          this.usuarios = response.data.map(usuario => ({
+            id: usuario._id, // Mapeando _id para id
+            username: usuario.username,
+            email: usuario.email,
+            livrosEmprestados: usuario.livrosEmprestados || 0,
+            livrosReservados: usuario.livrosReservados || 0,
+            livrosAtrasados: usuario.livrosAtrasados || 0,
+            status: usuario.isActive ? 'Ativo' : 'Bloqueado',
+            role: usuario.role,
+          }));
+        })
+        .catch(error => {
+          console.error('Erro ao buscar usuários:', error.response?.data?.error || error.message);
+        });
+    },
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
-    setStatus(usuario) {
-      console.log(`Status de ${usuario.nome} alterado para ${usuario.status}`);
-    },
-    navegarParaPerfil(usuario) {
-    this.$router.push({ path: '/adm_perfiluser', query: { id: usuario.id } });
-    
+    alterarStatus(usuario) {
+      console.log(`Status de ${usuario.username} alterado para ${usuario.status}`);
     },
     excluirPopup(usuario) {
       this.usuarioExcluir = usuario;
@@ -176,8 +192,16 @@ export default {
       console.log('Pesquisando...');
     },
   },
+  mounted() {
+    this.carregarUsuarios();
+  },
 };
 </script>
+
+
+
+
+
 
 <style scoped>
 /* Estilo do corpo */
