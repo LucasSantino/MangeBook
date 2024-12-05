@@ -26,8 +26,9 @@ router.put('/users/role/:userId', verifyToken, isAdmin, authController.changeUse
 // Rota para listar todos os usuários  (somente administradores podem acessar)
 router.get('/users', verifyToken, isAdmin, authController.getAllUsers); // Rota protegida
 
-// Rota para buscar por nome ou ID de usuario (somente administradores podem acessar)
-router.get('/search', verifyToken, isAdmin, authController.getUserByNameOrId); // Rota protegida
+// Rota para buscar por nome ou ID de usuário (usuários podem acessar seus próprios dados, administradores podem acessar qualquer um)
+router.get('/search', verifyToken, authController.getUserByNameOrId);
+
 
 // Rota para deletar um usuário (somente administradores podem acessar)
 router.delete('/users/:id', verifyToken, isAdmin, authController.deleteUser); // Rota protegida

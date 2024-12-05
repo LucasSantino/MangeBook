@@ -23,7 +23,7 @@
 
 <script>
 import NavBar from '@/components/NavBar.vue';
-import axios from 'axios'; // Importar Axios para fazer requisição HTTP
+import axios from 'axios';
 
 export default {
   components: {
@@ -37,36 +37,46 @@ export default {
   },
   methods: {
     async handleSubmit() {
-  try {
-    // Envia a requisição para o backend com o email e senha
-    const response = await axios.post('http://localhost:3000/api/auth/login', {
-      email: this.email,
-      password: this.password
-    });
+      try {
+        // Envia a requisição para o backend com o email e senha
+        const response = await axios.post('http://localhost:3000/api/auth/login', {
+          email: this.email,
+          password: this.password
+        });
 
-    // Verifica se a resposta contém um token (sucesso no login)
-    if (response.status === 200 && response.data.token) {
-      // Salva o token e as informações do usuário no localStorage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+        // Verifica se a resposta contém um token (sucesso no login)
+        if (response.status === 200 && response.data.token) {
+          const user = response.data.user; // Usuário retornado do backend
+          
+          // Salva o token e as informações do usuário no localStorage
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('user', JSON.stringify(user));
 
-      // Redireciona para a página do usuário (baseado no role)
-      if (response.data.user.role === 'admin') {
-        this.$router.push('/adm_dashboard');  
-        alert('Login bem-sucedido como Administrador!');
-      } else {
-        this.$router.push('/index');
-        alert('Login bem-sucedido como Usuário Comum!');
+          // LOG DE DEPURAÇÃO
+          console.log('User info from backend:', user); // Log para depuração
+
+          // Salva o ID do usuário separadamente
+          localStorage.setItem('userId', user._id); // Armazena o ID do usuário separadamente
+          console.log('userId armazenado no localStorage:', user._id); // Log para depuração
+
+          // Redireciona para a página do usuário (baseado no role)
+          if (user.role === 'admin') {
+            this.$router.push('/adm_dashboard');  
+            alert('Login bem-sucedido como Administrador!');
+          } else {
+            this.$router.push('/index');
+            alert('Login bem-sucedido como Usuário Comum!');
+          }
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Erro ao realizar o login. Verifique suas credenciais.');
       }
     }
-  } catch (error) {
-    console.error(error);
-    alert('Erro ao realizar o login. Verifique suas credenciais.');
-  }
-}
   }
 };
 </script>
+
 
 <style scoped>
 /* Estilos do formulário de login */

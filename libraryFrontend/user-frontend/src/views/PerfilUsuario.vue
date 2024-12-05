@@ -8,7 +8,7 @@
       <div class="perfil-wrapper">
         <!-- Container da imagem de perfil -->
         <div class="perfil-container">
-          <img src="/Site - MangeBook/imagens/perfil.png" alt="Imagem de Perfil" class="foto-perfil">
+          <img :src="user.userThumbnail || '/Site - MangeBook/imagens/perfil.png'" alt="Imagem de Perfil" class="foto-perfil">
           <!-- Botão de Editar Perfil com navegação -->
           <button @click="editProfile">Editar Perfil</button>
         </div>
@@ -18,27 +18,27 @@
           <table class="informacoes-tabela">
             <tr>
               <td>ID do Usuário:</td>
-              <td>123456</td>
+              <td>{{ user._id || 'Carregando...' }}</td>
             </tr>
             <tr>
               <td>Nome Completo:</td>
-              <td>Nome do Usuário</td>
+              <td>{{ user.username || 'Carregando...' }}</td>
             </tr>
             <tr>
               <td>Email:</td>
-              <td>email@exemplo.com</td>
+              <td>{{ user.email || 'Carregando...' }}</td>
             </tr>
             <tr>
               <td>Data de Nascimento:</td>
-              <td>01/01/2000</td>
+              <td>{{ formatBirthDate(user.birthDate) || 'Carregando...' }}</td>
             </tr>
             <tr>
               <td>CPF:</td>
-              <td>123.456.789-00</td>
+              <td>{{ user.cpf || 'Carregando...' }}</td>
             </tr>
             <tr>
               <td>Endereço:</td>
-              <td>Rua Exemplo, 123</td>
+              <td>{{ user.address || 'Carregando...' }}</td>
             </tr>
             <tr>
               <td>Senha:</td>
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import NavBar from '@/components/NavBar.vue';
 import SideBar from '@/components/SideBar.vue';
 
@@ -63,19 +64,61 @@ export default {
   data() {
     return {
       sidebarOpen: false,
+      user: {}, // Dados do usuário
+      email: '', // E-mail do usuário
+      password: '', // Senha do usuário
     };
+  },
+  mounted() {
+    this.fetchUserData(); // Busca os dados do usuário quando o componente é montado
   },
   methods: {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
     },
-    // Método para navegar até a página de editar perfil
     editProfile() {
-      this.$router.push({ name: 'EditPerfil' }); // Usa o $router para redirecionar
+      this.$router.push({ name: 'EditPerfil' });
+    },
+    async fetchUserData() {
+  try {
+    const userId = localStorage.getItem('userId'); // Obtém o ID do usuário do localStorage
+    const token = localStorage.getItem('token'); // Obtém o token de autenticação do localStorage
+
+    console.log('ID do usuário:', userId);
+    console.log('Token de autenticação:', token);
+
+    if (!userId || !token) {
+      console.error('ID ou Token não encontrados no localStorage.');
+      alert('Por favor, faça login novamente.');
+      this.$router.push('/login'); // Redireciona para a página de login
+      return;
+    }
+
+    // Faz a requisição ao backend
+    const response = await axios.get(`http://localhost:3000/api/auth/search?userId=${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}` // Adiciona o token no cabeçalho
+      }
+    });
+
+    console.log('Resposta da API:', response.data);
+    this.user = response.data; // Armazena os dados do usuário
+  } catch (error) {
+    console.error('Erro ao buscar os dados do usuário:', error.response || error.message);
+    alert('Não foi possível carregar os dados do usuário.');
+  }
+},
+
+    formatBirthDate(date) {
+      if (!date) return null;
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      return new Date(date).toLocaleDateString('pt-BR', options);
     },
   },
 };
 </script>
+
+
 
 <style scoped>
 /* Reset de estilo básico */

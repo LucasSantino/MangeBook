@@ -268,23 +268,25 @@ exports.getAllUsers = async (req, res) => {
 
 // Função para listar os usuários pelo nome ou pelo ID
 exports.getUserByNameOrId = async (req, res) => {
-    const { username, userId } = req.query; // Recebe os parâmetros da consulta
+    const { userId } = req.query; // Recebe o parâmetro da consulta
 
     try {
-        let user;
+        // Se não houver um userId fornecido, retorna erro
+        if (!userId) {
+            return res.status(400).json({ error: 'userId é necessário' });
+        }
 
-        // Busca pelo ID, caso fornecido
-        if (userId) {
-            user = await User.findById(userId);
-        }
-        // Busca pelo nome, caso fornecido
-        else if (username) {
-            user = await User.findOne({ username: username.trim() });
-        }
+        // Busca o usuário pelo ID fornecido
+        let user = await User.findById(userId);
 
         // Caso o usuário não seja encontrado
         if (!user) {
             return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        // Verifica se o usuário é o mesmo que está tentando acessar
+        if (req.user.id !== userId && req.user.role !== 'admin') {
+            return res.status(403).json({ error: 'Acesso negado' }); // Impede que um usuário acesse dados de outro
         }
 
         // Retorna os dados do usuário
@@ -294,6 +296,7 @@ exports.getUserByNameOrId = async (req, res) => {
         res.status(500).json({ error: 'Erro ao buscar o usuário' });
     }
 };
+
 
 
 // Função para deletar um usuário
