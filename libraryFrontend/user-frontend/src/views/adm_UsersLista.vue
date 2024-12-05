@@ -34,7 +34,7 @@
           </thead>
           <tbody>
             <tr v-for="usuario in usuariosPaginados" :key="usuario.id">
-              <td>{{ usuario.id }}</td> <!-- ID exibido diretamente do objeto do usuário -->
+              <td>{{ usuario.id }}</td>
               <td>{{ usuario.username }}</td>
               <td>{{ usuario.email }}</td>
               <td>{{ usuario.livrosEmprestados || 0 }}</td>
@@ -75,10 +75,6 @@
     </main>
   </div>
 </template>
-
-
-
-
 
 <script>
 import axios from 'axios';
@@ -160,7 +156,26 @@ export default {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
     alterarStatus(usuario) {
-      console.log(`Status de ${usuario.username} alterado para ${usuario.status}`);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Token de autenticação não encontrado.');
+        return;
+      }
+
+      axios
+      axios
+  .patch(`http://localhost:3000/api/auth/users/${usuario.id}/toggle-status`, null, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+        .then(response => {
+          usuario.status = response.data.user.isActive ? 'Ativo' : 'Bloqueado';
+          console.log(`Status de ${usuario.username} alterado para ${usuario.status}`);
+        })
+        .catch(error => {
+          console.error('Erro ao alterar o status do usuário:', error.response?.data?.error || error.message);
+        });
     },
     excluirPopup(usuario) {
       this.usuarioExcluir = usuario;
@@ -197,6 +212,7 @@ export default {
   },
 };
 </script>
+
 
 
 
