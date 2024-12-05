@@ -267,13 +267,14 @@ exports.changeUserRole = async (req, res) => {
 // Função para listar todos os usuários
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({}, 'username'); // Retorna apenas os nomes de usuário
-        res.status(200).json(users);
+        const users = await User.find(); // Retorna todos os campos de cada usuário
+        res.status(200).json(users);  // Retorna todos os usuários com os dados completos
     } catch (error) {
-        console.error(error); // Loga o erro
+        console.error(error);  // Loga o erro
         res.status(500).json({ error: 'Erro ao buscar usuários' });
     }
 };
+
 
 // Função para listar os usuários pelo nome ou pelo ID
 exports.getUserByNameOrId = async (req, res) => {
