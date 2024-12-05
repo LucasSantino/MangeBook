@@ -164,9 +164,6 @@ exports.login = async (req, res) => {
 };
 
 
-
-
-
 exports.updateUser = async (req, res) => {
     const userId = req.params.userId;
     const { username, birthDate, gender, cpf, address, email, password, userThumbnail } = req.body;

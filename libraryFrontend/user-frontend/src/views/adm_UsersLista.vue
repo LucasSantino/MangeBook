@@ -152,9 +152,11 @@ export default {
           console.error('Erro ao buscar usuários:', error.response?.data?.error || error.message);
         });
     },
+
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
+
     alterarStatus(usuario) {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -163,12 +165,11 @@ export default {
       }
 
       axios
-      axios
-  .patch(`http://localhost:3000/api/auth/users/${usuario.id}/toggle-status`, null, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+        .patch(`http://localhost:3000/api/auth/users/${usuario.id}/toggle-status`, null, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then(response => {
           usuario.status = response.data.user.isActive ? 'Ativo' : 'Bloqueado';
           console.log(`Status de ${usuario.username} alterado para ${usuario.status}`);
@@ -177,25 +178,44 @@ export default {
           console.error('Erro ao alterar o status do usuário:', error.response?.data?.error || error.message);
         });
     },
+
     excluirPopup(usuario) {
       this.usuarioExcluir = usuario;
       this.showExcluirPopup = true;
       this.showPopupOverlay = true;
     },
+
     excluirUsuario() {
-      const index = this.usuarios.findIndex(usuario => usuario.id === this.usuarioExcluir.id);
-      if (index !== -1) {
-        this.usuarios.splice(index, 1);
-        if (this.paginaAtual > this.totalPaginas) {
-          this.paginaAtual = this.totalPaginas;
-        }
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error('Token de autenticação não encontrado.');
+        return;
       }
-      this.fecharPopup();
+
+      axios
+        .delete(`http://localhost:3000/api/auth/users/${this.usuarioExcluir.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(response => {
+          const index = this.usuarios.findIndex(usuario => usuario.id === this.usuarioExcluir.id);
+          if (index !== -1) {
+            this.usuarios.splice(index, 1); // Remove o usuário da lista
+            console.log('Usuário excluído com sucesso:', response.data.message);
+          }
+          this.fecharPopup();
+        })
+        .catch(error => {
+          console.error('Erro ao excluir o usuário:', error.response?.data?.error || error.message);
+        });
     },
+
     fecharPopup() {
       this.showExcluirPopup = false;
       this.showPopupOverlay = false;
     },
+
     navegar(direcao) {
       if (direcao === 'anterior' && this.paginaAtual > 1) {
         this.paginaAtual--;
@@ -203,6 +223,7 @@ export default {
         this.paginaAtual++;
       }
     },
+
     pesquisar() {
       console.log('Pesquisando...');
     },
