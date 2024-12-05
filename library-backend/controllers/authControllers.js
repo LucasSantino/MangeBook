@@ -1,11 +1,15 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path'); // Importa o módulo path
 
-// Função para registrar novos usuários
+
 exports.register = async (req, res) => {
-    const { username, birthDate, gender, cpf, address, email, password, confirmPassword, role } = req.body;
-    const userThumbnail = req.file ? req.file.path : null; // Pega o caminho da imagem se fornecida
+    const { username, birthDate, gender, cpf, address, email, password, confirmPassword } = req.body;
+
+    // Processa o campo userThumbnail, que contém o caminho do arquivo salvo
+    const userThumbnail = req.file ? req.file.path : null;
 
     // Verifica se o campo 'password' e 'confirmPassword' estão presentes e não são vazios
     if (!password || !confirmPassword) {
@@ -29,9 +33,8 @@ exports.register = async (req, res) => {
 
         // Criptografa a senha antes de salvar no banco
         const hashedPassword = await bcrypt.hash(trimmedPassword, 10);
-        console.log('Senha criptografada gerada:', hashedPassword); // Loga o hash gerado
 
-        // Cria um novo usuário com os dados
+        // Cria um novo usuário com os dados fornecidos
         const newUser = new User({
             username,
             birthDate,
@@ -41,23 +44,20 @@ exports.register = async (req, res) => {
             email,
             password: hashedPassword, // Armazena a senha criptografada
             userThumbnail, // Salva o caminho da imagem
-            role: role || 'user', // Se não for fornecido, o papel será 'user' por padrão
         });
 
         // Salva o usuário no banco de dados
         await newUser.save();
-        console.log('Usuário registrado com sucesso, senha armazenada no banco:', newUser.password); // Verifica o hash armazenado
 
         // Retorna a mensagem de sucesso
         res.status(201).json({ message: 'Usuário registrado com sucesso' });
     } catch (error) {
-        console.error('Erro ao registrar usuário:', error); // Loga o erro
+        console.error('Erro ao registrar usuário:', error); 
         res.status(500).json({ error: 'Erro ao registrar usuário' });
     }
 };
 
-
-
+  
 // Função para registrar novos usuários (apenas administradores podem usar)
 exports.adminRegister = async (req, res) => {
     try {
@@ -161,31 +161,40 @@ exports.login = async (req, res) => {
 
 
 
-// Função para atualizar informações do usuário
 exports.updateUser = async (req, res) => {
-    const { userId } = req.params; // ID do usuário a ser atualizado
-    const updates = req.body; // Dados a serem atualizados (enviados no corpo da requisição)
-
-    // Verifica se o usuário existe
-    const user = await User.findById(userId);
-    if (!user) {
-        return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-
-    // Itera sobre os campos que foram enviados no corpo da requisição
-    Object.keys(updates).forEach((key) => {
-        if (updates[key]) {
-            user[key] = updates[key];  // Atualiza o campo se o valor for fornecido
-        }
-    });
+    const userId = req.params.userId;
+    const { username, birthDate, gender, cpf, address, email, password, userThumbnail } = req.body;
 
     try {
+        // Busca o usuário pelo ID
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        // Atualiza os dados do usuário (sem a senha por enquanto)
+        user.username = username || user.username;
+        user.birthDate = birthDate || user.birthDate;
+        user.gender = gender || user.gender;
+        user.cpf = cpf || user.cpf;
+        user.address = address || user.address;
+        user.email = email || user.email;
+        user.userThumbnail = userThumbnail || user.userThumbnail;
+
+        // Se a senha foi fornecida, criptografe antes de salvar
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password.trim(), 10);
+            user.password = hashedPassword;
+        }
+
         // Salva as alterações no banco de dados
         await user.save();
-        res.status(200).json({ message: 'Usuário atualizado com sucesso', user });
+
+        res.status(200).json({ message: 'Perfil atualizado com sucesso', user });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Erro ao atualizar o usuário' });
+        res.status(500).json({ error: 'Erro ao atualizar o perfil' });
     }
 };
 

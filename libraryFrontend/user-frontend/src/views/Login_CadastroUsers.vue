@@ -9,7 +9,7 @@
                   <div class="form-grid">
                       <div class="form-left">
                           <img :src="userThumbnail" alt="Foto do Usuário" id="userThumbnail">
-                          <input type="file" id="imageUpload" accept="image/*" @change="previewImage">
+                          <input type="file" ref="imageUpload" accept="image/*" @change="previewImage">
                       </div>
                       <div class="form-right">
                           <div class="form-group">
@@ -131,7 +131,7 @@ export default {
   formData.append("confirmPassword", this.confirmPassword);
 
   // Verifica se o arquivo de imagem foi selecionado
-  const imageUpload = this.$refs.imageUpload?.files[0];
+  const imageUpload = this.$refs.imageUpload?.files[0]; // Certifique-se de que a referência está configurada corretamente
   if (imageUpload) {
     formData.append("userThumbnail", imageUpload); // Anexa o arquivo de imagem ao FormData
   }
@@ -159,14 +159,9 @@ export default {
     this.showModal = true; // Exibe o modal de erro
   }
 }
-
   },
 };
 </script>
-
-
-
-
   
   <style scoped>
   /* Estilos gerais */
