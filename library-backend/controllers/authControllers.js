@@ -137,6 +137,11 @@ exports.login = async (req, res) => {
         console.log('Usuário encontrado:', user);  // Loga os dados do usuário
         console.log('Senha fornecida:', password);  // Loga a senha fornecida
 
+        // Verifica se o usuário está bloqueado
+        if (!user.isActive) {
+            return res.status(403).json({ error: 'Usuário bloqueado. Não é possível fazer login.' });
+        }
+
         // Compara a senha fornecida com a armazenada no banco de dados
         const isMatch = await bcrypt.compare(password.trim(), user.password);
         
@@ -157,6 +162,7 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: 'Erro ao fazer login' });
     }
 };
+
 
 
 
