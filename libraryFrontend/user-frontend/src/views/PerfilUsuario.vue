@@ -8,7 +8,10 @@
       <div class="perfil-wrapper">
         <!-- Container da imagem de perfil -->
         <div class="perfil-container">
-          <img :src="user.userThumbnail || '/Site - MangeBook/imagens/perfil.png'" alt="Imagem de Perfil" class="foto-perfil">
+          <img 
+            :src="getProfileImage(user.userThumbnail)" 
+            alt="Imagem de Perfil" 
+            class="foto-perfil">
           <!-- Botão de Editar Perfil com navegação -->
           <button @click="editProfile">Editar Perfil</button>
         </div>
@@ -80,35 +83,42 @@ export default {
       this.$router.push({ name: 'EditPerfil' });
     },
     async fetchUserData() {
-  try {
-    const userId = localStorage.getItem('userId'); // Obtém o ID do usuário do localStorage
-    const token = localStorage.getItem('token'); // Obtém o token de autenticação do localStorage
+      try {
+        const userId = localStorage.getItem('userId'); // Obtém o ID do usuário do localStorage
+        const token = localStorage.getItem('token'); // Obtém o token de autenticação do localStorage
 
-    console.log('ID do usuário:', userId);
-    console.log('Token de autenticação:', token);
+        console.log('ID do usuário:', userId);
+        console.log('Token de autenticação:', token);
 
-    if (!userId || !token) {
-      console.error('ID ou Token não encontrados no localStorage.');
-      alert('Por favor, faça login novamente.');
-      this.$router.push('/login'); // Redireciona para a página de login
-      return;
-    }
+        if (!userId || !token) {
+          console.error('ID ou Token não encontrados no localStorage.');
+          alert('Por favor, faça login novamente.');
+          this.$router.push('/login'); // Redireciona para a página de login
+          return;
+        }
 
-    // Faz a requisição ao backend
-    const response = await axios.get(`http://localhost:3000/api/auth/search?userId=${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}` // Adiciona o token no cabeçalho
+        // Faz a requisição ao backend
+        const response = await axios.get(`http://localhost:3000/api/auth/search?userId=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}` // Adiciona o token no cabeçalho
+          }
+        });
+
+        console.log('Resposta da API:', response.data);
+        this.user = response.data; // Armazena os dados do usuário
+      } catch (error) {
+        console.error('Erro ao buscar os dados do usuário:', error.response || error.message);
+        alert('Não foi possível carregar os dados do usuário.');
       }
-    });
-
-    console.log('Resposta da API:', response.data);
-    this.user = response.data; // Armazena os dados do usuário
-  } catch (error) {
-    console.error('Erro ao buscar os dados do usuário:', error.response || error.message);
-    alert('Não foi possível carregar os dados do usuário.');
-  }
-},
-
+    },
+    getProfileImage(thumbnailPath) {
+      if (!thumbnailPath) {
+        // Caminho para imagem padrão, caso o usuário não tenha foto
+        return 'http://localhost:3000/uploads/default-profile.png';
+      }
+      // Corrige o caminho da imagem com barras normais
+      return `http://localhost:3000/${thumbnailPath.replace(/\\/g, '/')}`;
+    },
     formatBirthDate(date) {
       if (!date) return null;
       const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
