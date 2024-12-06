@@ -33,7 +33,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="usuario in usuariosPaginados" :key="usuario.id">
+            <tr
+              v-for="usuario in usuariosPaginados"
+              :key="usuario.id"
+              @click="redirecionarPerfil(usuario)"
+              :class="{ 'linha-acao': true }"
+            >
               <td>{{ usuario.id }}</td>
               <td>{{ usuario.username }}</td>
               <td>{{ usuario.email }}</td>
@@ -42,7 +47,7 @@
               <td>{{ usuario.livrosAtrasados || 0 }}</td>
               <td>{{ usuario.status }}</td>
               <td>{{ usuario.role }}</td>
-              <td>
+              <td @click.stop>
                 <div class="acao-container">
                   <select v-model="usuario.status" @change="alterarStatus(usuario)">
                     <option value="Ativo">Ativo</option>
@@ -138,7 +143,7 @@ export default {
         })
         .then(response => {
           this.usuarios = response.data.map(usuario => ({
-            id: usuario._id, // Mapeando _id para id
+            id: usuario._id,
             username: usuario.username,
             email: usuario.email,
             livrosEmprestados: usuario.livrosEmprestados || 0,
@@ -152,11 +157,9 @@ export default {
           console.error('Erro ao buscar usuários:', error.response?.data?.error || error.message);
         });
     },
-
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
-
     alterarStatus(usuario) {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -178,13 +181,11 @@ export default {
           console.error('Erro ao alterar o status do usuário:', error.response?.data?.error || error.message);
         });
     },
-
     excluirPopup(usuario) {
       this.usuarioExcluir = usuario;
       this.showExcluirPopup = true;
       this.showPopupOverlay = true;
     },
-
     excluirUsuario() {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -201,7 +202,7 @@ export default {
         .then(response => {
           const index = this.usuarios.findIndex(usuario => usuario.id === this.usuarioExcluir.id);
           if (index !== -1) {
-            this.usuarios.splice(index, 1); // Remove o usuário da lista
+            this.usuarios.splice(index, 1);
             console.log('Usuário excluído com sucesso:', response.data.message);
           }
           this.fecharPopup();
@@ -210,12 +211,10 @@ export default {
           console.error('Erro ao excluir o usuário:', error.response?.data?.error || error.message);
         });
     },
-
     fecharPopup() {
       this.showExcluirPopup = false;
       this.showPopupOverlay = false;
     },
-
     navegar(direcao) {
       if (direcao === 'anterior' && this.paginaAtual > 1) {
         this.paginaAtual--;
@@ -223,9 +222,16 @@ export default {
         this.paginaAtual++;
       }
     },
-
     pesquisar() {
       console.log('Pesquisando...');
+    },
+    redirecionarPerfil(usuario) {
+      if (!usuario || !usuario.id) {
+        console.error('Usuário inválido ou não encontrado para redirecionamento.');
+        return;
+      }
+
+      this.$router.push({ name: 'adm_PerfilUsers', params: { usuario } });
     },
   },
   mounted() {
@@ -233,6 +239,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 
