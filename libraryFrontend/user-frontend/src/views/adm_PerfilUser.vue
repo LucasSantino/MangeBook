@@ -21,7 +21,7 @@
           </select>
 
           <!-- Campo de Tipo de Usuário (Administrador/Usuário Comum) -->
-          <select v-model="tipoUsuario" class="tipo-usuario-select">
+          <select v-model="tipoUsuario" class="tipo-usuario-select" @change="alterarTipoUsuario">
             <option value="Administrador">Administrador</option>
             <option value="Usuário Comum">Usuário Comum</option>
           </select>
@@ -158,13 +158,13 @@ export default {
           return;
         }
 
-        const response = await axios.get(`http://localhost:3000/api/auth/search?userId=${userId}`, {
+        const { data } = await axios.get(`http://localhost:3000/api/auth/search?userId=${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        this.user = response.data;
+        this.user = data;
 
         // Corrigindo o status para exibir "Ativo" ou "Bloqueado"
         this.status = this.user.isActive ? 'Ativo' : 'Bloqueado';
@@ -180,13 +180,7 @@ export default {
         const userId = this.user._id;
         const token = localStorage.getItem('token');
 
-        if (!userId || !token) {
-          alert('ID do usuário ou token não encontrados. Por favor, faça login novamente.');
-          this.$router.push('/login');
-          return;
-        }
-
-        const response = await axios.patch(
+        const { data } = await axios.patch(
           `http://localhost:3000/api/auth/users/${userId}/toggle-status`,
           {},
           {
@@ -196,13 +190,37 @@ export default {
           }
         );
 
-        this.user.isActive = response.data.user.isActive;
+        this.user.isActive = data.user.isActive;
         this.status = this.user.isActive ? 'Ativo' : 'Bloqueado';
 
         alert(`Usuário ${this.user.isActive ? 'ativado' : 'desativado'} com sucesso!`);
       } catch (error) {
-        console.error('Erro ao alterar o status do usuário:', error.response || error.message);
         alert('Não foi possível alterar o status do usuário.');
+      }
+    },
+    async alterarTipoUsuario() {
+      try {
+        const userId = this.user._id;
+        const token = localStorage.getItem('token');
+
+        const role = this.tipoUsuario === 'Administrador' ? 'admin' : 'user';
+
+        const { data } = await axios.put(
+          `http://localhost:3000/api/auth/users/role/${userId}`,
+          { role },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        this.user.role = data.role;
+        this.tipoUsuario = this.user.role === 'admin' ? 'Administrador' : 'Usuário Comum';
+
+        alert(`Tipo de usuário alterado para ${this.tipoUsuario} com sucesso!`);
+      } catch (error) {
+        alert('Não foi possível alterar o tipo de usuário.');
       }
     },
     enviarNotificacao() {
@@ -233,6 +251,7 @@ export default {
   },
 };
 </script>
+
 
 
 
