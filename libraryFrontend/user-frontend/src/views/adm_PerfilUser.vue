@@ -18,6 +18,12 @@
             <option value="Ativo">Ativo</option>
             <option value="Bloqueado">Bloqueado</option>
           </select>
+
+          <!-- Campo de Tipo de Usuário (Administrador/Usuário Comum) -->
+          <select v-model="tipoUsuario" class="tipo-usuario-select">
+                <option value="Administrador">Administrador</option>
+                <option value="Usuário Comum">Usuário Comum</option>
+              </select>
         </div>
 
         <div class="informacoes-container">
@@ -119,16 +125,17 @@ export default {
     return {
       isSidebarOpen: false, // Controle do estado da sidebar
       notificacao: '',
-      status: 'Ativo', // Valor inicial do select
+      status: 'Ativo', // Valor inicial do select de status
+      tipoUsuario: 'Usuário Comum', // Valor inicial do select de tipo de usuário
       // Histórico de livros
       historico: [
-        {id: 1, titulo: 'O Senhor dos Anéis', dataEmprestimo: '01/10/2024', dataDevolucao: '15/10/2024', status: 'Devolvido',},  
-        {id: 2, titulo: 'Harry Potter e a Pedra Filosofal', dataEmprestimo: '05/10/2024', dataDevolucao: '20/10/2024', status: 'Atrasado',},
-        {id: 3, titulo: 'O Hobbit', dataEmprestimo: '12/10/2024', dataDevolucao: '26/10/2024', status: 'Emprestado',},
-        {id: 4, titulo: 'Percy Jacksom e o Ladrão de raios', dataEmprestimo: '12/10/2024', dataDevolucao: '26/10/2024', status: 'Emprestado',},
-        {id: 5, titulo: 'O Código Da Vinci', dataEmprestimo: '01/11/2024', dataDevolucao: '15/11/2024', status: 'Emprestado',},
-        {id: 6, titulo: 'O Alquimista', dataEmprestimo: '07/11/2024', dataDevolucao: '20/11/2024', status: 'Atrasado',},
-        {id: 7, titulo: 'O Poder do Hábito', dataEmprestimo: '10/11/2024', dataDevolucao: '24/11/2024', status: 'Emprestado',},
+        {id: 1, titulo: 'O Senhor dos Anéis', dataEmprestimo: '01/10/2024', dataDevolucao: '15/10/2024', status: 'Devolvido'},  
+        {id: 2, titulo: 'Harry Potter e a Pedra Filosofal', dataEmprestimo: '05/10/2024', dataDevolucao: '20/10/2024', status: 'Atrasado'},
+        {id: 3, titulo: 'O Hobbit', dataEmprestimo: '12/10/2024', dataDevolucao: '26/10/2024', status: 'Emprestado'},
+        {id: 4, titulo: 'Percy Jackson e o Ladrão de Raios', dataEmprestimo: '12/10/2024', dataDevolucao: '26/10/2024', status: 'Emprestado'},
+        {id: 5, titulo: 'O Código Da Vinci', dataEmprestimo: '01/11/2024', dataDevolucao: '15/11/2024', status: 'Emprestado'},
+        {id: 6, titulo: 'O Alquimista', dataEmprestimo: '07/11/2024', dataDevolucao: '20/11/2024', status: 'Atrasado'},
+        {id: 7, titulo: 'O Poder do Hábito', dataEmprestimo: '10/11/2024', dataDevolucao: '24/11/2024', status: 'Emprestado'},
       ],
       paginaAtual: 1,
       itensPorPagina: 5, // Número de livros por página
@@ -168,10 +175,15 @@ export default {
       } else if (direcao === 'proxima' && this.paginaAtual < this.totalPaginas) {
         this.paginaAtual++;
       }
-    }
+    },
+    alterarTipoUsuario() {
+      console.log(`Tipo de usuário alterado para: ${this.tipoUsuario}`);
+      // Aqui pode ser adicionada lógica para salvar as mudanças no backend.
+    },
   },
 };
 </script>
+
 
 <style scoped>
 /* Reset de estilo básico */
@@ -232,6 +244,19 @@ main {
 
 /* Estilos do campo de status */
 .status-select {
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #00334e;
+  color: white;
+}
+
+/* Estilo do campo de Tipo de Usuário */
+.tipo-usuario-select {
   margin-top: 20px;
   padding: 10px;
   width: 100%;
