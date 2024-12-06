@@ -13,9 +13,9 @@
         <div class="perfil-container">
           <!-- Imagem de perfil -->
           <img :src="getProfileImage(user.userThumbnail)" alt="Imagem de Perfil" class="foto-perfil" />
-          
+
           <!-- Campo de Status -->
-          <select v-model="status" class="status-select">
+          <select v-model="status" class="status-select" @change="alterarStatusUsuario">
             <option value="Ativo">Ativo</option>
             <option value="Bloqueado">Bloqueado</option>
           </select>
@@ -32,35 +32,35 @@
           <table class="informacoes-tabela">
             <tr>
               <td>ID do Usuário:</td>
-              <td>{{ user._id }}</td> <!-- Exibe o ID do usuário -->
+              <td>{{ user._id }}</td>
             </tr>
             <tr>
               <td>Tipo de Usuário:</td>
-              <td>{{ tipoUsuario }}</td> <!-- Exibe o tipo de usuário -->
+              <td>{{ tipoUsuario }}</td>
             </tr>
             <tr>
               <td>Nome Completo:</td>
-              <td>{{ user.username }}</td> <!-- Exibe o nome do usuário -->
+              <td>{{ user.username }}</td>
             </tr>
             <tr>
               <td>Email:</td>
-              <td>{{ user.email }}</td> <!-- Exibe o e-mail do usuário -->
+              <td>{{ user.email }}</td>
             </tr>
             <tr>
               <td>Data de Nascimento:</td>
-              <td>{{ formatBirthDate(user.birthDate) }}</td> <!-- Exibe a data de nascimento -->
+              <td>{{ formatBirthDate(user.birthDate) }}</td>
             </tr>
             <tr>
               <td>CPF:</td>
-              <td>{{ user.cpf }}</td> <!-- Exibe o CPF do usuário -->
+              <td>{{ user.cpf }}</td>
             </tr>
             <tr>
               <td>Endereço:</td>
-              <td>{{ user.address }}</td> <!-- Exibe o endereço -->
+              <td>{{ user.address }}</td>
             </tr>
             <tr>
               <td>Status:</td>
-              <td>{{ status }}</td> <!-- Exibe o status selecionado -->
+              <td>{{ status }}</td>
             </tr>
           </table>
 
@@ -72,7 +72,7 @@
           </div>
         </div>
 
-        <!-- Tabela Histórico do Perfil dentro do container de perfil -->
+        <!-- Tabela Histórico do Perfil -->
         <div class="historico-container">
           <h2>Histórico do Perfil</h2>
           <table class="historico-tabela">
@@ -104,7 +104,6 @@
           </div>
         </div>
       </div>
-
     </main>
   </div>
 </template>
@@ -122,13 +121,13 @@ export default {
   data() {
     return {
       isSidebarOpen: false,
-      user: {}, // Dados do usuário recebidos da API
+      user: {},
       notificacao: '',
-      status: 'Ativo', // Valor inicial do status
-      tipoUsuario: 'Usuário Comum', // Tipo inicial do usuário
-      historico: [], // Histórico de livros
+      status: 'Ativo',
+      tipoUsuario: 'Usuário Comum',
+      historico: [],
       paginaAtual: 1,
-      itensPorPagina: 5, // Número de itens por página
+      itensPorPagina: 5,
     };
   },
   computed: {
@@ -142,7 +141,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchUserData(); // Busca os dados do usuário ao carregar o componente
+    this.fetchUserData();
   },
   methods: {
     toggleSidebar() {
@@ -150,36 +149,61 @@ export default {
     },
     async fetchUserData() {
       try {
-        // Obtém o userId que foi passado como parâmetro da rota
-        const userId = this.$route.params.usuarioId; // Corrigido para 'usuarioId' conforme sua rota
-        const token = localStorage.getItem('token'); // Obtém o token de autenticação do localStorage
+        const userId = this.$route.params.usuarioId;
+        const token = localStorage.getItem('token');
 
         if (!userId || !token) {
-          console.error('ID do usuário ou Token não encontrados.');
           alert('Por favor, faça login novamente.');
-          this.$router.push('/login'); // Redireciona para a página de login se não houver ID ou token
+          this.$router.push('/login');
           return;
         }
 
-        // Faz a requisição ao backend com o userId passado na URL
         const response = await axios.get(`http://localhost:3000/api/auth/search?userId=${userId}`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+            Authorization: `Bearer ${token}`,
           },
         });
 
-        console.log('Dados do usuário recebidos:', response.data);
-        this.user = response.data; // Armazena os dados do usuário
-        this.status = this.user.isActive ? 'Ativo' : 'Inativo'; // Atualiza o status
-        this.tipoUsuario = this.user.role === 'admin' ? 'Administrador' : 'Usuário Comum'; // Atualiza o tipo de usuário
+        this.user = response.data;
+        this.status = this.user.isActive ? 'Ativo' : 'Inativo';
+        this.tipoUsuario = this.user.role === 'admin' ? 'Administrador' : 'Usuário Comum';
       } catch (error) {
-        console.error('Erro ao buscar os dados do usuário:', error.response || error.message);
         alert('Não foi possível carregar os dados do usuário.');
+      }
+    },
+    async alterarStatusUsuario() {
+      try {
+        const userId = this.user._id;
+        const token = localStorage.getItem('token');
+
+        if (!userId || !token) {
+          alert('ID do usuário ou token não encontrados. Por favor, faça login novamente.');
+          this.$router.push('/login');
+          return;
+        }
+
+        const response = await axios.patch(
+          `http://localhost:3000/api/auth/users/${userId}/toggle-status`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        this.user.isActive = response.data.user.isActive;
+        this.status = this.user.isActive ? 'Ativo' : 'Inativo';
+
+        alert(`Usuário ${this.user.isActive ? 'ativado' : 'desativado'} com sucesso!`);
+      } catch (error) {
+        console.error('Erro ao alterar o status do usuário:', error.response || error.message);
+        alert('Não foi possível alterar o status do usuário.');
       }
     },
     enviarNotificacao() {
       alert('Notificação enviada com sucesso!');
-      this.notificacao = ''; // Limpa o campo de notificação
+      this.notificacao = '';
     },
     navegar(direcao) {
       if (direcao === 'anterior' && this.paginaAtual > 1) {
@@ -189,30 +213,24 @@ export default {
       }
     },
     getStatusClass(status) {
-      if (status === 'Devolvido') {
-        return 'devolvido';
-      } else if (status === 'Atrasado') {
-        return 'atrasado';
-      } else if (status === 'Reservado') {
-        return 'reservado';
-      }
+      if (status === 'Devolvido') return 'devolvido';
+      if (status === 'Atrasado') return 'atrasado';
+      if (status === 'Reservado') return 'reservado';
       return '';
     },
     getProfileImage(thumbnailPath) {
-      // Corrige o caminho da imagem, substituindo as barras invertidas
-      if (!thumbnailPath) {
-        return 'http://localhost:3000/uploads/default-profile.png'; // Imagem padrão caso não exista
-      }
-      return `http://localhost:3000/${thumbnailPath.replace(/\\/g, '/')}`; // Corrige o caminho da imagem
+      if (!thumbnailPath) return 'http://localhost:3000/uploads/default-profile.png';
+      return `http://localhost:3000/${thumbnailPath.replace(/\\/g, '/')}`;
     },
     formatBirthDate(date) {
       if (!date) return null;
-      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-      return new Date(date).toLocaleDateString('pt-BR', options);
+      return new Date(date).toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit' });
     },
   },
 };
 </script>
+
+
 
 
 
