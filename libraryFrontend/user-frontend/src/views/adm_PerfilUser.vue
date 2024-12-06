@@ -165,7 +165,11 @@ export default {
         });
 
         this.user = response.data;
-        this.status = this.user.isActive ? 'Ativo' : 'Inativo';
+
+        // Corrigindo o status para exibir "Ativo" ou "Bloqueado"
+        this.status = this.user.isActive ? 'Ativo' : 'Bloqueado';
+
+        // Definindo o tipo de usuário
         this.tipoUsuario = this.user.role === 'admin' ? 'Administrador' : 'Usuário Comum';
       } catch (error) {
         alert('Não foi possível carregar os dados do usuário.');
@@ -193,7 +197,7 @@ export default {
         );
 
         this.user.isActive = response.data.user.isActive;
-        this.status = this.user.isActive ? 'Ativo' : 'Inativo';
+        this.status = this.user.isActive ? 'Ativo' : 'Bloqueado';
 
         alert(`Usuário ${this.user.isActive ? 'ativado' : 'desativado'} com sucesso!`);
       } catch (error) {
@@ -229,6 +233,7 @@ export default {
   },
 };
 </script>
+
 
 
 
