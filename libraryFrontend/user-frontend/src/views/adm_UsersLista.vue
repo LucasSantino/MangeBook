@@ -226,19 +226,22 @@ export default {
       console.log('Pesquisando...');
     },
     redirecionarPerfil(usuario) {
-      if (!usuario || !usuario.id) {
-        console.error('Usuário inválido ou não encontrado para redirecionamento.');
-        return;
-      }
+  if (!usuario || !usuario.id) {
+    console.error('Usuário inválido ou não encontrado para redirecionamento.');
+    return;
+  }
 
-      this.$router.push({ name: 'adm_PerfilUsers', params: { usuario } });
-    },
+  // Corrigido: Enviando o ID do usuário corretamente como "usuarioId"
+  this.$router.push({ name: 'adm_PerfilUser', params: { usuarioId: usuario.id } });
+}
+
   },
   mounted() {
     this.carregarUsuarios();
   },
 };
 </script>
+
 
 
 

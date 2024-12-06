@@ -11,7 +11,8 @@
       <div class="perfil-wrapper">
         <!-- Container da imagem de perfil -->
         <div class="perfil-container">
-          <img src="/Site - MangeBook/imagens/perfil.png" alt="Imagem de Perfil" class="foto-perfil">
+          <!-- Imagem de perfil -->
+          <img :src="getProfileImage(user.userThumbnail)" alt="Imagem de Perfil" class="foto-perfil" />
           
           <!-- Campo de Status -->
           <select v-model="status" class="status-select">
@@ -21,9 +22,9 @@
 
           <!-- Campo de Tipo de Usuário (Administrador/Usuário Comum) -->
           <select v-model="tipoUsuario" class="tipo-usuario-select">
-                <option value="Administrador">Administrador</option>
-                <option value="Usuário Comum">Usuário Comum</option>
-              </select>
+            <option value="Administrador">Administrador</option>
+            <option value="Usuário Comum">Usuário Comum</option>
+          </select>
         </div>
 
         <div class="informacoes-container">
@@ -31,35 +32,31 @@
           <table class="informacoes-tabela">
             <tr>
               <td>ID do Usuário:</td>
-              <td>123456</td>
+              <td>{{ user._id }}</td> <!-- Exibe o ID do usuário -->
             </tr>
             <tr>
               <td>Tipo de Usuário:</td>
-              <td></td>
+              <td>{{ tipoUsuario }}</td> <!-- Exibe o tipo de usuário -->
             </tr>
             <tr>
               <td>Nome Completo:</td>
-              <td>Nome do Usuário</td>
+              <td>{{ user.username }}</td> <!-- Exibe o nome do usuário -->
             </tr>
             <tr>
               <td>Email:</td>
-              <td>email@exemplo.com</td>
+              <td>{{ user.email }}</td> <!-- Exibe o e-mail do usuário -->
             </tr>
             <tr>
               <td>Data de Nascimento:</td>
-              <td>01/01/2000</td>
+              <td>{{ formatBirthDate(user.birthDate) }}</td> <!-- Exibe a data de nascimento -->
             </tr>
             <tr>
               <td>CPF:</td>
-              <td>123.456.789-00</td>
+              <td>{{ user.cpf }}</td> <!-- Exibe o CPF do usuário -->
             </tr>
             <tr>
               <td>Endereço:</td>
-              <td>Rua Exemplo, 123</td>
-            </tr>
-            <tr>
-              <td>Senha:</td>
-              <td>********</td>
+              <td>{{ user.address }}</td> <!-- Exibe o endereço -->
             </tr>
             <tr>
               <td>Status:</td>
@@ -113,32 +110,25 @@
 </template>
 
 <script>
+import axios from 'axios';
 import NavBar from '@/components/NavBar.vue';
-import adm_SideBar from '@/components/adm_SideBar.vue'; // Importando corretamente a adm_SideBar
+import adm_SideBar from '@/components/adm_SideBar.vue';
 
 export default {
   components: {
     NavBar,
-    adm_SideBar, // Usando a adm_SideBar no componente
+    adm_SideBar,
   },
   data() {
     return {
-      isSidebarOpen: false, // Controle do estado da sidebar
+      isSidebarOpen: false,
+      user: {}, // Dados do usuário recebidos da API
       notificacao: '',
-      status: 'Ativo', // Valor inicial do select de status
-      tipoUsuario: 'Usuário Comum', // Valor inicial do select de tipo de usuário
-      // Histórico de livros
-      historico: [
-        {id: 1, titulo: 'O Senhor dos Anéis', dataEmprestimo: '01/10/2024', dataDevolucao: '15/10/2024', status: 'Devolvido'},  
-        {id: 2, titulo: 'Harry Potter e a Pedra Filosofal', dataEmprestimo: '05/10/2024', dataDevolucao: '20/10/2024', status: 'Atrasado'},
-        {id: 3, titulo: 'O Hobbit', dataEmprestimo: '12/10/2024', dataDevolucao: '26/10/2024', status: 'Emprestado'},
-        {id: 4, titulo: 'Percy Jackson e o Ladrão de Raios', dataEmprestimo: '12/10/2024', dataDevolucao: '26/10/2024', status: 'Emprestado'},
-        {id: 5, titulo: 'O Código Da Vinci', dataEmprestimo: '01/11/2024', dataDevolucao: '15/11/2024', status: 'Emprestado'},
-        {id: 6, titulo: 'O Alquimista', dataEmprestimo: '07/11/2024', dataDevolucao: '20/11/2024', status: 'Atrasado'},
-        {id: 7, titulo: 'O Poder do Hábito', dataEmprestimo: '10/11/2024', dataDevolucao: '24/11/2024', status: 'Emprestado'},
-      ],
+      status: 'Ativo', // Valor inicial do status
+      tipoUsuario: 'Usuário Comum', // Tipo inicial do usuário
+      historico: [], // Histórico de livros
       paginaAtual: 1,
-      itensPorPagina: 5, // Número de livros por página
+      itensPorPagina: 5, // Número de itens por página
     };
   },
   computed: {
@@ -151,23 +141,45 @@ export default {
       return this.historico.slice(inicio, fim);
     },
   },
+  mounted() {
+    this.fetchUserData(); // Busca os dados do usuário ao carregar o componente
+  },
   methods: {
     toggleSidebar() {
-      this.isSidebarOpen = !this.isSidebarOpen; // Alterna o estado da sidebar
+      this.isSidebarOpen = !this.isSidebarOpen;
+    },
+    async fetchUserData() {
+      try {
+        // Obtém o userId que foi passado como parâmetro da rota
+        const userId = this.$route.params.usuarioId; // Corrigido para 'usuarioId' conforme sua rota
+        const token = localStorage.getItem('token'); // Obtém o token de autenticação do localStorage
+
+        if (!userId || !token) {
+          console.error('ID do usuário ou Token não encontrados.');
+          alert('Por favor, faça login novamente.');
+          this.$router.push('/login'); // Redireciona para a página de login se não houver ID ou token
+          return;
+        }
+
+        // Faz a requisição ao backend com o userId passado na URL
+        const response = await axios.get(`http://localhost:3000/api/auth/search?userId=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Adiciona o token no cabeçalho
+          },
+        });
+
+        console.log('Dados do usuário recebidos:', response.data);
+        this.user = response.data; // Armazena os dados do usuário
+        this.status = this.user.isActive ? 'Ativo' : 'Inativo'; // Atualiza o status
+        this.tipoUsuario = this.user.role === 'admin' ? 'Administrador' : 'Usuário Comum'; // Atualiza o tipo de usuário
+      } catch (error) {
+        console.error('Erro ao buscar os dados do usuário:', error.response || error.message);
+        alert('Não foi possível carregar os dados do usuário.');
+      }
     },
     enviarNotificacao() {
-      alert("Notificação enviada com sucesso!");
-      this.notificacao = ''; // Limpa o campo de notificação após o envio
-    },
-    getStatusClass(status) {
-      if (status === 'Devolvido') {
-        return 'devolvido';
-      } else if (status === 'Atrasado') {
-        return 'atrasado';
-      } else if (status === 'Reservado') {
-        return 'reservado'; // Classe para o status reservado
-      }
-      return '';
+      alert('Notificação enviada com sucesso!');
+      this.notificacao = ''; // Limpa o campo de notificação
     },
     navegar(direcao) {
       if (direcao === 'anterior' && this.paginaAtual > 1) {
@@ -176,13 +188,36 @@ export default {
         this.paginaAtual++;
       }
     },
-    alterarTipoUsuario() {
-      console.log(`Tipo de usuário alterado para: ${this.tipoUsuario}`);
-      // Aqui pode ser adicionada lógica para salvar as mudanças no backend.
+    getStatusClass(status) {
+      if (status === 'Devolvido') {
+        return 'devolvido';
+      } else if (status === 'Atrasado') {
+        return 'atrasado';
+      } else if (status === 'Reservado') {
+        return 'reservado';
+      }
+      return '';
+    },
+    getProfileImage(thumbnailPath) {
+      // Corrige o caminho da imagem, substituindo as barras invertidas
+      if (!thumbnailPath) {
+        return 'http://localhost:3000/uploads/default-profile.png'; // Imagem padrão caso não exista
+      }
+      return `http://localhost:3000/${thumbnailPath.replace(/\\/g, '/')}`; // Corrige o caminho da imagem
+    },
+    formatBirthDate(date) {
+      if (!date) return null;
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+      return new Date(date).toLocaleDateString('pt-BR', options);
     },
   },
 };
 </script>
+
+
+
+
+
 
 
 <style scoped>
