@@ -1,217 +1,203 @@
 <template>
-    <div id="app">
-      <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
-      <NavBar @toggle-sidebar="toggleSidebar" />
-  
-      <!-- Sidebar Administrativa para administradores -->
-      <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
-  
-      <main class="main-content">
-        <!-- Formulário de Edição de Livro -->
-        <div class="book-registration-container">
-          <h1 class="title">Editar Informações do Livro</h1>
-          <form @submit.prevent="submitForm">
-            <div class="form-grid">
-              <div class="form-left">
-                <img :src="bookThumbnail" alt="Capa do Livro" id="bookThumbnail" />
-                <input type="file" id="imageUpload" accept="image/*" @change="previewImage" />
+  <div id="app">
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
+    <NavBar @toggle-sidebar="toggleSidebar" />
+
+    <!-- Sidebar Administrativa para administradores -->
+    <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+
+    <main class="main-content">
+      <!-- Formulário de Edição de Livro -->
+      <div class="book-registration-container">
+        <h1 class="title">Editar Informações do Livro</h1>
+        <form @submit.prevent="submitForm">
+          <div class="form-grid">
+            <div class="form-left">
+              <img :src="bookThumbnail" alt="Capa do Livro" id="bookThumbnail" />
+              <input type="file" id="imageUpload" accept="image/*" @change="previewImage" />
+            </div>
+            <div class="form-right">
+              <div class="form-group">
+                <label for="bookTitle">Título do Livro</label>
+                <input
+                  type="text"
+                  v-model="bookTitle"
+                  id="bookTitle"
+                  name="bookTitle"
+                  placeholder="Insira o título do livro"
+                  required
+                />
               </div>
-              <div class="form-right">
-                <div class="form-group">
-                  <label for="bookId">ID do Livro</label>
-                  <input
-                    type="text"
-                    v-model="bookId"
-                    id="bookId"
-                    name="bookId"
-                    placeholder="Insira o ID do livro"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="bookTitle">Título do Livro</label>
-                  <input
-                    type="text"
-                    v-model="bookTitle"
-                    id="bookTitle"
-                    name="bookTitle"
-                    placeholder="Insira o título do livro"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="bookAuthor">Autor</label>
-                  <input
-                    type="text"
-                    v-model="bookAuthor"
-                    id="bookAuthor"
-                    name="bookAuthor"
-                    placeholder="Nome do autor"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="publicationYear">Ano de Publicação</label>
-                  <input
-                    type="number"
-                    v-model="publicationYear"
-                    id="publicationYear"
-                    name="publicationYear"
-                    placeholder="Exemplo: 2024"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="bookGenre">Gênero</label>
-                  <input
-                    type="text"
-                    v-model="bookGenre"
-                    id="bookGenre"
-                    name="bookGenre"
-                    placeholder="Gênero do livro"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="isbn">ISBN</label>
-                  <input
-                    type="text"
-                    v-model="isbn"
-                    id="isbn"
-                    name="isbn"
-                    placeholder="Exemplo: 978-3-16-148410-0"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="copiesAvailable">Número de Cópias Disponíveis</label>
-                  <input
-                    type="number"
-                    v-model="copiesAvailable"
-                    id="copiesAvailable"
-                    name="copiesAvailable"
-                    placeholder="Quantidade de cópias"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="bookDescription">Descrição</label>
-                  <textarea
-                    v-model="bookDescription"
-                    id="bookDescription"
-                    name="bookDescription"
-                    rows="5"
-                    placeholder="Descreva o livro, seus personagens e história"
-                    maxlength="630"
-                    required
-                  ></textarea>
-                  <p class="char-count">{{ remainingCharacters }} caracteres restantes</p>
-                </div>
+              <div class="form-group">
+                <label for="bookAuthor">Autor</label>
+                <input
+                  type="text"
+                  v-model="bookAuthor"
+                  id="bookAuthor"
+                  name="bookAuthor"
+                  placeholder="Nome do autor"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="publicationYear">Ano de Publicação</label>
+                <input
+                  type="number"
+                  v-model="publicationYear"
+                  id="publicationYear"
+                  name="publicationYear"
+                  placeholder="Exemplo: 2024"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="bookGenre">Gênero</label>
+                <input
+                  type="text"
+                  v-model="bookGenre"
+                  id="bookGenre"
+                  name="bookGenre"
+                  placeholder="Gênero do livro"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="isbn">ISBN</label>
+                <input
+                  type="text"
+                  v-model="isbn"
+                  id="isbn"
+                  name="isbn"
+                  placeholder="Exemplo: 978-3-16-148410-0"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="copiesAvailable">Número de Cópias Disponíveis</label>
+                <input
+                  type="number"
+                  v-model="copiesAvailable"
+                  id="copiesAvailable"
+                  name="copiesAvailable"
+                  placeholder="Quantidade de cópias"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="bookDescription">Descrição</label>
+                <textarea
+                  v-model="bookDescription"
+                  id="bookDescription"
+                  name="bookDescription"
+                  rows="5"
+                  placeholder="Descreva o livro, seus personagens e história"
+                  maxlength="630"
+                  required
+                ></textarea>
+                <p class="char-count">{{ remainingCharacters }} caracteres restantes</p>
               </div>
             </div>
-            <button type="submit" class="submit-btn">Salvar Alterações</button>
-          </form>
-        </div>
-      </main>
-  
-      <!-- Modal de Sucesso -->
-      <div v-if="showModal" class="modal">
-        <div class="modal-content">
-          <h2>Livro Atualizado com Sucesso!</h2>
-          <button @click="closeModal" class="modal-close-btn">Fechar</button>
-        </div>
+          </div>
+          <button type="submit" class="submit-btn">Salvar Alterações</button>
+        </form>
       </div>
-  
-      <!-- Rodapé -->
-      <Footer />
+    </main>
+
+    <!-- Modal de Sucesso -->
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <h2>Livro Atualizado com Sucesso!</h2>
+        <button @click="closeModal" class="modal-close-btn">Fechar</button>
+      </div>
     </div>
-  </template>
-  
-  <script>
-  import NavBar from "@/components/NavBar.vue";
-  import adm_SideBar from "@/components/adm_SideBar.vue";
-  
-  export default {
-    components: {
-      NavBar,
-      adm_SideBar,
-    
+
+    <!-- Rodapé -->
+    <Footer />
+  </div>
+</template>
+
+<script>
+import NavBar from "@/components/NavBar.vue";
+import adm_SideBar from "@/components/adm_SideBar.vue";
+
+export default {
+  components: {
+    NavBar,
+    adm_SideBar,
+  },
+  props: {
+    book: {
+      type: Object,
+      default: () => ({
+        title: "",
+        author: "",
+        year: "",
+        genre: "",
+        isbn: "",
+        copies: "",
+        description: "",
+        thumbnail: "https://via.placeholder.com/200x300",
+      }),
     },
-    props: {
-      book: {
-        type: Object,
-        default: () => ({
-          id: "",
-          title: "",
-          author: "",
-          year: "",
-          genre: "",
-          isbn: "",
-          copies: "",
-          description: "",
-          thumbnail: "https://via.placeholder.com/200x300",
-        }),
-      },
+  },
+  data() {
+    return {
+      bookThumbnail: this.book.thumbnail,
+      bookTitle: this.book.title,
+      bookAuthor: this.book.author,
+      publicationYear: this.book.year,
+      bookGenre: this.book.genre,
+      isbn: this.book.isbn,
+      copiesAvailable: this.book.copies,
+      bookDescription: this.book.description,
+      isSidebarOpen: false,
+      showModal: false,
+    };
+  },
+  computed: {
+    remainingCharacters() {
+      const maxLength = 630;
+      return maxLength - (this.bookDescription?.length || 0);
     },
-    data() {
-      return {
-        bookThumbnail: this.book.thumbnail,
-        bookId: this.book.id,
-        bookTitle: this.book.title,
-        bookAuthor: this.book.author,
-        publicationYear: this.book.year,
-        bookGenre: this.book.genre,
-        isbn: this.book.isbn,
-        copiesAvailable: this.book.copies,
-        bookDescription: this.book.description,
-        isSidebarOpen: false,
-        showModal: false,
-      };
+  },
+  methods: {
+    previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.bookThumbnail = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
     },
-    computed: {
-      remainingCharacters() {
-        const maxLength = 630;
-        return maxLength - (this.bookDescription?.length || 0);
-      },
+    submitForm() {
+      if (!this.bookThumbnail || this.bookThumbnail === "https://via.placeholder.com/200x300") {
+        alert("Por favor, insira uma imagem para o livro.");
+        return;
+      }
+      console.log("Formulário atualizado com sucesso", {
+        bookTitle: this.bookTitle,
+        bookAuthor: this.bookAuthor,
+        publicationYear: this.publicationYear,
+        bookGenre: this.bookGenre,
+        isbn: this.isbn,
+        copiesAvailable: this.copiesAvailable,
+        bookDescription: this.bookDescription,
+        bookThumbnail: this.bookThumbnail,
+      });
+      this.showModal = true;
     },
-    methods: {
-      previewImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            this.bookThumbnail = reader.result;
-          };
-          reader.readAsDataURL(file);
-        }
-      },
-      submitForm() {
-        if (!this.bookThumbnail || this.bookThumbnail === "https://via.placeholder.com/200x300") {
-          alert("Por favor, insira uma imagem para o livro.");
-          return;
-        }
-        console.log("Formulário atualizado com sucesso", {
-          bookId: this.bookId,
-          bookTitle: this.bookTitle,
-          bookAuthor: this.bookAuthor,
-          publicationYear: this.publicationYear,
-          bookGenre: this.bookGenre,
-          isbn: this.isbn,
-          copiesAvailable: this.copiesAvailable,
-          bookDescription: this.bookDescription,
-          bookThumbnail: this.bookThumbnail,
-        });
-        this.showModal = true;
-      },
-      closeModal() {
-        this.showModal = false;
-      },
-      toggleSidebar() {
-        this.isSidebarOpen = !this.isSidebarOpen;
-      },
+    closeModal() {
+      this.showModal = false;
     },
-  };
-  </script>
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen;
+    },
+  },
+};
+</script>
+
   
   <style scoped>
   /* CSS fornecido por você */
