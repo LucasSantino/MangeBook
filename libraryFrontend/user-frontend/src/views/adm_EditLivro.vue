@@ -129,7 +129,7 @@ export default {
   data() {
     return {
       bookId: this.$route.params.id, // ID do livro recebido na rota
-      bookThumbnail: null,
+      bookThumbnailUrl: null, // URL para pré-visualização da imagem
       bookTitle: "",
       bookAuthor: "",
       publicationYear: "",
@@ -137,21 +137,23 @@ export default {
       isbn: "",
       copiesAvailable: "",
       bookDescription: "",
-      isSidebarOpen: false,
-      showModal: false,
+      isSidebarOpen: false, // Controle do estado da sidebar
+      showModal: false, // Controle da exibição do modal
+      selectedImage: null, // Para armazenar o arquivo da imagem selecionada
     };
   },
   mounted() {
     this.carregarLivro();
   },
   methods: {
+    // Carregar os dados do livro
     async carregarLivro() {
       try {
         const response = await axios.get(`http://localhost:3000/api/books/${this.bookId}`);
         const book = response.data;
 
         // Preenche os campos com os dados retornados
-        this.bookThumbnail = book.bookThumbnail
+        this.bookThumbnailUrl = book.bookThumbnail
           ? `http://localhost:3000/${book.bookThumbnail}`
           : "https://via.placeholder.com/200x300";
         this.bookTitle = book.bookTitle || "";
@@ -160,60 +162,85 @@ export default {
         this.bookGenre = book.bookGenre || "";
         this.isbn = book.isbn || "";
         this.copiesAvailable = book.copiesAvailable || "";
-        this.bookDescription = book.dbookDescription || "";
+        this.bookDescription = book.dbookDescription || ""; // Certifica-se de usar o campo correto do backend
       } catch (error) {
         console.error("Erro ao carregar informações do livro:", error);
         alert("Erro ao carregar as informações do livro.");
       }
     },
+
+    // Pré-visualização da imagem
     previewImage(event) {
       const file = event.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.bookThumbnail = reader.result; // Atualiza a imagem para exibição
-        };
-        reader.readAsDataURL(file);
-      }
-    },
-    async submitForm() {
-      try {
-        const formData = new FormData();
-        formData.append("bookTitle", this.bookTitle);
-        formData.append("bookAuthor", this.bookAuthor);
-        formData.append("publicationYear", this.publicationYear);
-        formData.append("bookGenre", this.bookGenre);
-        formData.append("isbn", this.isbn);
-        formData.append("copiesAvailable", this.copiesAvailable);
-        formData.append("dbookDescription", this.bookDescription);
-
-        const imageInput = this.$refs.imageUpload;
-
-        // Se o usuário escolheu uma nova imagem, envia a imagem nova
-        if (imageInput && imageInput.files[0]) {
-          formData.append("bookThumbnail", imageInput.files[0]);
-        } else if (this.bookThumbnail && !this.bookThumbnail.startsWith("data:")) {
-          // Caso contrário, envia a imagem já existente no banco (se for uma URL)
-          formData.append("bookThumbnail", this.bookThumbnail.replace("http://localhost:3000/", ""));
-        } else if (this.bookThumbnail && this.bookThumbnail.startsWith("data:")) {
-          // Se for uma imagem em base64 (gerada pelo preview), envia também
-          formData.append("bookThumbnail", this.bookThumbnail);
+        if (file.size > 5 * 1024 * 1024) { // Valida se o tamanho do arquivo excede 5MB
+          alert("A imagem é muito grande. O tamanho máximo permitido é 5MB.");
+          return;
         }
-
-        const response = await axios.put(`http://localhost:3000/api/books/${this.bookId}`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        this.showModal = true; // Exibe o modal de sucesso
-        console.log("Livro atualizado com sucesso:", response.data);
-      } catch (error) {
-        console.error("Erro ao atualizar livro:", error);
-        alert("Erro ao atualizar o livro. Verifique os campos preenchidos.");
+        this.bookThumbnailUrl = URL.createObjectURL(file); // Atualiza a visualização da imagem
+        this.selectedImage = file; // Armazena o arquivo da imagem para envio
       }
     },
+
+    // Função para enviar o formulário
+    async submitForm() {
+      if (!this.bookTitle || !this.bookAuthor || !this.publicationYear || !this.bookGenre || !this.isbn || !this.copiesAvailable) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("bookTitle", this.bookTitle);
+      formData.append("bookAuthor", this.bookAuthor);
+      formData.append("publicationYear", this.publicationYear);
+      formData.append("bookGenre", this.bookGenre);
+      formData.append("isbn", this.isbn);
+      formData.append("copiesAvailable", this.copiesAvailable);
+      formData.append("dbookDescription", this.bookDescription); // Usa o campo correto para descrição
+
+      // Adiciona a imagem apenas se o usuário selecionou uma nova
+      if (this.selectedImage) {
+        formData.append("bookThumbnail", this.selectedImage);
+      }
+
+      try {
+        const response = await axios.put(
+          `http://localhost:3000/api/books/${this.bookId}`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        console.log("Livro atualizado:", response.data);
+
+        // Exibe o modal de sucesso
+        this.showModal = true;
+
+        // Limpa a imagem armazenada localmente
+        URL.revokeObjectURL(this.bookThumbnailUrl);
+        this.resetForm();
+      } catch (error) {
+        console.error("Erro ao atualizar livro:", error.response?.data || error.message);
+        alert("Erro ao atualizar o livro. Verifique os dados e tente novamente.");
+      }
+    },
+
+    // Resetar o formulário
+    resetForm() {
+      this.bookThumbnailUrl = "https://via.placeholder.com/200x300";
+      this.bookTitle = "";
+      this.bookAuthor = "";
+      this.publicationYear = "";
+      this.bookGenre = "";
+      this.isbn = "";
+      this.copiesAvailable = "";
+      this.bookDescription = "";
+      this.selectedImage = null;
+    },
+
     closeModal() {
       this.showModal = false;
     },
+
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
@@ -222,12 +249,6 @@ export default {
 </script>
 
 
-
-
-
-
-
-  
   <style scoped>
   /* CSS fornecido por você */
   body {
