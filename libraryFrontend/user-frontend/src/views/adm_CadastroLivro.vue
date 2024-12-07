@@ -18,10 +18,6 @@
             </div>
             <div class="form-right">
               <div class="form-group">
-                <label for="bookId">ID do Livro</label>
-                <input type="text" v-model="bookId" id="bookId" name="bookId" placeholder="Insira o ID do livro" required>
-              </div>
-              <div class="form-group">
                 <label for="bookTitle">Título do Livro</label>
                 <input type="text" v-model="bookTitle" id="bookTitle" name="bookTitle" placeholder="Insira o título do livro" required>
               </div>
@@ -82,18 +78,16 @@
 // Importação dos componentes necessários
 import NavBar from '@/components/NavBar.vue';
 import adm_SideBar from '@/components/adm_SideBar.vue';
-
+import axios from 'axios';
 
 export default {
   components: {
     NavBar,
     adm_SideBar,
-   
   },
   data() {
     return {
       bookThumbnail: "https://via.placeholder.com/200x300",
-      bookId: "",
       bookTitle: "",
       bookAuthor: "",
       publicationYear: "",
@@ -103,6 +97,7 @@ export default {
       bookDescription: "",
       isSidebarOpen: false,  // Controle do estado da sidebar
       showModal: false,      // Controle da exibição do modal
+      selectedImage: null,   // Para armazenar a imagem selecionada
     };
   },
   computed: {
@@ -121,32 +116,58 @@ export default {
           this.bookThumbnail = reader.result;
         };
         reader.readAsDataURL(file);
+        this.selectedImage = file; // Armazena o arquivo para envio
       }
     },
-    submitForm() {
-  // Verificar se o campo de imagem foi preenchido
-  if (!this.bookThumbnail || this.bookThumbnail === "https://via.placeholder.com/200x300") {
-    alert("Por favor, insira uma imagem para o livro.");
-    return; // Impede o envio do formulário
-  }
+    async submitForm() {
+      // Validação da imagem
+      if (!this.selectedImage) {
+        alert("Por favor, insira uma imagem para o livro.");
+        return;
+      }
 
-  // Lógica para enviar o formulário (exibição do modal)
-  console.log('Formulário enviado', {
-    bookId: this.bookId,
-    bookTitle: this.bookTitle,
-    bookAuthor: this.bookAuthor,
-    publicationYear: this.publicationYear,
-    bookGenre: this.bookGenre,
-    isbn: this.isbn,
-    copiesAvailable: this.copiesAvailable,
-    bookDescription: this.bookDescription
-  });
+      // Criação do objeto FormData
+      const formData = new FormData();
+      formData.append("bookThumbnail", this.selectedImage); // Adiciona a imagem
+      formData.append("bookTitle", this.bookTitle);
+      formData.append("bookAuthor", this.bookAuthor);
+      formData.append("publicationYear", this.publicationYear);
+      formData.append("bookGenre", this.bookGenre);
+      formData.append("isbn", this.isbn);
+      formData.append("copiesAvailable", this.copiesAvailable);
+      formData.append("dbookDescription", this.bookDescription);
 
-  // Exibir o modal de sucesso
-  this.showModal = true;
-},
+      try {
+        // Envio da requisição para a API
+        const response = await axios.post("http://localhost:3000/api/books", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Livro cadastrado:", response.data);
+
+        // Exibe o modal de sucesso
+        this.showModal = true;
+
+        // Limpa o formulário após o cadastro
+        this.resetForm();
+      } catch (error) {
+        console.error("Erro ao cadastrar livro:", error.response?.data || error.message);
+        alert("Erro ao cadastrar livro. Verifique os dados e tente novamente.");
+      }
+    },
+    resetForm() {
+      this.bookThumbnail = "https://via.placeholder.com/200x300";
+      this.bookTitle = "";
+      this.bookAuthor = "";
+      this.publicationYear = "";
+      this.bookGenre = "";
+      this.isbn = "";
+      this.copiesAvailable = "";
+      this.bookDescription = "";
+      this.selectedImage = null;
+    },
     closeModal() {
-      // Fechar o modal
       this.showModal = false;
     },
     toggleSidebar() {
@@ -155,6 +176,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+/* Adicione aqui o CSS necessário para estilizar o formulário, modal e componentes */
+</style>
+
 
 <style scoped>
 /* Estilos gerais */
