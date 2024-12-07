@@ -171,7 +171,7 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          this.bookThumbnail = reader.result; // Pré-visualização da imagem
+          this.bookThumbnail = reader.result; // Atualiza a imagem para exibição
         };
         reader.readAsDataURL(file);
       }
@@ -187,13 +187,17 @@ export default {
         formData.append("copiesAvailable", this.copiesAvailable);
         formData.append("dbookDescription", this.bookDescription);
 
-        // Adiciona a nova imagem apenas se ela foi selecionada
         const imageInput = this.$refs.imageUpload;
+
+        // Se o usuário escolheu uma nova imagem, envia a imagem nova
         if (imageInput && imageInput.files[0]) {
-          formData.append("bookThumbnail", imageInput.files[0]); // Nova imagem
+          formData.append("bookThumbnail", imageInput.files[0]);
         } else if (this.bookThumbnail && !this.bookThumbnail.startsWith("data:")) {
-          // Se a imagem não for base64 (já salva no banco), enviar a URL da imagem
+          // Caso contrário, envia a imagem já existente no banco (se for uma URL)
           formData.append("bookThumbnail", this.bookThumbnail.replace("http://localhost:3000/", ""));
+        } else if (this.bookThumbnail && this.bookThumbnail.startsWith("data:")) {
+          // Se for uma imagem em base64 (gerada pelo preview), envia também
+          formData.append("bookThumbnail", this.bookThumbnail);
         }
 
         const response = await axios.put(`http://localhost:3000/api/books/${this.bookId}`, formData, {
@@ -216,6 +220,7 @@ export default {
   },
 };
 </script>
+
 
 
 
