@@ -159,8 +159,18 @@ export default {
     editarLivro(id) {
       this.$router.push(`/adm_editlivro/${id}`);
     },
-    removerLivro(id) {
-      console.log('Remover Livro:', id);
+    async removerLivro(id) {
+      try {
+        const confirmDelete = confirm('Tem certeza que deseja excluir este livro?');
+        if (confirmDelete) {
+          await axios.delete(`http://localhost:3000/api/books/${id}`);
+          this.livros = this.livros.filter(livro => livro._id !== id); // Atualiza a lista localmente
+          alert('Livro removido com sucesso!');
+        }
+      } catch (error) {
+        console.error('Erro ao remover o livro:', error);
+        alert('Erro ao remover o livro.');
+      }
     },
     navegarParaDetalhes(bookId) {
       this.$router.push(`/detalhes-livros/${bookId}`);
@@ -171,6 +181,7 @@ export default {
   },
 };
 </script>
+
 
 
 
