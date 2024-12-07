@@ -1,8 +1,13 @@
 <template>
   <div id="app">
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
     <NavBar @toggle-sidebar="toggleSidebar" />
+
+    <!-- Sidebar Administrativa para administradores -->
     <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+
     <main class="main-content">
+      <!-- Formulário de Edição de Livro -->
       <div class="book-registration-container">
         <h1 class="title">Editar Informações do Livro</h1>
         <form @submit.prevent="submitForm">
@@ -17,8 +22,9 @@
                 <input
                   type="text"
                   v-model="bookTitle"
-                  @blur="trimField('bookTitle')"
                   id="bookTitle"
+                  name="bookTitle"
+                  placeholder="Insira o título do livro"
                   required
                 />
               </div>
@@ -27,8 +33,9 @@
                 <input
                   type="text"
                   v-model="bookAuthor"
-                  @blur="trimField('bookAuthor')"
                   id="bookAuthor"
+                  name="bookAuthor"
+                  placeholder="Nome do autor"
                   required
                 />
               </div>
@@ -38,6 +45,8 @@
                   type="number"
                   v-model="publicationYear"
                   id="publicationYear"
+                  name="publicationYear"
+                  placeholder="Exemplo: 2024"
                   required
                 />
               </div>
@@ -47,7 +56,8 @@
                   type="text"
                   v-model="bookGenre"
                   id="bookGenre"
-                  @blur="trimField('bookGenre')"
+                  name="bookGenre"
+                  placeholder="Gênero do livro"
                   required
                 />
               </div>
@@ -57,7 +67,8 @@
                   type="text"
                   v-model="isbn"
                   id="isbn"
-                  @blur="trimField('isbn')"
+                  name="isbn"
+                  placeholder="Exemplo: 978-3-16-148410-0"
                   required
                 />
               </div>
@@ -67,15 +78,19 @@
                   type="number"
                   v-model="copiesAvailable"
                   id="copiesAvailable"
+                  name="copiesAvailable"
+                  placeholder="Quantidade de cópias"
                   required
                 />
               </div>
               <div class="form-group">
                 <label for="bookDescription">Descrição</label>
                 <textarea
-                  v-model="dbookDescription"
+                  v-model="bookDescription"
                   id="bookDescription"
+                  name="bookDescription"
                   rows="5"
+                  placeholder="Descreva o livro, seus personagens e história"
                   maxlength="630"
                   required
                 ></textarea>
@@ -88,12 +103,15 @@
       </div>
     </main>
 
+    <!-- Modal de Sucesso -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">
         <h2>Livro Atualizado com Sucesso!</h2>
         <button @click="closeModal" class="modal-close-btn">Fechar</button>
       </div>
     </div>
+
+    <!-- Rodapé -->
     <Footer />
   </div>
 </template>
@@ -110,76 +128,103 @@ export default {
   },
   data() {
     return {
-      bookId: this.$route.params.id,
-      bookThumbnailUrl: "https://via.placeholder.com/200x300",
+      bookId: this.$route.params.id, // ID do livro recebido na rota
+      bookThumbnailUrl: null, // URL para pré-visualização da imagem
       bookTitle: "",
       bookAuthor: "",
       publicationYear: "",
       bookGenre: "",
       isbn: "",
       copiesAvailable: "",
-      dbookDescription: "", // Agora usa o campo correto do backend
-      isSidebarOpen: false,
-      showModal: false,
-      selectedImage: null,
+      bookDescription: "",
+      isSidebarOpen: false, // Controle do estado da sidebar
+      showModal: false, // Controle da exibição do modal
+      selectedImage: null, // Para armazenar o arquivo da imagem selecionada
     };
   },
   mounted() {
     this.carregarLivro();
   },
-  computed: {
-    remainingCharacters() {
-      return 630 - this.dbookDescription.length;
-    },
-  },
   methods: {
+    // Carregar os dados do livro
     async carregarLivro() {
       try {
-        const { data: book } = await axios.get(`http://localhost:3000/api/books/${this.bookId}`);
-        Object.assign(this, book);
+        const response = await axios.get(`http://localhost:3000/api/books/${this.bookId}`);
+        const book = response.data;
+
+        // Preenche os campos com os dados retornados
         this.bookThumbnailUrl = book.bookThumbnail
           ? `http://localhost:3000/${book.bookThumbnail}`
-          : this.bookThumbnailUrl;
+          : "https://via.placeholder.com/200x300";
+        this.bookTitle = book.bookTitle || "";
+        this.bookAuthor = book.bookAuthor || "";
+        this.publicationYear = book.publicationYear || "";
+        this.bookGenre = book.bookGenre || "";
+        this.isbn = book.isbn || "";
+        this.copiesAvailable = book.copiesAvailable || "";
+        this.bookDescription = book.dbookDescription || ""; // Certifica-se de usar o campo correto do backend
       } catch (error) {
-        console.error("Erro ao carregar informações do livro:", error.message);
-        alert("Erro ao carregar o livro.");
+        console.error("Erro ao carregar informações do livro:", error);
+        alert("Erro ao carregar as informações do livro.");
       }
     },
+
+    // Pré-visualização da imagem
     previewImage(event) {
       const file = event.target.files[0];
       if (file) {
-        if (file.size > 5 * 1024 * 1024) {
-          alert("Imagem muito grande! Limite de 5MB.");
+        if (file.size > 5 * 1024 * 1024) { // Valida se o tamanho do arquivo excede 5MB
+          alert("A imagem é muito grande. O tamanho máximo permitido é 5MB.");
           return;
         }
-        this.bookThumbnailUrl = URL.createObjectURL(file);
-        this.selectedImage = file;
+        this.bookThumbnailUrl = URL.createObjectURL(file); // Atualiza a visualização da imagem
+        this.selectedImage = file; // Armazena o arquivo da imagem para envio
       }
     },
-    async submitForm() {
-      try {
-        const formData = new FormData();
-        formData.append("bookTitle", this.bookTitle);
-        formData.append("bookAuthor", this.bookAuthor);
-        formData.append("publicationYear", this.publicationYear);
-        formData.append("bookGenre", this.bookGenre);
-        formData.append("isbn", this.isbn);
-        formData.append("copiesAvailable", this.copiesAvailable);
-        formData.append("dbookDescription", this.dbookDescription); // Usa o campo correto
-        if (this.selectedImage) {
-          formData.append("bookThumbnail", this.selectedImage);
-        }
 
-        await axios.put(`http://localhost:3000/api/books/${this.bookId}`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
+    // Função para enviar o formulário
+    async submitForm() {
+      if (!this.bookTitle || !this.bookAuthor || !this.publicationYear || !this.bookGenre || !this.isbn || !this.copiesAvailable) {
+        alert("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("bookTitle", this.bookTitle);
+      formData.append("bookAuthor", this.bookAuthor);
+      formData.append("publicationYear", this.publicationYear);
+      formData.append("bookGenre", this.bookGenre);
+      formData.append("isbn", this.isbn);
+      formData.append("copiesAvailable", this.copiesAvailable);
+      formData.append("dbookDescription", this.bookDescription); // Usa o campo correto para descrição
+
+      // Adiciona a imagem apenas se o usuário selecionou uma nova
+      if (this.selectedImage) {
+        formData.append("bookThumbnail", this.selectedImage);
+      }
+
+      try {
+        const response = await axios.put(
+          `http://localhost:3000/api/books/${this.bookId}`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+
+        console.log("Livro atualizado:", response.data);
+
+        // Exibe o modal de sucesso
         this.showModal = true;
+
+        // Limpa a imagem armazenada localmente
+        URL.revokeObjectURL(this.bookThumbnailUrl);
         this.resetForm();
       } catch (error) {
         console.error("Erro ao atualizar livro:", error.response?.data || error.message);
-        alert("Erro ao atualizar o livro.");
+        alert("Erro ao atualizar o livro. Verifique os dados e tente novamente.");
       }
     },
+
+    // Resetar o formulário
     resetForm() {
       this.bookThumbnailUrl = "https://via.placeholder.com/200x300";
       this.bookTitle = "";
@@ -188,15 +233,14 @@ export default {
       this.bookGenre = "";
       this.isbn = "";
       this.copiesAvailable = "";
-      this.dbookDescription = ""; // Reseta o campo correto
+      this.bookDescription = "";
       this.selectedImage = null;
     },
-    trimField(field) {
-      this[field] = this[field].trim();
-    },
+
     closeModal() {
       this.showModal = false;
     },
+
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
     },

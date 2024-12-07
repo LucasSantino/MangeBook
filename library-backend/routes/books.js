@@ -81,8 +81,15 @@ router.put('/:id', upload.single('bookThumbnail'), async (req, res) => {
     // Extraímos os dados enviados no corpo da requisição
     const { bookTitle, bookAuthor, publicationYear, bookGenre, isbn, copiesAvailable, dbookDescription } = req.body;
 
-    // Verificamos se uma nova imagem foi enviada
-    const bookThumbnail = req.file ? req.file.path : null;
+    // Verifica se foi enviado um novo arquivo para bookThumbnail, se não, mantemos o valor atual
+    let bookThumbnail;
+    if (req.file) {
+        bookThumbnail = req.file.path;
+    } else {
+        // Se não houver um novo arquivo, mantemos o valor atual do bookThumbnail
+        const currentBook = await Book.findById(req.params.id);
+        bookThumbnail = currentBook ? currentBook.bookThumbnail : null;
+    }
 
     // Tentamos atualizar o livro no banco de dados pelo ID
     try {
@@ -114,6 +121,7 @@ router.put('/:id', upload.single('bookThumbnail'), async (req, res) => {
         res.status(500).json({ message: 'Erro ao atualizar livro', error });
     }
 });
+
 
 // *** EXCLUSÃO (DELETE) ***
 router.delete('/:id', async (req, res) => {
