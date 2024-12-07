@@ -14,10 +14,17 @@
 
         <!-- Barra de Pesquisa -->
         <div class="search-container2">
-          <input type="text" class="search-bar2" placeholder="Pesquisar livros cadastrados..." v-model="searchQuery" />
+          <input
+            type="text"
+            class="search-bar2"
+            placeholder="Pesquisar livros cadastrados..."
+            v-model="searchQuery"
+          />
           <button class="search-icon2" @click="pesquisar">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+              />
             </svg>
           </button>
         </div>
@@ -32,7 +39,6 @@
                 <th>ID</th>
                 <th>Título</th>
                 <th>Autor</th>
-                <th>Descrição</th>
                 <th>Ano de Publicação</th>
                 <th>Gênero</th>
                 <th>ISBN</th>
@@ -43,23 +49,21 @@
             <tbody>
               <tr
                 v-for="livro in livrosFiltrados"
-                :key="livro.id"
-                @click="navegarParaDetalhes(livro.id)"
+                :key="livro._id"
+                @click="navegarParaDetalhes(livro._id)"
                 style="cursor: pointer"
               >
-                <td>{{ livro.id }}</td>
-                <td>{{ livro.titulo }}</td>
-                <td>{{ livro.autor }}</td>
-                <td>{{ livro.descricao }}</td>
-                <td>{{ livro.anoPublicacao }}</td>
-                <td>{{ livro.genero }}</td>
+                <td>{{ livro._id }}</td>
+                <td>{{ livro.bookTitle }}</td>
+                <td>{{ livro.bookAuthor }}</td>
+                <td>{{ livro.publicationYear }}</td>
+                <td>{{ livro.bookGenre }}</td>
                 <td>{{ livro.isbn }}</td>
-                <td>{{ livro.numCopias }}</td>
+                <td>{{ livro.copiesAvailable }}</td>
                 <td>
                   <div class="btn-container">
-                    <!-- Impede que o clique no botão propague para o <tr> -->
-                    <button class="btn-editar" @click.stop="editarLivro(livro.id)">Editar Livro</button>
-                    <button class="btn-remover" @click.stop="removerLivro(livro.id)">Remover</button>
+                    <button class="btn-editar" @click.stop="editarLivro(livro._id)">Editar Livro</button>
+                    <button class="btn-remover" @click.stop="removerLivro(livro._id)">Remover</button>
                   </div>
                 </td>
               </tr>
@@ -79,6 +83,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import NavBar from '@/components/NavBar.vue';
 import adm_SideBar from '@/components/adm_SideBar.vue';
 
@@ -90,43 +95,40 @@ export default {
   data() {
     return {
       isSidebarOpen: false,
-      searchQuery: '', // variável para armazenar a busca
-      livros: [
-          { id: 1, titulo: 'Harry Potter e a Pedra Filosofal', autor: 'JK Rowling', descricao: 'Primeiro livro da série Harry Potter.', anoPublicacao: 1997, genero: 'Fantasia', isbn: '978-3-16-148410-0', numCopias: 5 },
-          { id: 2, titulo: 'Harry Potter e a Câmara Secreta', autor: 'JK Rowling', descricao: 'Segunda parte da série Harry Potter.', anoPublicacao: 1998, genero: 'Fantasia', isbn: '978-3-16-148410-1', numCopias: 3 },
-          { id: 3, titulo: 'Percy Jackson e o Ladrão de Raios', autor: 'Rick Riordan', descricao: 'Aventura de Percy no mundo dos deuses gregos.', anoPublicacao: 2005, genero: 'Aventura', isbn: '978-3-16-148410-2', numCopias: 4 },
-          { id: 4, titulo: 'A Culpa é das Estrelas', autor: 'John Green', descricao: 'Uma história de amor entre jovens com câncer.', anoPublicacao: 2012, genero: 'Romance', isbn: '978-0-313-32531-5', numCopias: 2 },
-          { id: 5, titulo: 'O Hobbit', autor: 'J.R.R. Tolkien', descricao: 'A jornada de Bilbo Bolseiro em busca de um tesouro.', anoPublicacao: 1937, genero: 'Fantasia', isbn: '978-0-261-10221-8', numCopias: 6 },
-          { id: 6, titulo: '1984', autor: 'George Orwell', descricao: 'Uma distopia sobre totalitarismo e vigilância.', anoPublicacao: 1949, genero: 'Ficção Científica', isbn: '978-0-452-28423-4', numCopias: 8 },
-          { id: 7, titulo: 'O Senhor dos Anéis: A Sociedade do Anel', autor: 'J.R.R. Tolkien', descricao: 'O início da jornada de Frodo e seus amigos.', anoPublicacao: 1954, genero: 'Fantasia', isbn: '978-0-618-26649-9', numCopias: 7 },
-          { id: 8, titulo: 'O Pequeno Príncipe', autor: 'Antoine de Saint-Exupéry', descricao: 'Uma fábula sobre a inocência e a amizade.', anoPublicacao: 1943, genero: 'Fábula', isbn: '978-0-15-601219-5', numCopias: 10 },
-          { id: 9, titulo: 'Dom Casmurro', autor: 'Machado de Assis', descricao: 'A história de Bentinho e seu ciúme por Capitu.', anoPublicacao: 1899, genero: 'Literatura Brasileira', isbn: '978-85-359-0277-6', numCopias: 4 },
-          { id: 10, titulo: 'O Alquimista', autor: 'Paulo Coelho', descricao: 'A jornada de Santiago em busca de seu tesouro pessoal.', anoPublicacao: 1988, genero: 'Literatura Brasileira', isbn: '978-85-327-1632-0', numCopias: 3 },
-        ],
+      searchQuery: '',
+      livros: [], // Inicialmente vazio, será preenchido pela API
       paginaAtual: 1,
-      totalPaginas: 10,
+      totalPaginas: 1, // Inicialmente 1, ajustaremos com os dados da API
     };
   },
   computed: {
     livrosFiltrados() {
-      return this.livros.filter(livro => {
-        return livro.titulo.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-               livro.autor.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-               livro.descricao.toLowerCase().includes(this.searchQuery.toLowerCase());
+      return this.livros.filter((livro) => {
+        const titulo = livro.bookTitle?.toLowerCase() || '';
+        const autor = livro.bookAuthor?.toLowerCase() || '';
+        const query = this.searchQuery.toLowerCase();
+
+        return titulo.includes(query) || autor.includes(query);
       });
-    }
+    },
   },
   methods: {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
     },
+    async buscarLivros() {
+      try {
+        const response = await axios.get('http://localhost:3000/api/books');
+        this.livros = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar livros:', error);
+      }
+    },
     editarLivro(id) {
-      // Redireciona para a página de edição do livro
       this.$router.push(`/adm_editlivro/${id}`);
     },
     removerLivro(id) {
       console.log('Remover Livro:', id);
-      // Aqui você pode implementar a lógica de remoção do livro
     },
     navegarParaDetalhes(bookId) {
       this.$router.push(`/detalhes-livros/${bookId}`);
@@ -138,12 +140,15 @@ export default {
         this.paginaAtual++;
       }
     },
-    pesquisar() {
-      // Lógica de pesquisa pode ser aplicada aqui (se necessário)
-    }
+  },
+  mounted() {
+    this.buscarLivros(); // Faz a chamada à API ao montar o componente
   },
 };
 </script>
+
+
+
   
   <style scoped>
   /* Estilo do corpo */
