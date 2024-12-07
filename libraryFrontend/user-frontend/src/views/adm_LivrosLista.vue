@@ -48,7 +48,7 @@
             </thead>
             <tbody>
               <tr
-                v-for="livro in livrosFiltrados"
+                v-for="livro in livrosPaginados"
                 :key="livro._id"
                 @click="navegarParaDetalhes(livro._id)"
                 style="cursor: pointer"
@@ -72,9 +72,23 @@
 
           <!-- Navegação de Páginas -->
           <div class="pagination">
-            <button class="btn-navegacao" aria-label="Página anterior" @click="navegar('anterior')">Anterior</button>
+            <button
+              class="btn-navegacao"
+              aria-label="Página anterior"
+              :disabled="paginaAtual === 1"
+              @click="navegar('anterior')"
+            >
+              Anterior
+            </button>
             <span>Página {{ paginaAtual }} de {{ totalPaginas }}</span>
-            <button class="btn-navegacao" aria-label="Próxima página" @click="navegar('proxima')">Próximo</button>
+            <button
+              class="btn-navegacao"
+              aria-label="Próxima página"
+              :disabled="paginaAtual === totalPaginas"
+              @click="navegar('proxima')"
+            >
+              Próximo
+            </button>
           </div>
         </div>
       </div>
@@ -96,20 +110,30 @@ export default {
     return {
       isSidebarOpen: false,
       searchQuery: '',
-      livros: [], // Inicialmente vazio, será preenchido pela API
-      paginaAtual: 1,
-      totalPaginas: 1, // Inicialmente 1, ajustaremos com os dados da API
+      livros: [], // Todos os livros recebidos da API
+      paginaAtual: 1, // Página inicial
+      livrosPorPagina: 10, // Exibir 10 livros por página
     };
   },
   computed: {
     livrosFiltrados() {
+      // Filtra os livros com base no termo de busca
       return this.livros.filter((livro) => {
         const titulo = livro.bookTitle?.toLowerCase() || '';
         const autor = livro.bookAuthor?.toLowerCase() || '';
         const query = this.searchQuery.toLowerCase();
-
         return titulo.includes(query) || autor.includes(query);
       });
+    },
+    livrosPaginados() {
+      // Paginação dos livros filtrados
+      const inicio = (this.paginaAtual - 1) * this.livrosPorPagina;
+      const fim = inicio + this.livrosPorPagina;
+      return this.livrosFiltrados.slice(inicio, fim);
+    },
+    totalPaginas() {
+      // Calcula o número total de páginas
+      return Math.ceil(this.livrosFiltrados.length / this.livrosPorPagina);
     },
   },
   methods: {
@@ -124,6 +148,14 @@ export default {
         console.error('Erro ao buscar livros:', error);
       }
     },
+    navegar(direcao) {
+      // Navegação entre páginas
+      if (direcao === 'anterior' && this.paginaAtual > 1) {
+        this.paginaAtual--;
+      } else if (direcao === 'proxima' && this.paginaAtual < this.totalPaginas) {
+        this.paginaAtual++;
+      }
+    },
     editarLivro(id) {
       this.$router.push(`/adm_editlivro/${id}`);
     },
@@ -133,19 +165,13 @@ export default {
     navegarParaDetalhes(bookId) {
       this.$router.push(`/detalhes-livros/${bookId}`);
     },
-    navegar(direcao) {
-      if (direcao === 'anterior' && this.paginaAtual > 1) {
-        this.paginaAtual--;
-      } else if (direcao === 'proxima' && this.paginaAtual < this.totalPaginas) {
-        this.paginaAtual++;
-      }
-    },
   },
   mounted() {
-    this.buscarLivros(); // Faz a chamada à API ao montar o componente
+    this.buscarLivros(); // Busca os livros ao montar o componente
   },
 };
 </script>
+
 
 
 
