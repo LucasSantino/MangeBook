@@ -1,15 +1,20 @@
 <template>
   <div id="app">
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
     <NavBar @toggle-sidebar="toggleSidebar" />
+
+    <!-- Sidebar Administrativa para administradores -->
     <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+
     <main class="main-content">
+      <!-- Novo Formulário de Cadastro de Livro -->
       <div class="book-registration-container">
         <h1 class="title">Cadastro de Livro</h1>
         <form @submit.prevent="submitForm">
           <div class="form-grid">
             <div class="form-left">
               <img :src="bookThumbnail" alt="Capa do Livro" id="bookThumbnail">
-              <input type="file" id="imageUpload" accept="image/*" @change="previewImage" required>
+              <input type="file" id="imageUpload" accept="image/*" @change="previewImage">
             </div>
             <div class="form-right">
               <div class="form-group">
@@ -56,19 +61,24 @@
       </div>
     </main>
 
+    <!-- Modal de Sucesso -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">
         <h2>Livro Cadastrado com Sucesso!</h2>
         <button @click="closeModal" class="modal-close-btn">Fechar</button>
       </div>
     </div>
+
+    <!-- Rodapé -->
     <Footer />
   </div>
 </template>
 
 <script>
+// Importação dos componentes necessários
 import NavBar from '@/components/NavBar.vue';
 import adm_SideBar from '@/components/adm_SideBar.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -85,15 +95,17 @@ export default {
       isbn: "",
       copiesAvailable: "",
       bookDescription: "",
-      isSidebarOpen: false,
-      showModal: false,
+      isSidebarOpen: false,  // Controle do estado da sidebar
+      showModal: false,      // Controle da exibição do modal
+      selectedImage: null,   // Para armazenar a imagem selecionada
     };
   },
   computed: {
+    // Computed property para calcular os caracteres restantes
     remainingCharacters() {
       const maxLength = 630;
       return maxLength - this.bookDescription.length;
-    },
+    }
   },
   methods: {
     previewImage(event) {
@@ -104,51 +116,66 @@ export default {
           this.bookThumbnail = reader.result;
         };
         reader.readAsDataURL(file);
+        this.selectedImage = file; // Armazena o arquivo para envio
       }
     },
-    submitForm() {
-      // Validação dos campos
-      if (
-        !this.bookThumbnail ||
-        this.bookThumbnail === "https://via.placeholder.com/200x300" ||
-        !this.bookTitle.trim() ||
-        !this.bookAuthor.trim() ||
-        !this.publicationYear ||
-        !this.bookGenre.trim() ||
-        !this.isbn.trim() ||
-        !this.copiesAvailable ||
-        !this.bookDescription.trim()
-      ) {
-        alert("Por favor, preencha todos os campos antes de enviar o formulário.");
+    async submitForm() {
+      // Validação da imagem
+      if (!this.selectedImage) {
+        alert("Por favor, insira uma imagem para o livro.");
         return;
       }
 
-      // Exibir o modal de sucesso
+      // Criação do objeto FormData
       const formData = new FormData();
-      formData.append("bookThumbnail", this.bookThumbnail);
+      formData.append("bookThumbnail", this.selectedImage); // Adiciona a imagem
       formData.append("bookTitle", this.bookTitle);
       formData.append("bookAuthor", this.bookAuthor);
       formData.append("publicationYear", this.publicationYear);
       formData.append("bookGenre", this.bookGenre);
       formData.append("isbn", this.isbn);
       formData.append("copiesAvailable", this.copiesAvailable);
-      formData.append("bookDescription", this.bookDescription);
+      formData.append("dbookDescription", this.bookDescription);
 
-      // Simulação de envio
-      console.log("Formulário enviado com dados:", formData);
+      try {
+        // Envio da requisição para a API
+        const response = await axios.post("http://localhost:3000/api/books", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        console.log("Livro cadastrado:", response.data);
 
-      this.showModal = true;
+        // Exibe o modal de sucesso
+        this.showModal = true;
+
+        // Limpa o formulário após o cadastro
+        this.resetForm();
+      } catch (error) {
+        console.error("Erro ao cadastrar livro:", error.response?.data || error.message);
+        alert("Erro ao cadastrar livro. Verifique os dados e tente novamente.");
+      }
+    },
+    resetForm() {
+      this.bookThumbnail = "https://via.placeholder.com/200x300";
+      this.bookTitle = "";
+      this.bookAuthor = "";
+      this.publicationYear = "";
+      this.bookGenre = "";
+      this.isbn = "";
+      this.copiesAvailable = "";
+      this.bookDescription = "";
+      this.selectedImage = null;
     },
     closeModal() {
       this.showModal = false;
     },
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
-    },
-  },
+    }
+  }
 };
 </script>
-
 
 
 
