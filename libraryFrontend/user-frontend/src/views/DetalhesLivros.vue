@@ -7,7 +7,6 @@
     <main v-if="!loading && !error">
       <h2 class="welcome-title">Detalhes do Livro</h2>
       <div v-if="book" class="detalhes-container">
-        <!-- Alteração aqui de book.image para book.bookThumbnail -->
         <img :src="book.bookThumbnail" alt="Capa do Livro" class="book-thumbnail" />
         <div class="detalhes-livro">
           <table>
@@ -29,7 +28,7 @@
             </tr>
             <tr>
               <th>ISBN:</th>
-              <td>{{ book.isbn }}</td>
+              <td>{{ book.isbn || 'Não disponível' }}</td> <!-- Verificando se o ISBN existe -->
             </tr>
             <tr>
               <th>Cópias Disponíveis:</th>
@@ -37,7 +36,7 @@
             </tr>
             <tr>
               <th>Descrição:</th>
-              <td>{{ book.description }}</td>
+              <td>{{ book.dbookDescription || 'Não disponível' }}</td> <!-- Verificando se a descrição existe -->
             </tr>
             <tr>
               <th>Avaliação:</th>
@@ -148,18 +147,20 @@ export default {
       try {
         const response = await axios.get(`http://localhost:3000/api/books/${bookId}`);
         const data = response.data;
+
+        // Adicionando os campos corretamente
         this.book = {
           title: data.bookTitle,
           author: data.bookAuthor,
           year: data.publicationYear,
           genre: data.bookGenre,
-          isbn: data.bookISBN,
+          isbn: data.isbn || 'Não disponível',  // Garantindo que o ISBN seja retornado corretamente
+          dbookDescription: data.dbookDescription || 'Não disponível',  // Garantindo que a descrição seja retornada
           availableCopies: data.copiesAvailable,
-          description: data.bookDescription,
-          // Alteração aqui de book.image para book.bookThumbnail
           bookThumbnail: `http://localhost:3000/${data.bookThumbnail.replace(/\\/g, '/')}`,
           rating: data.averageRating || 0,
         };
+
         this.comments = data.comments || [];
       } catch (err) {
         this.error = "Erro ao carregar os detalhes do livro. Por favor, tente novamente.";
@@ -193,6 +194,7 @@ export default {
   },
 };
 </script>
+
 
 
 
