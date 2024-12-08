@@ -37,8 +37,8 @@
       <div v-if="loading" class="loading-message">Carregando livros...</div>
       <div v-else-if="error" class="error-message">{{ error }}</div>
       <div v-else class="book-list">
-        <div v-for="(book, index) in paginatedBooks" :key="book._id" class="book-card">
-          <a @click.prevent="goToBookDetails(index)">
+        <div v-for="book in paginatedBooks" :key="book.id" class="book-card">
+          <a @click.prevent="goToBookDetails(book.id)">
             <img :src="book.image" :alt="book.title" class="book-image" />
             <h4>{{ book.title }}</h4>
             <h5>Autor: {{ book.author }}</h5>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import axios from 'axios'; // Biblioteca para requisições HTTP
+import axios from 'axios';
 
 export default {
   data() {
@@ -68,9 +68,11 @@ export default {
         genre: 'all',
         year: 'all',
       },
-      books: [], // Inicialmente vazio, será preenchido com os dados da API
+      books: [],
       currentPage: 1,
       booksPerPage: 12,
+      loading: false,
+      error: null,
     };
   },
   computed: {
@@ -91,25 +93,38 @@ export default {
       const end = start + this.booksPerPage;
       return this.filteredBooks.slice(start, end);
     },
+    authors() {
+      return [...new Set(this.books.map((book) => book.author))];
+    },
+    genres() {
+      return [...new Set(this.books.map((book) => book.genre))];
+    },
+    years() {
+      return [...new Set(this.books.map((book) => book.year))];
+    },
   },
   methods: {
     async fetchBooks() {
-    try {
+      this.loading = true;
+      this.error = null;
+      try {
         const response = await axios.get('http://localhost:3000/api/books');
         this.books = response.data.map((book) => ({
-            title: book.bookTitle,
-            author: book.bookAuthor,
-            availability: book.copiesAvailable > 0 ? 'Disponível' : 'Indisponível',
-            image: `http://localhost:3000/${book.bookThumbnail.replace(/\\/g, '/')}`, // Normaliza as barras
-            genre: book.bookGenre,
-            year: book.publicationYear,
+          id: book._id,
+          title: book.bookTitle,
+          author: book.bookAuthor,
+          availability: book.copiesAvailable > 0 ? 'Disponível' : 'Indisponível',
+          image: `http://localhost:3000/${book.bookThumbnail.replace(/\\/g, '/')}`,
+          genre: book.bookGenre,
+          year: book.publicationYear,
         }));
-    } catch (error) {
+      } catch (error) {
         console.error('Erro ao buscar livros:', error);
-    }
-},
-
-
+        this.error = 'Falha ao carregar os livros. Por favor, tente novamente.';
+      } finally {
+        this.loading = false;
+      }
+    },
     changePage(direction) {
       if (direction === 'previous' && this.currentPage > 1) {
         this.currentPage--;
@@ -125,20 +140,18 @@ export default {
     },
   },
   watch: {
-    // Observa mudanças nos filtros e redefine a página ao aplicar novos filtros
     filters: {
       handler() {
         this.resetPagination();
       },
-      deep: true, // Necessário para observar mudanças em objetos aninhados
+      deep: true,
     },
   },
   mounted() {
-    this.fetchBooks(); // Busca os dados ao carregar o componente
+    this.fetchBooks();
   },
 };
 </script>
-
 
 
 

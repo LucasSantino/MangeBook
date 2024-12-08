@@ -35,12 +35,19 @@ const routes = [
     name: 'Index',
     component: Index,
   },
+  /*
   {
     path: '/detalhes-livros/:bookId',
     name: 'DetalhesLivros',
     component: DetalhesLivros,
     props: true,
-  },
+  },*/
+  {
+    path: '/livro/:bookId',
+    name: 'DetalhesLivros',
+    component: DetalhesLivros,
+    props: true,
+  },  
   {
     path: '/meus-livros',
     name: 'MeusLivros',

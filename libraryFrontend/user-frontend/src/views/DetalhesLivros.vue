@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <NavBar @toggle-sidebar="toggleSidebar" /> <!-- Passando o evento para abrir/fechar a Sidebar -->
-    <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" /> <!-- Passando o estado da Sidebar -->
-    <MainContent /> <!-- Importação do Conteúdo Principal-->
+    <NavBar @toggle-sidebar="toggleSidebar" />
+    <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
 
     <!-- Detalhes do Livro -->
-    <main>
+    <main v-if="!loading && !error">
       <h2 class="welcome-title">Detalhes do Livro</h2>
-      <div class="detalhes-container">
-        <img :src="book.image" alt="Capa do Livro" class="book-thumbnail">
+      <div v-if="book" class="detalhes-container">
+        <!-- Alteração aqui de book.image para book.bookThumbnail -->
+        <img :src="book.bookThumbnail" alt="Capa do Livro" class="book-thumbnail" />
         <div class="detalhes-livro">
           <table>
             <tr>
@@ -16,46 +16,53 @@
               <td>{{ book.title }}</td>
             </tr>
             <tr>
-              <th>Autor</th>
+              <th>Autor:</th>
               <td>{{ book.author }}</td>
             </tr>
             <tr>
-              <th>Ano de Publicação</th>
+              <th>Ano de Publicação:</th>
               <td>{{ book.year }}</td>
             </tr>
             <tr>
-              <th>Gênero</th>
+              <th>Gênero:</th>
               <td>{{ book.genre }}</td>
             </tr>
             <tr>
-              <th>ISBN</th>
+              <th>ISBN:</th>
               <td>{{ book.isbn }}</td>
             </tr>
             <tr>
-              <th>Número de Cópias Disponíveis</th>
+              <th>Cópias Disponíveis:</th>
               <td>{{ book.availableCopies }}</td>
             </tr>
             <tr>
-              <th>Descrição</th>
+              <th>Descrição:</th>
               <td>{{ book.description }}</td>
             </tr>
             <tr>
-              <th>Avaliação do Livro</th>
-              <td>{{ '★'.repeat(Math.round(book.rating)) }} <span>({{ book.rating }}.0)</span></td>
+              <th>Avaliação:</th>
+              <td>
+                {{ '★'.repeat(Math.round(book.rating)) }}
+                <span>({{ book.rating.toFixed(1) }})</span>
+              </td>
             </tr>
           </table>
         </div>
       </div>
+      <div v-else>
+        <p class="error-message">Os detalhes do livro não estão disponíveis.</p>
+      </div>
 
-      <div class="reservar-container">
+      <!-- Botões de ação -->
+      <div class="reservar-container" v-if="book">
         <button class="reservar-livro" @click="reserveBook">Reservar Livro</button>
         <button class="adicionar-desejos" @click="addToWishlist">Adicionar à Lista de Desejos</button>
       </div>
 
       <!-- Comentários -->
-      <div class="comentarios">
+      <div class="comentarios" v-if="book">
         <h4>Comentários e Avaliações</h4>
-        <div class="comentarios-container">
+        <div v-if="comments.length > 0" class="comentarios-container">
           <table class="comentario">
             <tr>
               <th>Usuário</th>
@@ -69,119 +76,126 @@
             </tr>
           </table>
         </div>
+        <p v-else class="sem-comentarios">Nenhum comentário disponível.</p>
       </div>
 
       <!-- Formulário para adicionar comentário -->
-      <form @submit.prevent="submitComment" class="form-comentario">
+      <form v-if="book" @submit.prevent="submitComment" class="form-comentario">
         <h4>Deixe seu comentário</h4>
         <div class="form-group">
           <label for="nome">Nome:</label>
-          <input v-model="newComment.name" type="text" id="nome" placeholder="Seu nome" required>
+          <input v-model="newComment.name" type="text" id="nome" placeholder="Seu nome" required />
         </div>
         <div class="form-group">
           <label for="comentario">Comentário:</label>
-          <textarea v-model="newComment.text" id="comentario" rows="4" placeholder="Escreva seu comentário aqui..." required></textarea>
+          <textarea
+            v-model="newComment.text"
+            id="comentario"
+            rows="4"
+            placeholder="Escreva seu comentário aqui..."
+            required
+          ></textarea>
         </div>
         <div class="form-group">
           <label for="avaliacao">Avaliação:</label>
           <select v-model="newComment.rating" id="avaliacao" required>
             <option value="" disabled selected>Selecione uma avaliação</option>
-            <option value="1">★☆☆☆☆</option>
-            <option value="2">★★☆☆☆</option>
-            <option value="3">★★★☆☆</option>
-            <option value="4">★★★★☆</option>
-            <option value="5">★★★★★</option>
+            <option v-for="i in 5" :key="i" :value="i">{{ '★'.repeat(i) }}</option>
           </select>
         </div>
         <button type="submit" class="enviar-comentario">Enviar Comentário</button>
       </form>
     </main>
+
+    <div v-else-if="loading" class="loading-message">Carregando detalhes do livro...</div>
+    <div v-else-if="error" class="error-message">{{ error }}</div>
   </div>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar.vue";
 import SideBar from "@/components/SideBar.vue";
+import axios from "axios";
 
 export default {
   components: {
     NavBar,
     SideBar,
   },
-
   data() {
     return {
-      sidebarOpen: false,  // Controle do estado de visibilidade da Sidebar
-      dropdown: {},        // Controle do dropdown, se necessário
-      currentPage: 1,      // Controle de páginas (se necessário para paginação)
-      book: {
-        title: 'Nome do Livro',
-        author: 'Nome do Autor',
-        year: 2024,
-        genre: 'Ficção Científica',
-        isbn: '978-3-16-148410-0',
-        availableCopies: 5,
-        description: 'Esta é uma breve descrição do livro...',
-        image: '/Site - MangeBook/imagens/Harry Potter4.webp',
-        rating: 4.5
-      },
-      comments: [
-        { id: 1, user: 'Usuário 1', text: 'Excelente livro! Recomendo muito.', rating: 5 },
-        { id: 2, user: 'Usuário 2', text: 'Uma leitura agradável, mas o final deixou a desejar.', rating: 3 },
-        { id: 3, user: 'Usuário 3', text: 'Excelente livro! Recomendo muito.', rating: 5 },
-      ],
+      sidebarOpen: false,
+      book: null,
+      comments: [],
       newComment: {
         name: '',
         text: '',
         rating: '',
       },
-      sidebarVisible: false,
-      dropdownVisible: false,
-      searchQuery: ''
+      loading: false,
+      error: null,
     };
   },
-
   methods: {
     toggleSidebar() {
-      this.sidebarOpen = !this.sidebarOpen;  // Alterna o estado da Sidebar
+      this.sidebarOpen = !this.sidebarOpen;
     },
+    async fetchBookDetails() {
+      this.loading = true;
+      this.error = null;
+      const bookId = this.$route.params.bookId;
 
-    toggleDropdown(menu) {
-      this.dropdown[menu] = !this.dropdown[menu];  // Alterna o estado do dropdown
-    },
-
-    changePage(direction) {
-      if (direction === 'prev' && this.currentPage > 1) {
-        this.currentPage--;
-      } else if (direction === 'next') {
-        this.currentPage++;
+      try {
+        const response = await axios.get(`http://localhost:3000/api/books/${bookId}`);
+        const data = response.data;
+        this.book = {
+          title: data.bookTitle,
+          author: data.bookAuthor,
+          year: data.publicationYear,
+          genre: data.bookGenre,
+          isbn: data.bookISBN,
+          availableCopies: data.copiesAvailable,
+          description: data.bookDescription,
+          // Alteração aqui de book.image para book.bookThumbnail
+          bookThumbnail: `http://localhost:3000/${data.bookThumbnail.replace(/\\/g, '/')}`,
+          rating: data.averageRating || 0,
+        };
+        this.comments = data.comments || [];
+      } catch (err) {
+        this.error = "Erro ao carregar os detalhes do livro. Por favor, tente novamente.";
+      } finally {
+        this.loading = false;
       }
     },
-
-    searchBook() {
-      console.log('Pesquisar:', this.searchQuery);
-    },
-
     reserveBook() {
       alert('Livro reservado!');
     },
-
     addToWishlist() {
       alert('Livro adicionado à Lista de Desejos!');
     },
-
     submitComment() {
       if (this.newComment.name && this.newComment.text && this.newComment.rating) {
-        const comment = { ...this.newComment, id: Date.now() };
+        const comment = { 
+          id: Date.now(), 
+          user: this.newComment.name, 
+          text: this.newComment.text, 
+          rating: parseInt(this.newComment.rating) 
+        };
         this.comments.push(comment);
         this.newComment = { name: '', text: '', rating: '' };
       } else {
         alert("Por favor, preencha todos os campos.");
       }
-    }
-  }
+    },
+  },
+  mounted() {
+    this.fetchBookDetails();
+  },
 };
 </script>
+
+
+
 
 
 <style scoped>
