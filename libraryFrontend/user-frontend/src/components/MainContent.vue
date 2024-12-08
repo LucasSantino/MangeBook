@@ -4,42 +4,40 @@
     <div class="welcome-container">
       <h2 class="welcome-title">Bem-vindo à MangeBook</h2>
       <p>Explore nosso acervo e gerencie seus empréstimos de forma eficiente!</p>
-      
+
       <!-- Container de Filtros -->
       <div class="filter-container">
         <div>
           <label class="filter-label" for="author">Autor</label>
           <select id="author" class="filter-button" v-model="filters.author">
             <option value="all">Todos</option>
-            <option value="author1">Autor 1</option>
-            <option value="author2">Autor 2</option>
+            <option v-for="author in authors" :key="author" :value="author">{{ author }}</option>
           </select>
         </div>
         <div>
           <label class="filter-label" for="genre">Gênero</label>
           <select id="genre" class="filter-button" v-model="filters.genre">
             <option value="all">Todos</option>
-            <option value="fiction">Ficção</option>
-            <option value="non-fiction">Não Ficção</option>
+            <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
           </select>
         </div>
         <div>
           <label class="filter-label" for="year">Ano de Publicação</label>
           <select id="year" class="filter-button" v-model="filters.year">
             <option value="all">Todos</option>
-            <option value="2023">2023</option>
-            <option value="2022">2022</option>
+            <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
           </select>
         </div>
       </div>
     </div>
-    
+
     <!-- Livros em Destaque -->
     <section class="featured-books">
       <h3 class="featured-title">Livros em Destaque</h3>
-      <div class="book-list">
-        <div v-for="(book, index) in paginatedBooks" :key="index" class="book-card">
-          <!-- Navegação ao clicar no título ou imagem do livro -->
+      <div v-if="loading" class="loading-message">Carregando livros...</div>
+      <div v-else-if="error" class="error-message">{{ error }}</div>
+      <div v-else class="book-list">
+        <div v-for="(book, index) in paginatedBooks" :key="book._id" class="book-card">
           <a @click.prevent="goToBookDetails(index)">
             <img :src="book.image" :alt="book.title" class="book-image" />
             <h5>{{ book.title }}</h5>
@@ -60,171 +58,28 @@
 </template>
 
 <script>
+import axios from 'axios'; // Biblioteca para requisições HTTP
+
 export default {
   data() {
     return {
       filters: {
         author: 'all',
         genre: 'all',
-        year: 'all'
+        year: 'all',
       },
-      books: [
-        {
-          title: 'Título do Livro 1',
-          author: 'Autor 1',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/livro1.jpg',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 2',
-          author: 'Autor 2',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/Harry Potter 2.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2022
-        },
-        {
-          title: 'Título do Livro 3',
-          author: 'Autor 3',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/PercyJacksom1.jpg',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Aventura',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 4',
-          author: 'Autor 4',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/Harry Potter4.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2022
-        },
-        {
-          title: 'Título do Livro 5',
-          author: 'Autor 5',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/Harry Potter 2.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Fantasia',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 6',
-          author: 'Autor 6',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/Harry Potter3.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2021
-        },
-        {
-          title: 'Título do Livro 7',
-          author: 'Autor 7',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/Harry Potter6.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Aventura',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 8',
-          author: 'Autor 8',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/Harry Potter7.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2022
-        },
-        {
-          title: 'Título do Livro 9',
-          author: 'Autor 9',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/Harry Potter 2.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 10',
-          author: 'Autor 10',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/PercyJacksom3.jpg',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Aventura',
-          year: 2021
-        },
-        {
-          title: 'Título do Livro 11',
-          author: 'Autor 11',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/PercyJacksom4.jpg',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Aventura',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 12',
-          author: 'Autor 12',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/PercyJacksom5.jpg',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2022
-        },
-        {
-          title: 'Título do Livro 13',
-          author: 'Autor 13',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/livro13.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 14',
-          author: 'Autor 14',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/Livro14.jpg',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2022
-        },
-        {
-          title: 'Título do Livro 15',
-          author: 'Autor 15',
-          availability: 'Disponível',
-          image: '/Site - MangeBook/imagens/Livro 15.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Ficção',
-          year: 2023
-        },
-        {
-          title: 'Título do Livro 16',
-          author: 'Autor 16',
-          availability: 'Indisponível',
-          image: '/Site - MangeBook/imagens/livrop16.webp',
-          detailsLink: '/Site - MangeBook/DetalhesLivros.html',
-          genre: 'Fantasia',
-          year: 2021
-        }
-      ],
+      books: [], // Inicialmente vazio, será preenchido com os dados da API
       currentPage: 1,
-      booksPerPage: 12
+      booksPerPage: 12,
     };
   },
   computed: {
     filteredBooks() {
-      return this.books.filter(book => {
+      return this.books.filter((book) => {
         return (
           (this.filters.author === 'all' || book.author === this.filters.author) &&
           (this.filters.genre === 'all' || book.genre === this.filters.genre) &&
-          (this.filters.year === 'all' || book.year === this.filters.year)
+          (this.filters.year === 'all' || book.year === parseInt(this.filters.year))
         );
       });
     },
@@ -235,9 +90,26 @@ export default {
       const start = (this.currentPage - 1) * this.booksPerPage;
       const end = start + this.booksPerPage;
       return this.filteredBooks.slice(start, end);
-    }
+    },
   },
   methods: {
+    async fetchBooks() {
+    try {
+        const response = await axios.get('http://localhost:3000/api/books');
+        this.books = response.data.map((book) => ({
+            title: book.bookTitle,
+            author: book.bookAuthor,
+            availability: book.copiesAvailable > 0 ? 'Disponível' : 'Indisponível',
+            image: `http://localhost:3000/${book.bookThumbnail.replace(/\\/g, '/')}`, // Normaliza as barras
+            genre: book.bookGenre,
+            year: book.publicationYear,
+        }));
+    } catch (error) {
+        console.error('Erro ao buscar livros:', error);
+    }
+},
+
+
     changePage(direction) {
       if (direction === 'previous' && this.currentPage > 1) {
         this.currentPage--;
@@ -247,10 +119,27 @@ export default {
     },
     goToBookDetails(bookId) {
       this.$router.push({ name: 'DetalhesLivros', params: { bookId } });
-    }
-  }
+    },
+    resetPagination() {
+      this.currentPage = 1;
+    },
+  },
+  watch: {
+    // Observa mudanças nos filtros e redefine a página ao aplicar novos filtros
+    filters: {
+      handler() {
+        this.resetPagination();
+      },
+      deep: true, // Necessário para observar mudanças em objetos aninhados
+    },
+  },
+  mounted() {
+    this.fetchBooks(); // Busca os dados ao carregar o componente
+  },
 };
 </script>
+
+
 
 
 <style scoped>
@@ -394,5 +283,16 @@ main {
 .pagination span {
     margin: 0 15px; /* Margem lateral para o texto */
     color: #333; /* Cor do texto */
+}
+
+.loading-message {
+  color: #00334e;
+  font-size: 18px;
+  margin: 20px 0;
+}
+.error-message {
+  color: red;
+  font-size: 18px;
+  margin: 20px 0;
 }
 </style>
