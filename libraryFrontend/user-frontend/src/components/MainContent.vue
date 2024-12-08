@@ -40,8 +40,8 @@
         <div v-for="(book, index) in paginatedBooks" :key="book._id" class="book-card">
           <a @click.prevent="goToBookDetails(index)">
             <img :src="book.image" :alt="book.title" class="book-image" />
-            <h5>{{ book.title }}</h5>
-            <h6>Autor: {{ book.author }}</h6>
+            <h4>{{ book.title }}</h4>
+            <h5>Autor: {{ book.author }}</h5>
             <h5>Disponibilidade: {{ book.availability }}</h5>
           </a>
         </div>
@@ -143,7 +143,6 @@ export default {
 
 
 <style scoped>
-
 /* Conteúdo principal */
 main {
     margin-top: 70px;
@@ -165,7 +164,6 @@ main {
     max-width: 940px; /* Ajuste conforme necessário para se alinhar com a tabela */
     margin-top: 90px; /* Ajuste o valor para aumentar o espaçamento superior */
 }
-
 
 /* Seção de boas-vindas */
 .welcome-title {
@@ -203,10 +201,17 @@ main {
     background-color: #f0f0f0;
     padding: 15px;
     border-radius: 5px;
-    width: 180px; /* Largura fixa */
-    height: 300px; /* Altura fixa */
+    width: 200px; /* Largura fixa */
+    height: 430px; /* Altura fixa */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adiciona transição suave para o hover */
+}
+
+/* Efeito ao passar o mouse */
+.book-card:hover {
+    transform: translateY(-5px); /* Eleva o card levemente para cima */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Aumenta a sombra para destacar */
 }
 
 .book-card a {
@@ -214,10 +219,16 @@ main {
     color: inherit; /* Herda a cor do texto do elemento pai */
 }
 
+h4 {
+    color: #00334e; /* Define a cor do texto */
+    margin-top: 10px; /* Espaçamento acima do h4 */
+    margin-bottom: 10px; /* Espaçamento abaixo do h4 */
+}
+
 /* Imagem do livro */
 .book-image {
     width: 100%;
-    height: 200px;
+    height: 260px;
     object-fit: cover;
     border-radius: 5px;
 }
@@ -290,9 +301,11 @@ main {
   font-size: 18px;
   margin: 20px 0;
 }
+
 .error-message {
   color: red;
   font-size: 18px;
   margin: 20px 0;
 }
 </style>
+
