@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <NavBar @toggle-sidebar="toggleSidebar" /> <!-- Passando o evento para abrir/fechar a Sidebar -->
-    <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" /> <!-- Passando o estado da Sidebar -->
+    <component :is="sidebarComponent" :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" /> <!-- Sidebar dinâmica -->
     <MainContent /> <!-- Importação do Conteúdo Principal-->
   </div>
 </template>
@@ -10,12 +10,14 @@
 import MainContent from "@/components/MainContent.vue";
 import NavBar from "@/components/NavBar.vue";
 import SideBar from "@/components/SideBar.vue";
+import adm_SideBar from "@/components/adm_SideBar.vue";
 
 export default {
   components: {
     NavBar,
     SideBar,
     MainContent,
+    adm_SideBar,
   },
 
   data() {
@@ -23,7 +25,24 @@ export default {
       sidebarOpen: false,  // Controle do estado de visibilidade da Sidebar
       dropdown: {},        // Controle do dropdown, se necessário
       currentPage: 1,      // Controle de páginas (se necessário para paginação)
+      userRole: '',        // Armazenará o papel do usuário (admin ou user)
     };
+  },
+
+  computed: {
+    sidebarComponent() {
+      return this.userRole === 'admin' ? 'adm_SideBar' : 'SideBar';
+    }
+  },
+
+  created() {
+    // Verificar o tipo de usuário no localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      this.userRole = user.role;
+    } else {
+      this.userRole = 'user'; // Caso o usuário não esteja logado, default para 'user'
+    }
   },
 
   methods: {
@@ -42,10 +61,10 @@ export default {
         this.currentPage++;
       }
     }
-    
   }
 };
 </script>
+
 
 <style scoped>
 /* Reset de estilo básico */

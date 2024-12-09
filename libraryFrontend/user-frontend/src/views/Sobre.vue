@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <NavBar @toggle-sidebar="toggleSidebar" />
-    <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
+    <component :is="sidebarComponent" :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
     <main>
       <!-- Container de boas-vindas -->
       <div class="welcome-container">
@@ -71,31 +71,40 @@
 <script>
 import NavBar from '@/components/NavBar.vue';
 import SideBar from '@/components/SideBar.vue';
+import AdmSideBar from '@/components/adm_SideBar.vue';
 
 export default {
   components: {
     NavBar,
     SideBar,
+    AdmSideBar
   },
 
   data() {
     return {
       sidebarOpen: false,
-      dropdown: {},
     };
+  },
+
+  computed: {
+    sidebarComponent() {
+      // Verifica o tipo de usuário no localStorage e seleciona a Sidebar adequada
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.role === 'admin') {
+        return 'AdmSideBar'; // Sidebar de administrador
+      }
+      return 'SideBar'; // Sidebar padrão de usuário
+    }
   },
 
   methods: {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;  // Alterna o estado da Sidebar
     },
-
-    toggleDropdown(menu) {
-      this.dropdown[menu] = !this.dropdown[menu];  // Alterna o estado do dropdown
-    },
-  },
+  }
 };
 </script>
+
 
 <style scoped>
 /* Reset de estilo básico */
