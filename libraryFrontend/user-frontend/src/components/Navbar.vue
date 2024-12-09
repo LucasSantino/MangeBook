@@ -2,7 +2,19 @@
   <header class="navbar">
     <button class="menu-btn" @click="toggleSidebar">☰</button>
     <h1 class="logo">
-      <router-link to="/index" style="color: white; text-decoration: none;">MangeBook</router-link>
+      <span 
+        v-if="isLoginPage" 
+        style="color: white; text-decoration: none; cursor: default;"
+      >
+        MangeBook
+      </span>
+      <router-link 
+        v-else 
+        to="/index" 
+        style="color: white; text-decoration: none;"
+      >
+        MangeBook
+      </router-link>
     </h1>
 
     <div class="search-container">
@@ -15,15 +27,20 @@
     </div>
 
     <div>
-    <button class="notification-icon" @click="irParaNotificacoes">
-      <img :src="icone" alt="Notificações" class="notification-img">
-    </button>
-  </div>
+      <button 
+        class="notification-icon" 
+        @click="irParaNotificacoes" 
+        :disabled="isLoginPage" 
+        :style="{ cursor: isLoginPage ? 'not-allowed' : 'pointer' }"
+      >
+        <img :src="icone" alt="Notificações" class="notification-img">
+      </button>
+    </div>
   </header>
 </template>
 
 <script>
-import icone from '@/assets/IconeNotificação.png'; 
+import icone from '@/assets/IconeNotificação.png';
 
 export default {
   data() {
@@ -31,16 +48,25 @@ export default {
       icone,
     };
   },
+  computed: {
+    isLoginPage() {
+      // Verifica se a URL atual é a página de login (path: '/')
+      return this.$route.path === '/';
+    },
+  },
   methods: {
     toggleSidebar() {
       this.$emit('toggle-sidebar'); // Emite evento para alternar a visibilidade da sidebar
     },
     irParaNotificacoes() {
-      this.$router.push('/notifica'); // Redireciona para a página '/notifica'
+      if (!this.isLoginPage) {
+        this.$router.push('/notifica'); // Redireciona para a página '/notifica'
+      }
     },
   },
 };
 </script>
+
 
 
 <style>
