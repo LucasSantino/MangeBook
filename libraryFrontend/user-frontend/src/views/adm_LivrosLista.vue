@@ -173,7 +173,7 @@ export default {
       }
     },
     navegarParaDetalhes(bookId) {
-      this.$router.push(`/detalhes-livros/${bookId}`);
+      this.$router.push({ name: 'DetalhesLivros', params: { bookId } });
     },
   },
   mounted() {
