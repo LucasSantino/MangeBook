@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <NavBar @toggle-sidebar="toggleSidebar" />
-    <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
+    <!-- Exibição condicional das Sidebars -->
+    <SideBar v-if="userRole === 'user'" :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
+    <AdmSideBar v-if="userRole === 'admin'" :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
 
     <!-- Detalhes do Livro -->
     <main v-if="!loading && !error">
@@ -28,7 +30,7 @@
             </tr>
             <tr>
               <th>ISBN:</th>
-              <td>{{ book.isbn || 'Não disponível' }}</td> <!-- Verificando se o ISBN existe -->
+              <td>{{ book.isbn || 'Não disponível' }}</td>
             </tr>
             <tr>
               <th>Cópias Disponíveis:</th>
@@ -36,7 +38,7 @@
             </tr>
             <tr>
               <th>Descrição:</th>
-              <td>{{ book.dbookDescription || 'Não disponível' }}</td> <!-- Verificando se a descrição existe -->
+              <td>{{ book.dbookDescription || 'Não disponível' }}</td>
             </tr>
             <tr>
               <th>Avaliação:</th>
@@ -114,12 +116,14 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import SideBar from "@/components/SideBar.vue";
+import AdmSideBar from "@/components/adm_SideBar.vue"; // Sidebar para administradores
 import axios from "axios";
 
 export default {
   components: {
     NavBar,
     SideBar,
+    AdmSideBar, // Adicionando a sidebar do admin como componente
   },
   data() {
     return {
@@ -133,6 +137,7 @@ export default {
       },
       loading: false,
       error: null,
+      userRole: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).role : 'user', // Obtendo o papel do usuário do localStorage
     };
   },
   methods: {
@@ -194,6 +199,8 @@ export default {
   },
 };
 </script>
+
+
 
 
 
