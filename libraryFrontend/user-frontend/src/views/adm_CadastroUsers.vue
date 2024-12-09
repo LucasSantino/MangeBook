@@ -1,173 +1,204 @@
 <template>
-    <div id="app">
-      <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
-      <NavBar @toggle-sidebar="toggleSidebar" />
-  
-      <!-- Sidebar Administrativa para administradores -->
-      <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
-  
-      <main class="main-content">
-        <!-- Novo Formulário de Cadastro de Usuário -->
-        <div class="book-registration-container">
-          <h1 class="title">Cadastro de Usuário</h1>
-          <form @submit.prevent="submitForm">
-            <div class="form-grid">
-              <div class="form-left">
-                <!-- Foto do usuário (opcional) -->
-                <img :src="userThumbnail" alt="Foto do Usuário" id="userThumbnail">
-                <input type="file" id="imageUpload" accept="image/*" @change="previewImage">
+  <div id="app">
+    <!-- Navbar com o evento de toggle para abrir/fechar a sidebar -->
+    <NavBar @toggle-sidebar="toggleSidebar" />
+
+    <!-- Sidebar Administrativa para administradores -->
+    <adm_SideBar :isSidebarOpen="isSidebarOpen" @toggle-sidebar="toggleSidebar" />
+
+    <main class="main-content">
+      <!-- Novo Formulário de Cadastro de Usuário -->
+      <div class="book-registration-container">
+        <h1 class="title">Cadastro de Usuário</h1>
+        <form @submit.prevent="submitForm">
+          <div class="form-grid">
+            <div class="form-left">
+              <!-- Foto do usuário (opcional) -->
+              <img :src="userThumbnail" alt="Foto do Usuário" id="userThumbnail">
+              <input type="file" id="imageUpload" accept="image/*" @change="previewImage">
+            </div>
+            <div class="form-right">
+              <div class="form-group">
+                <label for="fullName">Nome Completo</label>
+                <input type="text" v-model="fullName" id="fullName" name="fullName" placeholder="Insira o nome completo" required>
               </div>
-              <div class="form-right">
-                <div class="form-group">
-                  <label for="userId">ID</label>
-                  <input type="text" v-model="userId" id="userId" name="userId" placeholder="Insira o ID do usuário" required>
-                </div>
-                <div class="form-group">
-                  <label for="fullName">Nome Completo</label>
-                  <input type="text" v-model="fullName" id="fullName" name="fullName" placeholder="Insira o nome completo" required>
-                </div>
-                <div class="form-group">
-                  <label for="birthDate">Data de Nascimento</label>
-                  <input type="date" v-model="birthDate" id="birthDate" name="birthDate" required>
-                </div>
-                <div class="form-group">
-                  <label for="gender">Gênero</label>
-                  <select v-model="gender" id="gender" name="gender" required>
-                    <option value="masculino">Masculino</option>
-                    <option value="feminino">Feminino</option>
-                    <option value="outro">Outro</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="cpf">CPF</label>
-                  <input type="text" v-model="cpf" id="cpf" name="cpf" placeholder="Insira o CPF" required>
-                </div>
-                <div class="form-group">
-                  <label for="address">Endereço</label>
-                  <input type="text" v-model="address" id="address" name="address" placeholder="Insira o endereço" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">E-mail</label>
-                  <input type="email" v-model="email" id="email" name="email" placeholder="Insira o e-mail" required>
-                </div>
-                <div class="form-group">
-                  <label for="userType">Tipo de Usuário</label>
-                  <select v-model="userType" id="userType" name="userType" required>
-                    <option value="administrador">Administrador</option>
-                    <option value="usuario">Usuário</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="password">Senha</label>
-                  <input type="password" v-model="password" id="password" name="password" placeholder="Insira a senha" required>
-                </div>
-                <div class="form-group">
-                  <label for="confirmPassword">Confirmar Senha</label>
-                  <input type="password" v-model="confirmPassword" id="confirmPassword" name="confirmPassword" placeholder="Confirme a senha" required>
-                </div>
-                <div v-if="password && confirmPassword && password !== confirmPassword" class="error-message">
-                  <small>As senhas não coincidem.</small>
-                </div>
+              <div class="form-group">
+                <label for="birthDate">Data de Nascimento</label>
+                <input type="date" v-model="birthDate" id="birthDate" name="birthDate" required>
+              </div>
+              <div class="form-group">
+                <label for="gender">Gênero</label>
+                <select v-model="gender" id="gender" name="gender" required>
+                  <option value="masculino">Masculino</option>
+                  <option value="feminino">Feminino</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="cpf">CPF</label>
+                <input type="text" v-model="cpf" id="cpf" name="cpf" placeholder="Insira o CPF" required>
+              </div>
+              <div class="form-group">
+                <label for="address">Endereço</label>
+                <input type="text" v-model="address" id="address" name="address" placeholder="Insira o endereço" required>
+              </div>
+              <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" v-model="email" id="email" name="email" placeholder="Insira o e-mail" required>
+              </div>
+              <div class="form-group">
+              <label for="userType">Tipo de Usuário</label>
+                <select v-model="userType" id="userType" name="userType" required>
+                <option value="user">Usuário</option>
+                <option value="admin">Administrador</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" v-model="password" id="password" name="password" placeholder="Insira a senha" required>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirmar Senha</label>
+                <input type="password" v-model="confirmPassword" id="confirmPassword" name="confirmPassword" placeholder="Confirme a senha" required>
+              </div>
+              <div v-if="password && confirmPassword && password !== confirmPassword" class="error-message">
+                <small>As senhas não coincidem.</small>
               </div>
             </div>
-            <button type="submit" class="submit-btn" :disabled="!isFormValid">Cadastrar Usuário</button>
-          </form>
-        </div>
-  
-        <!-- Modal de Sucesso -->
-        <div v-if="showModal" class="modal-overlay">
-          <div class="modal-content">
-            <p>Usuário cadastrado com sucesso!</p>
-            <button @click="closeModal">Fechar</button>
           </div>
+          <button type="submit" class="submit-btn" :disabled="!isFormValid">Cadastrar Usuário</button>
+        </form>
+      </div>
+
+      <!-- Modal de Sucesso -->
+      <div v-if="showModal" class="modal-overlay">
+        <div class="modal-content">
+          <p>Usuário cadastrado com sucesso!</p>
+          <button @click="closeModal">Fechar</button>
         </div>
-      </main>
-  
-      <!-- Rodapé -->
-      <Footer />
-    </div>
-  </template>
-  
-  <script>
-  import NavBar from '@/components/NavBar.vue';
-  import adm_SideBar from '@/components/adm_SideBar.vue';
-  
-  export default {
-    components: {
-      NavBar,
-      adm_SideBar,
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <Footer />
+  </div>
+</template>
+
+<script>
+import NavBar from '@/components/NavBar.vue';
+import adm_SideBar from '@/components/adm_SideBar.vue';
+
+export default {
+  components: {
+    NavBar,
+    adm_SideBar,
+  },
+  data() {
+    return {
+      userThumbnail: "https://via.placeholder.com/200", // Imagem padrão
+      fullName: "",
+      birthDate: "",
+      gender: "masculino",
+      cpf: "",
+      address: "",
+      email: "",
+      userType: "usuario",
+      password: "",
+      confirmPassword: "", // Campo para confirmar a senha
+      isSidebarOpen: false, // Controle do estado da sidebar
+      showModal: false, // Controle da exibição do modal
+    };
+  },
+  computed: {
+    isFormValid() {
+      return (
+        this.fullName &&
+        this.birthDate &&
+        this.cpf &&
+        this.address &&
+        this.email &&
+        this.password &&
+        this.confirmPassword &&
+        this.password === this.confirmPassword &&
+        this.userThumbnail !== "https://via.placeholder.com/200"
+      );
     },
-    data() {
-      return {
-        userThumbnail: "https://via.placeholder.com/200", // Imagem padrão
-        userId: "",
-        fullName: "",
-        birthDate: "",
-        gender: "masculino",
-        cpf: "",
-        address: "",
-        email: "",
-        userType: "usuario",
-        password: "",
-        confirmPassword: "", // Campo para confirmar a senha
-        isSidebarOpen: false, // Controle do estado da sidebar
-        showModal: false, // Controle da exibição do modal
-      };
+  },
+  methods: {
+    previewImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.userThumbnail = reader.result;
+        };
+        reader.readAsDataURL(file);
+      }
     },
-    computed: {
-      isFormValid() {
-        return (
-          this.userId &&
-          this.fullName &&
-          this.birthDate &&
-          this.cpf &&
-          this.address &&
-          this.email &&
-          this.password &&
-          this.confirmPassword &&
-          this.password === this.confirmPassword &&
-          this.userThumbnail !== "https://via.placeholder.com/200"
-        );
-      },
-    },
-    methods: {
-      previewImage(event) {
-        const file = event.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = () => {
-            this.userThumbnail = reader.result;
-          };
-          reader.readAsDataURL(file);
-        }
-      },
-      submitForm() {
-        if (!this.isFormValid) return;
-  
-        console.log("Formulário de Cadastro de Usuário enviado", {
-          userId: this.userId,
-          fullName: this.fullName,
-          birthDate: this.birthDate,
-          gender: this.gender,
-          cpf: this.cpf,
-          address: this.address,
-          email: this.email,
-          userType: this.userType,
-          password: this.password,
+    submitForm() {
+      if (!this.isFormValid) return;
+
+      // Criação de FormData para incluir a imagem e os dados
+      const formData = new FormData();
+      formData.append('username', this.fullName); // Nome de usuário baseado no nome completo
+      formData.append('birthDate', this.birthDate);
+      formData.append('gender', this.gender);
+      formData.append('cpf', this.cpf);
+      formData.append('address', this.address);
+      formData.append('email', this.email);
+      formData.append('password', this.password);
+      formData.append('confirmPassword', this.confirmPassword);
+      formData.append('role', this.userType); // 'user' ou 'admin'
+      
+      const imageInput = document.getElementById('imageUpload');
+      if (imageInput.files.length > 0) {
+        formData.append('userThumbnail', imageInput.files[0]);
+      }
+
+      const url = 'http://localhost:3000/api/auth/admin/register';
+
+      fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+        .then(async (response) => {
+          const result = await response.json();
+          if (response.ok) {
+            this.showModal = true;
+            this.resetForm();
+          } else {
+            alert(result.error || 'Erro desconhecido.');
+          }
+        })
+        .catch(() => {
+          alert('Erro ao conectar-se ao servidor.');
         });
-  
-        // Exibir o modal de sucesso
-        this.showModal = true;
-      },
-      closeModal() {
-        this.showModal = false;
-      },
-      toggleSidebar() {
-        this.isSidebarOpen = !this.isSidebarOpen;
-      },
     },
-  };
-  </script>
+    resetForm() {
+      this.fullName = '';
+      this.birthDate = '';
+      this.gender = 'masculino';
+      this.cpf = '';
+      this.address = '';
+      this.email = '';
+      this.userType = 'usuario';
+      this.password = '';
+      this.confirmPassword = '';
+      this.userThumbnail = 'https://via.placeholder.com/200';
+    },
+    closeModal() {
+      this.showModal = false;
+    },
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen;
+    },
+  },
+};
+</script>
+
   
   <style scoped>
 /* Estilos gerais */
