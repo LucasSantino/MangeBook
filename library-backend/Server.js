@@ -71,6 +71,10 @@ const authRoutes = require('./routes/authRoutes');
 app.use('/api/books', booksRoutes);
 app.use('/api/auth', authRoutes);
 
+const reservationRoutes = require('./routes/reservationRoutes');
+app.use('/api/reservations', reservationRoutes);
+
+
 // Rota para registro de usuário com upload (não duplicar em authRoutes)
 app.post('/api/auth/register', upload.single('userThumbnail'), require('./controllers/authControllers').register);
 
