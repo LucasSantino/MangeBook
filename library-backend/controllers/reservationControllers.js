@@ -66,7 +66,7 @@ exports.returnBook = async (req, res) => {
   }
 };
 
-// Get de retorno de informações
+// Get de retorno de informações dos livros reservados
 exports.getUserReservations = async (req, res) => {
   try {
     const userId = req.user.id; // ID do usuário autenticado

@@ -1,195 +1,171 @@
 <template>
-    <div class="container">
-      <NavBar @toggle-sidebar="toggleSidebar" />
-      <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
-      <main>
-        <div class="welcome-container">
-          <h2 class="welcome-title">Meus Livros</h2>
-          <p>Seja Bem-vindo à sua Biblioteca, explore todos os livros selecionados por você em um só lugar</p>
-  
-          <!-- Barra de Pesquisa dentro do Container de Boas-Vindas -->
-          <div class="search-container2">
-            <input
-              type="text"
-              class="search-bar2"
-              placeholder="Pesquisar em Meus livros..."
-              v-model="searchQuery"
-            />
-            <button class="search-icon2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path
-                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-  
-        <!-- Tabela de Livros -->
-        <div class="tabela-container">
-          <table class="livros-tabela">
-            <thead>
-              <tr>
-                <th>Thumbnail</th>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Ano</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><img src="/Site - MangeBook/imagens/Harry Potter 1.webp" alt="Capa do Livro" class="thumbnail"></td>
-                <td>Harry Potter e a Pedra Filosofal</td>
-                <td>JK Rowling</td>
-                <td>2007</td>
-                <td>
-                  <button class="btn-favoritar">Favoritar</button>
-                  <button class="btn-remover">Remover</button>
-                  <button class="btn-avaliar">Avaliar</button>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="/Site - MangeBook/imagens/Harry Potter 2.webp" alt="Capa do Livro" class="thumbnail"></td>
-                <td>Harry Potter e a Câmara Secreta</td>
-                <td>JK Rowling</td>
-                <td>1949</td>
-                <td>
-                  <button class="btn-favoritar">Favoritar</button>
-                  <button class="btn-remover">Remover</button>
-                  <button class="btn-avaliar">Avaliar</button>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="/Site - MangeBook/imagens/Harry Potter3.webp" alt="Capa do Livro" class="thumbnail"></td>
-                <td>Harry Potter e o Prisioneiro de Azkaban</td>
-                <td>JK Rowling</td>
-                <td>1899</td>
-                <td>
-                  <button class="btn-favoritar">Favoritar</button>
-                  <button class="btn-remover">Remover</button>
-                  <button class="btn-avaliar">Avaliar</button>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="/Site - MangeBook/imagens/PercyJacksom3.jpg" alt="Capa do Livro" class="thumbnail"></td>
-                <td>Percy Jackson e a Maldição do Titã</td>
-                <td>Rick Riordan</td>
-                <td>2005</td>
-                <td>
-                  <button class="btn-favoritar">Favoritar</button>
-                  <button class="btn-remover">Remover</button>
-                  <button class="btn-avaliar">Avaliar</button>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="/Site - MangeBook/imagens/PercyJacksom4.jpg" alt="Capa do Livro" class="thumbnail"></td>
-                <td>Percy Jackson e a Batalha do Labirinto</td>
-                <td>Rick Riordan</td>
-                <td>1988</td>
-                <td>
-                  <button class="btn-favoritar">Favoritar</button>
-                  <button class="btn-remover">Remover</button>
-                  <button class="btn-avaliar">Avaliar</button>
-                </td>
-              </tr>
-              <tr>
-                <td><img src="/Site - MangeBook/imagens/PercyJacksom5.jpg" alt="Capa do Livro" class="thumbnail"></td>
-                <td>Percy Jackson e o Último Olimpiano</td>
-                <td>Rick Riordan</td>
-                <td>1997</td>
-                <td>
-                  <button class="btn-favoritar">Favoritar</button>
-                  <button class="btn-remover">Remover</button>
-                  <button class="btn-avaliar">Avaliar</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-  
-        <!-- Navegação de Páginas -->
-        <div class="pagination">
-          <button class="btn-navegacao" aria-label="Página anterior" @click="previousPage" :disabled="currentPage === 1">
-            Anterior
-          </button>
-          <span>Página {{ currentPage }} de {{ totalPages }}</span>
-          <button class="btn-navegacao" aria-label="Próxima página" @click="nextPage" :disabled="currentPage === totalPages">
-            Próximo
+  <div class="container">
+    <NavBar @toggle-sidebar="toggleSidebar" />
+    <SideBar :isSidebarOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" />
+    <main>
+      <div class="welcome-container">
+        <h2 class="welcome-title">Meus Livros</h2>
+        <p>Seja bem-vindo à sua Biblioteca, explore todos os livros selecionados por você em um só lugar.</p>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-container2">
+          <input
+            type="text"
+            class="search-bar2"
+            placeholder="Pesquisar em Meus livros..."
+            v-model="searchQuery"
+          />
+          <button class="search-icon2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+              />
+            </svg>
           </button>
         </div>
-      </main>
-    </div>
-    <Footer />
-  </template>
-  
-  
-  <script>
-  import NavBar from "@/components/NavBar.vue";
-  import SideBar from "@/components/SideBar.vue";
- 
-  
-  export default {
-    components: {
-      NavBar,
-      SideBar,
-      
+      </div>
+
+      <!-- Tabela de Livros -->
+      <div class="tabela-container">
+        <table class="livros-tabela" v-if="!loading && filteredReservas.length > 0">
+          <thead>
+            <tr>
+              <th>Thumbnail</th>
+              <th>Título</th>
+              <th>Autor</th>
+              <th>Ano</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="reserva in currentPageReservas" :key="reserva._id">
+              <td><img :src="reserva.book.bookThumbnail" alt="Capa do Livro" class="thumbnail"></td>
+              <td>{{ reserva.book.bookTitle }}</td>
+              <td>{{ reserva.book.bookAuthor }}</td>
+              <td>{{ reserva.book.publicationYear }}</td>
+              <td>
+                <button class="btn-favoritar">Favoritar</button>
+                <button class="btn-remover" @click="removerReserva(reserva._id)">Remover</button>
+                <button class="btn-avaliar">Avaliar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p v-else-if="!loading && filteredReservas.length === 0" class="no-data-message">Nenhuma reserva encontrada.</p>
+        <p v-else class="loading-message">Carregando suas reservas...</p>
+      </div>
+
+      <!-- Paginação -->
+      <div class="pagination">
+        <button class="btn-navegacao" aria-label="Página anterior" @click="previousPage" :disabled="currentPage === 1">
+          Anterior
+        </button>
+        <span>Página {{ currentPage }} de {{ totalPages }}</span>
+        <button class="btn-navegacao" aria-label="Próxima página" @click="nextPage" :disabled="currentPage === totalPages">
+          Próximo
+        </button>
+      </div>
+    </main>
+  </div>
+</template>
+
+<script>
+import NavBar from "@/components/NavBar.vue";
+import SideBar from "@/components/SideBar.vue";
+import axios from "axios";
+
+export default {
+  components: {
+    NavBar,
+    SideBar,
+  },
+  data() {
+    return {
+      sidebarOpen: false,
+      searchQuery: "",
+      reservas: [],
+      loading: false,
+      currentPage: 1,
+      error: null,
+    };
+  },
+  computed: {
+    filteredReservas() {
+      return this.reservas.filter(
+        (reserva) =>
+          reserva.book.bookTitle.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          reserva.book.bookAuthor.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
     },
-    data() {
-      return {
-        sidebarOpen: false,
-        searchQuery: "",
-        paginaAtual: 1,
-        livros: [
-          {
-            id: 1,
-            thumbnail: "https://via.placeholder.com/100",
-            titulo: "Livro Exemplo 1",
-            autor: "Autor Exemplo",
-            ano: 2021,
+    totalPages() {
+      return Math.ceil(this.filteredReservas.length / 5); // Ajuste para mostrar 5 livros por página
+    },
+    currentPageReservas() {
+      const start = (this.currentPage - 1) * 5;
+      const end = start + 5;
+      return this.filteredReservas.slice(start, end);
+    },
+  },
+  methods: {
+    toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen;
+    },
+    async fetchReservas() {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const token = localStorage.getItem("token"); // Token de autenticação
+        const response = await axios.get("http://localhost:3000/api/reservations/user/reservations", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        this.reservas = response.data.map((reserva) => ({
+          ...reserva,
+          book: {
+            ...reserva.book,
+            bookThumbnail: `http://localhost:3000/${reserva.book.bookThumbnail.replace(/\\/g, "/")}`,
           },
-          {
-            id: 2,
-            thumbnail: "https://via.placeholder.com/100",
-            titulo: "Livro Exemplo 2",
-            autor: "Outro Autor",
-            ano: 2020,
-          },
-        ],
-      };
+        }));
+      } catch (err) {
+        this.error = "Erro ao carregar reservas.";
+        console.error(err);
+      } finally {
+        this.loading = false;
+      }
     },
-    computed: {
-      filteredLivros() {
-        return this.livros.filter(
-          (livro) =>
-            livro.titulo.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            livro.autor.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
-      },
-      currentPage() {
-        return this.paginaAtual;
-      },
-      totalPages() {
-        return Math.ceil(this.livros.length / 10); // Ajuste conforme necessário
-      },
+    async removerReserva(reservationId) {
+      try {
+        const token = localStorage.getItem("token");
+        await axios.post(`http://localhost:3000/api/reservations/${reservationId}/return`, null, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        this.reservas = this.reservas.filter((reserva) => reserva._id !== reservationId);
+        alert("Reserva removida com sucesso!");
+      } catch (err) {
+        alert("Erro ao remover a reserva.");
+        console.error(err);
+      }
     },
-    methods: {
-      toggleSidebar() {
-        this.sidebarOpen = !this.sidebarOpen;
-      },
-      previousPage() {
-        if (this.paginaAtual > 1) {
-          this.paginaAtual--;
-        }
-      },
-      nextPage() {
-        if (this.paginaAtual < this.totalPages) {
-          this.paginaAtual++;
-        }
-      },
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
     },
-  };
-  </script>
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+  },
+  mounted() {
+    this.fetchReservas();
+  },
+};
+</script>
+
+
+
   
   <style scoped>
   /* Estilo do corpo */
