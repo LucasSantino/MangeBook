@@ -45,7 +45,7 @@
               <td>{{ reserva.book.publicationYear }}</td>
               <td>
                 <button class="btn-favoritar">Favoritar</button>
-                <button class="btn-remover" @click="removerReserva(reserva._id)">Remover</button>
+                <button class="btn-remover" @click="removerReserva(reserva._id)">Devolver</button>
                 <button class="btn-avaliar">Avaliar</button>
               </td>
             </tr>
