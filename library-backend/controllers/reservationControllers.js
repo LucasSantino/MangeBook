@@ -2,7 +2,7 @@ const Reservation = require('../models/Reservation');
 const Book = require('../models/Book');
 
 
-// Post - Reservar livros
+// Post - Para o usario Reservar livros
 exports.createReservation = async (req, res) => {
   try {
     const { bookId } = req.params;

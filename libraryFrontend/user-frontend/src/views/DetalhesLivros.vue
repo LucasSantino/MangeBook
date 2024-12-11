@@ -116,14 +116,14 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import SideBar from "@/components/SideBar.vue";
-import AdmSideBar from "@/components/adm_SideBar.vue"; // Sidebar para administradores
+import AdmSideBar from "@/components/adm_SideBar.vue";
 import axios from "axios";
 
 export default {
   components: {
     NavBar,
     SideBar,
-    AdmSideBar, // Adicionando a sidebar do admin como componente
+    AdmSideBar,
   },
   data() {
     return {
@@ -137,7 +137,7 @@ export default {
       },
       loading: false,
       error: null,
-      userRole: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).role : 'user', // Obtendo o papel do usuário do localStorage
+      userRole: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).role : 'user',
     };
   },
   methods: {
@@ -153,14 +153,13 @@ export default {
         const response = await axios.get(`http://localhost:3000/api/books/${bookId}`);
         const data = response.data;
 
-        // Adicionando os campos corretamente
         this.book = {
           title: data.bookTitle,
           author: data.bookAuthor,
           year: data.publicationYear,
           genre: data.bookGenre,
-          isbn: data.isbn || 'Não disponível',  // Garantindo que o ISBN seja retornado corretamente
-          dbookDescription: data.dbookDescription || 'Não disponível',  // Garantindo que a descrição seja retornada
+          isbn: data.isbn || 'Não disponível',
+          dbookDescription: data.dbookDescription || 'Não disponível',
           availableCopies: data.copiesAvailable,
           bookThumbnail: `http://localhost:3000/${data.bookThumbnail.replace(/\\/g, '/')}`,
           rating: data.averageRating || 0,
@@ -173,8 +172,32 @@ export default {
         this.loading = false;
       }
     },
-    reserveBook() {
-      alert('Livro reservado!');
+    async reserveBook() {
+      const bookId = this.$route.params.bookId;
+      const userToken = localStorage.getItem("token");
+
+      if (!userToken) {
+        alert("Você precisa estar autenticado para reservar um livro.");
+        return;
+      }
+
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/api/reservations/${bookId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
+
+        alert(response.data.message || "Livro reservado com sucesso!");
+        this.fetchBookDetails();
+      } catch (error) {
+        console.error("Erro ao reservar o livro:", error.response?.data || error.message);
+        alert(error.response?.data.error || "Erro ao reservar o livro. Tente novamente.");
+      }
     },
     addToWishlist() {
       alert('Livro adicionado à Lista de Desejos!');
@@ -199,6 +222,7 @@ export default {
   },
 };
 </script>
+
 
 
 
