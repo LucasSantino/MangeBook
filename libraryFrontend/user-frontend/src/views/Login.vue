@@ -61,7 +61,7 @@ export default {
 
           // Redireciona para a página do usuário (baseado no role)
           if (user.role === 'admin') {
-            this.$router.push('/adm_dashboard');  
+            this.$router.push('/adm_userslista');  
             alert('Login bem-sucedido como Administrador!');
           } else {
             this.$router.push('/index');

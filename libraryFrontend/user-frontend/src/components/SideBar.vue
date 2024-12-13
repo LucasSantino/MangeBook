@@ -25,7 +25,7 @@
           </a>
           <ul v-show="isDropdownOpen" class="dropdown-menu">
             <li><router-link to="/meus-livros">Meus Livros</router-link></li>
-            <li><router-link to="/favoritos">Favoritos</router-link></li>
+            <!-- Linha removida: <li><router-link to="/favoritos">Favoritos</router-link></li> -->
             <li><router-link to="/lista-desejos">Lista de Desejos</router-link></li>
           </ul>
         </li>
@@ -98,8 +98,6 @@ export default {
   }
 };
 </script>
-
-
 
 <style scoped>
 /* Estilo para a imagem no topo da sidebar */

@@ -17,13 +17,34 @@
       </router-link>
     </h1>
 
+    <!-- Barra de Pesquisa -->
     <div class="search-container">
-      <input type="text" class="search-bar" placeholder="Pesquisar livros..." />
+      <input 
+        type="text" 
+        class="search-bar" 
+        placeholder="Pesquisar livros..." 
+        v-model="searchQuery" 
+        @input="searchBooks"
+      />
       <button class="search-icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.397l3.728 3.728a1 1 0 0 0 1.415-1.414l-3.728-3.728zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
         </svg>
       </button>
+
+      <!-- Dropdown de Resultados -->
+      <div v-if="filteredBooks.length > 0" class="dropdown-results">
+        <ul>
+          <li 
+            v-for="book in filteredBooks" 
+            :key="book._id" 
+            class="dropdown-item"
+            @click="goToBookDetails(book._id)"
+          >
+            <span class="book-title">{{ book.bookTitle }}</span> - <span class="book-author">{{ book.bookAuthor }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div>
@@ -40,33 +61,59 @@
 </template>
 
 <script>
+import axios from 'axios';
 import icone from '@/assets/IconeNotificação.png';
 
 export default {
   data() {
     return {
       icone,
+      searchQuery: '',
+      allBooks: [],
+      filteredBooks: [],
     };
   },
   computed: {
     isLoginPage() {
-      // Verifica se a URL atual é a página de login (path: '/')
       return this.$route.path === '/';
     },
   },
   methods: {
     toggleSidebar() {
-      this.$emit('toggle-sidebar'); // Emite evento para alternar a visibilidade da sidebar
+      this.$emit('toggle-sidebar');
     },
     irParaNotificacoes() {
       if (!this.isLoginPage) {
-        this.$router.push('/notifica'); // Redireciona para a página '/notifica'
+        this.$router.push('/notifica');
       }
     },
+    async fetchBooks() {
+      try {
+        const response = await axios.get('http://localhost:3000/api/books');
+        this.allBooks = response.data;
+      } catch (error) {
+        console.error('Erro ao buscar livros:', error);
+      }
+    },
+    searchBooks() {
+      const query = this.searchQuery.toLowerCase();
+      this.filteredBooks = this.allBooks.filter(
+        (book) =>
+          book.bookTitle.toLowerCase().includes(query) ||
+          book.bookAuthor.toLowerCase().includes(query)
+      );
+    },
+    goToBookDetails(bookId) {
+      this.$router.push({ name: 'DetalhesLivros', params: { bookId } }); // Usando parâmetros na navegação
+      this.searchQuery = ''; // Limpa a barra de pesquisa
+      this.filteredBooks = []; // Limpa os resultados filtrados
+    }
+  },
+  mounted() {
+    this.fetchBooks();
   },
 };
 </script>
-
 
 
 <style>
@@ -113,7 +160,7 @@ export default {
 .logo {
     font-size: 24px;
     text-align: center;
-    margin-top: 0; /* Removido o margin-top exagerado */
+    margin-top: 0;
 }
 
 /* Barra de pesquisa */
@@ -139,6 +186,47 @@ export default {
     cursor: pointer;
 }
 
+/* Dropdown de Resultados */
+.dropdown-results {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background-color: #00334e; /* Cor da navbar */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown-results ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.book-title {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.book-author {
+    font-size: 12px;
+    color: #ccc; /* Cor secundária para o autor */
+}
+
 /* Icone de notificação */
 .notification-icon {
     background: none;
@@ -149,7 +237,12 @@ export default {
 
 .notification-img {
     filter: brightness(0) invert(1); /* Torna o ícone branco */
-    width: 30px; /* Aumente o tamanho conforme necessário */
+    width: 30px;
     height: 30px;
 }
 </style>
+
+
+
+
+

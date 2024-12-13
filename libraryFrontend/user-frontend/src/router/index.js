@@ -43,11 +43,11 @@ const routes = [
     props: true,
   },*/
   {
-    path: '/livro/:bookId',
-    name: 'DetalhesLivros',
-    component: DetalhesLivros,
-    props: true,
-  },  
+    path: '/livro/:bookId',  // Rota de detalhes do livro
+    name: 'DetalhesLivros',   // Nome da rota
+    component: DetalhesLivros, // O componente que será exibido
+    props: true, // Passa o parâmetro bookId como prop para o componente
+  }, 
   {
     path: '/meus-livros',
     name: 'MeusLivros',
